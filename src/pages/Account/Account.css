@@ -1,0 +1,68 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.playlists-button {
+    margin: 10px;
+    width: 192px;
+    height: 50px;
+}
+
+.playlists {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px 0;
+}
+
+.playlist-tile img {
+    width: 275px;
+    height: 275px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.account-details-container {
+    display: flex;
+    gap: 50px;
+    margin-bottom: 50px;
+}
+
+.account-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.follower-count {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 10px;
+}
+
+.follower-count a {
+    color: white;
+}
+
+.follower-count a:hover {
+    color: rgb(178, 175, 241);
+}
+
+.follower-count h2 {
+    margin-bottom: 5px;
+}
+
+.follower-count p {
+    margin: 0;
+}
+
+.account-details .username {
+    margin: 5px;
+}
+
+.profile-pic {
+    border-radius: 50%;
+}
