@@ -32,6 +32,7 @@ MusicMe is a social media platform creating for sharing music.
 ## Contact 
 
 Thomas Mazzag - tom.mazzag@gmail.com
+<br>
 <a href="https://linkedin.com/in/thomas-mazzag" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="thomas-mazzag" height="30" width="40" /></a>
 
 ## App flow
