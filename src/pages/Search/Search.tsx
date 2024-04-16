@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import "./Search.css"
 import { Navbar } from "../../components/Navbar"
 import { TrackSearch } from "../../components/Search/track"
+import { getNewToken } from "../../utils/tokenGen"
 
 const SearchPage = () => {
     const [searchCategory, setSearchCategory] = useState("Track")
@@ -19,8 +20,15 @@ const SearchPage = () => {
             })
             .then(response => response.json())
             .then((data) => {
-                const category = searchCategory.toLowerCase() + "s"
-                setResult(data[category].items)
+                if(data.error) {
+                    if (data.error.status === 401) {
+                        console.log("Generating new token")
+                        getNewToken().then(setAccess_token(localStorage.getItem("access_token"))!)
+                    } 
+                } else {
+                    const category = searchCategory.toLowerCase() + "s"
+                    setResult(data[category].items)
+                }
             })
         }
     }, [searchCategory, searchInput])
