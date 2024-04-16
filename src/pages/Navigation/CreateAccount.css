@@ -1,0 +1,26 @@
+.create-account-page {
+    min-height: 100vh;
+}
+
+.account-creation-steps {
+    display: flex;
+    justify-content: center;
+}
+
+.MuiStepLabel-label {
+    color: black;
+}
+
+.Mui-active.css-1hv8oq8-MuiStepLabel-label  {
+    color: white !important;
+}
+
+.Mui-completed.css-1hv8oq8-MuiStepLabel-label {
+    color: gray !important;
+}
+
+.step-movement {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 30%;
+}

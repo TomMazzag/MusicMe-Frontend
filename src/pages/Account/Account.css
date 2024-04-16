@@ -14,7 +14,8 @@
 .playlists {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 5px 0;
+    gap: 20px 50px;
+    text-align: center;
 }
 
 .playlist-tile img {
@@ -34,6 +35,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.followers, .following {
+    text-align: center;
 }
 
 .follower-count {

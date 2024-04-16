@@ -2,7 +2,7 @@ export const Navbar = () => {
     return (
         <nav className="navbar bg-base-100 border-b-2 border-accent">
             <div className="flex-1">
-                <a className="btn btn-ghost text-xl">MusicMe</a>
+                <a className="btn btn-ghost text-4xl">MusicMe</a>
             </div>
             <div className="flex-none gap-2">
                 <div className="flex-1">
