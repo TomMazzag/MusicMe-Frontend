@@ -4,6 +4,7 @@ import { Welcome } from './pages/Navigation/Landing';
 import { Success } from './pages/Navigation/Success';
 import { UsersAccount } from './pages/Account/UsersAccount';
 import { CreateAccount } from './pages/Navigation/CreateAccount';
+import SearchPage from './pages/Search/Search';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
     path: "/account/create",
     element: <CreateAccount />,
   },
+  {
+    path: "/search",
+    element: <SearchPage />,
+  }
 ])
 
 function App() {

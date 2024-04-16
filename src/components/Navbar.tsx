@@ -12,7 +12,7 @@ export const Navbar = () => {
                     <a className="btn btn-ghost text-xl">Discover</a>
                 </div>
                 <div className="flex-1">
-                    <a className="btn btn-ghost text-xl">Search</a>
+                    <a href="/search" className="btn btn-ghost text-xl">Search</a>
                 </div>
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
@@ -21,7 +21,7 @@ export const Navbar = () => {
                         </div>
                     </div>
                     <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-40">
-                        <li><a>Profile</a></li>
+                        <li><a href="/account">Profile</a></li>
                         <li><a>Settings</a></li>
                         <li><a>Logout</a></li>
                     </ul>

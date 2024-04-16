@@ -28,7 +28,7 @@
 .account-details-container {
     display: flex;
     gap: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 35px;
 }
 
 .account-details {
@@ -53,7 +53,7 @@
 }
 
 .follower-count a:hover {
-    color: rgb(178, 175, 241);
+    color: #00cdb7;
 }
 
 .follower-count h2 {

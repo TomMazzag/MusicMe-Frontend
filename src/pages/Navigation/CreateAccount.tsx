@@ -52,15 +52,15 @@ export const CreateAccount = () => {
         }
     }
 
-    const nextStep = () => {
-        if (activeStep === 2) {
-            //Add in logic for creating user in DB
-            //Get user a platform token
-            //Then navigate to account page
-            navigate("/account")
-        }
-        setActiveStep((prevActiveStep) => prevActiveStep + 1)
-    }
+    // const nextStep = () => {
+    //     if (activeStep === 2) {
+    //         //Add in logic for creating user in DB
+    //         //Get user a platform token
+    //         //Then navigate to account page
+    //         navigate("/account")
+    //     }
+    //     setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    // }
 
 
 

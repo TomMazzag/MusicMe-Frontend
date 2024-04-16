@@ -1,0 +1,133 @@
+.search-page {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.search-bar {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border: 3px solid white;
+    border-radius: 30px;
+    padding: 8px 3px;
+    gap: 5px;
+    background-color: rgba(255, 255, 255, 0.067);
+    width: 60%;
+}
+
+.search-bar input {
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    flex-grow: 1;
+    padding: 0 5px;
+}
+
+.search-bar button {
+    background-color: transparent;
+    padding: 5px 10px;
+}
+
+.search-bar button:hover {
+    border: 1px solid transparent;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* .search-page .dropdown {
+    position: relative;
+    padding: 5px 15px;
+    margin-left: 5px;
+    width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: green;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.search-page .dropdown:hover {
+    cursor: pointer;
+} */
+
+.dropdown-list {
+    position: absolute;
+    top: 10rem;
+    background-color: white;
+    width: 120px;
+    border-radius: 20px;
+    color: black;
+    padding: 0;
+    margin-left: 5px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.dropdown-list li {
+    list-style: none;
+    text-align: start;
+    padding: 0 15px;
+    margin-bottom: 7px;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.dropdown-list li:hover {
+    transform: translateX(5px);
+}
+
+.dropdown-list.show {
+    max-height: 100px;
+    overflow:visible;
+}
+
+.dropdown-list:not(.show) {
+    padding: 0;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 50px;
+    width: 70%;
+    align-items: center;
+}
+
+.result-tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 50%;
+    color: white;
+}
+
+.result-tile:hover {
+    color: rgba(255, 255, 255, 0.76);
+}
+
+.result-text {
+    flex-grow: 1;
+    align-self: center;
+}
+
+.result-tile img {
+    height: 120px;
+}
+
+.repost {
+    padding: 0 20px;
+}
+
+.repost p {
+    margin: 0;
+    margin-top: 5px;
+}
+

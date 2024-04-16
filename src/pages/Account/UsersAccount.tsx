@@ -22,6 +22,7 @@ export const UsersAccount = () => {
     const [access_token, setAccess_token] = useState(localStorage.getItem("access_token"))
     const [profile, setProfile] = useState<Profile>()
     const [playlists, setPlaylists] = useState<any>()
+    const [activeTab, setActiveTab] = useState<string>("Playlists")
 
     const getPlaylists = async (id: string) => {
         const result = await fetch(`https://api.spotify.com/v1/users/${id}/playlists?offset=0&limit=50`, {
@@ -86,6 +87,24 @@ export const UsersAccount = () => {
                         <p className="text-center mt-5 mb-2">Current Favorite Song: Alone - Sainté</p>
                         <p className="text-center">1452 songs linked</p>
                     </div>
+                </div>
+
+                <div role="tablist" className="tabs tabs-boxed mb-10">
+                    <a 
+                        role="tab" 
+                        className={`tab ${activeTab === "Playlists" ? "tab-active" : ""}`} 
+                        onClick={() => setActiveTab("Playlists")}
+                    >Playlists</a>
+                    <a 
+                        role="tab" 
+                        className={`tab ${activeTab === "Liked" ? "tab-active" : ""}`}
+                        onClick={() => setActiveTab("Liked")}
+                    >Liked songs</a>
+                    <a 
+                        role="tab" 
+                        className={`tab ${activeTab === "Feed" ? "tab-active" : ""}`}
+                        onClick={() => setActiveTab("Feed")}
+                    >Feed</a>
                 </div>
 
                 {playlists &&
