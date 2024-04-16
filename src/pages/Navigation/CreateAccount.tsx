@@ -10,7 +10,7 @@ export const CreateAccount = () => {
 
     // Get spotify details
 
-    const [access_token, setAccess_token] = useState(localStorage.getItem("access_token"))
+    const access_token = localStorage.getItem("access_token")
     const [profile, setProfile] = useState()
 
     useEffect(() => {

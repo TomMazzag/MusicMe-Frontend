@@ -1,6 +1,4 @@
 export const TrackSearch = ({result}: any) => {
-
-    console.log(result)
     return (
         <>
             {result.map((result: any, index: number) => (
