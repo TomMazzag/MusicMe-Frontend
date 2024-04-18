@@ -16,7 +16,7 @@ export const StepTwo = ({spotifyAccountDetails, setActiveStep, updateAccountDeta
             </div>
             <div className="step-movement">
                     <button className="btn" onClick={() => {setActiveStep(0)}}>Previous</button>
-                    <button className="btn" onClick={() => {updateAccountDetails({profile_url: spotifyAccountDetails.images[1].url}); setActiveStep(2)}}>Next</button>
+                    <button className="btn" onClick={() => {updateAccountDetails({profile_pic_url: spotifyAccountDetails.images[1].url}); setActiveStep(2)}}>Next</button>
             </div>
         </div>
     )

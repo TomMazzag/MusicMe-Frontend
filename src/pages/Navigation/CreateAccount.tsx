@@ -5,6 +5,7 @@ import { StepOne } from "../../components/AccountCreation/FirstStep"
 import { StepTwo } from "../../components/AccountCreation/SecondStep"
 import { StepThree } from "../../components/AccountCreation/ThirdStep"
 import { useNavigate } from "react-router-dom"
+import { createAccount } from "../../services/auth"
 
 export const CreateAccount = () => {
 
@@ -12,7 +13,8 @@ export const CreateAccount = () => {
 
     const access_token = localStorage.getItem("access_token")
     const [profile, setProfile] = useState()
-
+    const [errorMessage, setErrorMessage] = useState<string>()
+    
     useEffect(() => {
         const getProfile = async () => {
             const result = await fetch("https://api.spotify.com/v1/me", {
@@ -20,25 +22,36 @@ export const CreateAccount = () => {
             })
             const data = await result.json()
             setProfile(data)
-            console.log(data)
+            updateAccountDetails({access_token})
+            //console.log(data)
         }
         getProfile()
     }, [])
-
+    
     // Spotify details close
-
+    
     const [activeStep, setActiveStep] = useState(0);
     const navigate = useNavigate()
-    const [accountDetails, setAccountDetails] = useState({})
+    const [accountDetails, setAccountDetails] = useState()
 
     const updateAccountDetails = (data: any) => {
-        console.log(data)
-        setAccountDetails((prevAccountDetails) => ({ ...prevAccountDetails, ...data }))
+        // console.log(data)
+        setAccountDetails((prevAccountDetails: any) => ({ ...prevAccountDetails, ...data }))
     }
 
     const logUserDetails = () => {
-        console.log(accountDetails)
-        navigate("/account")
+        // console.log(accountDetails)
+        createAccount(accountDetails)
+        .then((response) => {
+            if (response.error) {
+                setErrorMessage("Error when creating your account, try again!")
+                setTimeout(() => {
+                    setErrorMessage("");
+                }, 3000);
+            } else {
+                navigate("/account")
+            }
+        })
     }
 
     const showStep = (step: number) => {
@@ -51,18 +64,6 @@ export const CreateAccount = () => {
                 return <StepThree setActiveStep={setActiveStep} updateAccountDetails={updateAccountDetails} logUserDetails={logUserDetails}/>
         }
     }
-
-    // const nextStep = () => {
-    //     if (activeStep === 2) {
-    //         //Add in logic for creating user in DB
-    //         //Get user a platform token
-    //         //Then navigate to account page
-    //         navigate("/account")
-    //     }
-    //     setActiveStep((prevActiveStep) => prevActiveStep + 1)
-    // }
-
-
 
     return (
         <div className="create-account-page text-center mt-10">
@@ -82,6 +83,11 @@ export const CreateAccount = () => {
                     </Step>
                 </Stepper>
             </div>
+            {errorMessage && 
+                <>
+                    <p className="text-red-500 mt-5">{errorMessage}</p>
+                </>
+            }
             <div className="step-details-container mt-10">
                 {showStep(activeStep + 1)}
             </div>

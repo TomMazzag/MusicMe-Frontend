@@ -30,6 +30,7 @@ export const UsersAccount = () => {
         })
         const data = await result.json()
         const publicPlaylists = data.items.filter((item: Playlist) => item.public === true);
+        console.log(publicPlaylists)
         // console.log(publicPlaylists) 
         setPlaylists(publicPlaylists)
     }
@@ -53,6 +54,14 @@ export const UsersAccount = () => {
         }
         getProfile()
     }, [access_token])
+
+    function shortenString(str: string, maxLength: number) {
+    if (str.length <= maxLength) {
+        return str; // Return the original string if it's within the limit
+    } else {
+        return str.slice(0, maxLength) + '...'; // Truncate the string and add ellipsis
+    }
+}
 
     return (
         <>
@@ -110,9 +119,9 @@ export const UsersAccount = () => {
                 {playlists &&
                 <div className="playlists mb-20">
                     {playlists.map((playlist: any, index: number) => (
-                        <div key={index} className="playlist-tile">
+                        <div key={index} className="playlist-tile text-center">
                             <a href={playlist.external_urls.spotify} target="_blank"><img src={playlist.images[0].url} alt="Playlist artwork" className="border-none rounded-xl"/></a>
-                            <h4 className="mt-5">{playlist.name}</h4>
+                            <h4 className="mt-5">{shortenString(playlist.name, 35)}</h4>
                         </div>
                     ))}
                 </div>}

@@ -70,7 +70,7 @@ export const Welcome = () => {
 
             <div className="text-center mt-10">
                 <h1 className="text-6xl font-bold mb-4">MusicMe</h1>
-                <p className="text-1m">Welcome!</p>
+                <p className="text-xl italic">Social media for music</p>
             </div>
 
             <div className="flex flex-col gap-6">

@@ -37,12 +37,12 @@ export const Success = () => {
     }, [])
 
     return (
-        <div className="success-redirect">
-            <h1>Welcome to the social music app!</h1>
+        <div className="success-redirect flex justify-center items-center h-screen">
+            <h1>Welcome to social media for music!</h1>
           
-            <p>Loading</p>
+            <p>Loading...</p>
 
-            <PropagateLoader color="lightgreen" style={{ display: "inherit", position: "relative", left: "-4px"}} />
+            <PropagateLoader color="lightgreen" style={{ display: "inherit", position: "relative", left: "-5px"}} />
            
         </div>
     )
