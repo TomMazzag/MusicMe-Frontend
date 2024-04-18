@@ -2,14 +2,14 @@ export const Navbar = () => {
     return (
         <nav className="navbar bg-base-100 border-b-2 border-accent">
             <div className="flex-1">
-                <a className="btn btn-ghost text-4xl">MusicMe</a>
+                <a href="/account" className="btn btn-ghost text-4xl">MusicMe</a>
             </div>
             <div className="flex-none gap-2">
                 <div className="flex-1">
-                    <a className="btn btn-ghost text-xl">Feed</a>
+                    <a href="/feed" className="btn btn-ghost text-xl">Feed</a>
                 </div>
                 <div className="flex-1">
-                    <a className="btn btn-ghost text-xl">Discover</a>
+                    <a href="/discover" className="btn btn-ghost text-xl">Discover</a>
                 </div>
                 <div className="flex-1">
                     <a href="/search" className="btn btn-ghost text-xl">Search</a>

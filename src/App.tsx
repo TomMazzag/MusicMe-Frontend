@@ -5,6 +5,8 @@ import { Success } from './pages/Navigation/Success';
 import { UsersAccount } from './pages/Account/UsersAccount';
 import { CreateAccount } from './pages/Navigation/CreateAccount';
 import SearchPage from './pages/Search/Search';
+import { ErrorPage } from './pages/Error/CatchAll';
+import { ComingSoon } from './pages/Error/ComingSoon';
 
 const router = createBrowserRouter([
   {
@@ -26,7 +28,19 @@ const router = createBrowserRouter([
   {
     path: "/search",
     element: <SearchPage />,
-  }
+  },
+  {
+    path: "/*",
+    element: <ErrorPage />,
+  },
+  {
+    path: "/feed",
+    element: <ComingSoon />,
+  },
+  {
+    path: "/discover",
+    element: <ComingSoon />,
+  },
 ])
 
 function App() {
