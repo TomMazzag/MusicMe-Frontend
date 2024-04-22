@@ -3,6 +3,8 @@ import "./Search.css"
 import { Navbar } from "../../components/Navbar"
 import { TrackSearch } from "../../components/Search/track"
 import { getNewToken } from "../../utils/tokenGen"
+import { searchUser } from "../../services/search"
+import { UserSearch } from "../../components/Search/user"
 
 const SearchPage = () => {
     const [searchCategory, setSearchCategory] = useState("Track")
@@ -14,7 +16,7 @@ const SearchPage = () => {
     let encodedURI = encodeURI(url)
     
     useEffect(() => {
-        if (searchInput.length > 1) {
+        if (searchInput.length > 1 && searchCategory !== "Username") {
             fetch(encodedURI, {
                 method: "GET", headers: { Authorization: `Bearer ${access_token}` }
             })
@@ -30,6 +32,12 @@ const SearchPage = () => {
                     setResult(data[category].items)
                 }
             })
+        } else if (searchInput.length > 1) {
+            const userSearch = async () => {
+                const userSearch = await searchUser(searchInput)
+                setResult(userSearch.request)
+            }
+            userSearch()
         }
     }, [searchCategory, searchInput])
 
@@ -59,7 +67,17 @@ const SearchPage = () => {
                     <button><i className="fa-solid fa-magnifying-glass"></i></button>
                 </div>
                 <div className="results">
-                    {result.length > 1 && <TrackSearch result={result}/>}
+                    {result.length >= 1 && (
+                        (() => {
+                            switch(searchCategory) {
+                            case "Track":
+                                return <TrackSearch result={result} />;
+                            case "Username":
+                                return <UserSearch result={result} />;
+                            }
+                        })()
+                    )}
+                    {searchInput.length > 1 && result.length < 1 && <p className="text text-xl mt-20">No results ...</p>}
                 </div>
             </div>
         </>

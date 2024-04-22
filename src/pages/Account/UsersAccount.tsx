@@ -44,7 +44,11 @@ export const UsersAccount = () => {
             if(data.error) {
                 if (data.error.status === 401) {
                     console.log("Generating new token")
-                    getNewToken().then(setAccess_token(localStorage.getItem("access_token"))!)
+                    getNewToken()
+                    .then(
+                        setAccess_token(localStorage.getItem("access_token"))!
+                    )
+                    getProfile()
                 } 
             } else {
                 setProfile(data)
