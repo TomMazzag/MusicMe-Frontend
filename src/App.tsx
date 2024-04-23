@@ -7,6 +7,7 @@ import { CreateAccount } from './pages/Navigation/CreateAccount';
 import SearchPage from './pages/Search/Search';
 import { ErrorPage } from './pages/Error/CatchAll';
 import { ComingSoon } from './pages/Error/ComingSoon';
+import { PublicAccount } from './pages/Account/PublicAccount';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/discover",
     element: <ComingSoon />,
+  },
+  {
+    path: "/user/:user_id",
+    element: <PublicAccount />,
   },
 ])
 

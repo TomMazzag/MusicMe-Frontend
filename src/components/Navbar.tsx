@@ -23,7 +23,7 @@ export const Navbar = () => {
                     <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-40">
                         <li><a href="/account">Profile</a></li>
                         <li><a>Settings</a></li>
-                        <li><a>Logout</a></li>
+                        <li><a href="/">Logout</a></li>
                     </ul>
                 </div>
             </div>
