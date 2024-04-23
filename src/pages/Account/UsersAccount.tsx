@@ -70,10 +70,10 @@ export const UsersAccount = () => {
     return (
         <>
             <Navbar />
-            <h1 className="text-6xl font-bold mb-10 mt-10 text-center">My Account</h1>
+            <h1 className="text-2xl font-bold mb-10 mt-10 text-center md:text-6xl">My Account</h1>
             {profile ?
             <div className="profile">
-                <div className="account-details-container">
+                <div className="account-details-container flex-col md:flex-row">
                     <img src={profile.images[1].url} alt="" className="profile-pic"/>
                     <div className="account-details">
                         <h2 className="text-3xl font-bold text-center mb-5">{profile.display_name}</h2>
@@ -121,7 +121,7 @@ export const UsersAccount = () => {
                 </div>
 
                 {playlists &&
-                <div className="playlists mb-20">
+                <div className="playlists mb-20 grid-cols-1 md:grid-cols-3">
                     {playlists.map((playlist: any, index: number) => (
                         <div key={index} className="playlist-tile text-center">
                             <a href={playlist.external_urls.spotify} target="_blank"><img src={playlist.images[0].url} alt="Playlist artwork" className="border-none rounded-xl"/></a>

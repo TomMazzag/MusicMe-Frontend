@@ -56,7 +56,7 @@ const SearchPage = () => {
             <Navbar />
             <div className="search-page">
 
-                <div className="search-bar"> 
+                <div className="search-bar w-[90%] md:w-[60%]"> 
                     
 
                     <div className="dropdown dropdown-hover">

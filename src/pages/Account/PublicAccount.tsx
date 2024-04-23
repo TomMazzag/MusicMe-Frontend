@@ -70,7 +70,7 @@ export const PublicAccount = () => {
             <Navbar />
             {profile ?
             <div className="profile mt-10">
-                <div className="account-details-container">
+                <div className="account-details-container flex-col md:flex-row">
                     <img src={profile.profile_picture_url} alt="" className="profile-pic w-[300px] h-[300px] object-cover"/>
                     <div className="account-details">
                         <h2 className="text-3xl font-bold text-center mb-5">{profile.full_name}</h2>

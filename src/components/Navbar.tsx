@@ -4,7 +4,7 @@ export const Navbar = () => {
             <div className="flex-1">
                 <a href="/account" className="btn btn-ghost text-4xl">MusicMe</a>
             </div>
-            <div className="flex-none gap-2">
+            <div className="flex-none gap-2 hidden md:inline-flex">
                 <div className="flex-1">
                     <a href="/feed" className="btn btn-ghost text-xl">Feed</a>
                 </div>
