@@ -11,12 +11,18 @@ const SearchPage = () => {
     const [searchInput, setSearchInput] = useState("")
     const [access_token, setAccess_token] = useState(localStorage.getItem("access_token"))
     const [result, setResult] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
 
     const url = `https://api.spotify.com/v1/search?q=${searchInput}&type=${searchCategory.toLowerCase()}`
     let encodedURI = encodeURI(url)
     
     useEffect(() => {
+        if (searchInput.length === 0) {
+            setResult([])
+        }
+
         if (searchInput.length > 1 && searchCategory !== "Username") {
+            setIsLoading(true)
             fetch(encodedURI, {
                 method: "GET", headers: { Authorization: `Bearer ${access_token}` }
             })
@@ -29,12 +35,15 @@ const SearchPage = () => {
                     } 
                 } else {
                     const category = searchCategory.toLowerCase() + "s"
+                    setIsLoading(false)
                     setResult(data[category].items)
                 }
             })
         } else if (searchInput.length > 1) {
             const userSearch = async () => {
+                setIsLoading(true)
                 const userSearch = await searchUser(searchInput)
+                setIsLoading(false)
                 setResult(userSearch.request)
             }
             userSearch()
@@ -66,17 +75,25 @@ const SearchPage = () => {
                     <input type="text" placeholder={`Search by ${searchCategory}`} value={searchInput} onChange={(e) => {setSearchInput(e.target.value)}}/>
                     <button><i className="fa-solid fa-magnifying-glass"></i></button>
                 </div>
-                <div className="results">
-                    {result.length >= 1 && (
+                <div className="results mb-10">
+                    {isLoading &&
+                    <>
+                        <div className="skeleton h-28 w-2/3"></div>
+                        <div className="skeleton h-28 w-2/3"></div>
+                        <div className="skeleton h-28 w-2/3"></div>
+                        <div className="skeleton h-28 w-2/3"></div>
+                    </>
+                    }
+                    { searchInput.length > 1 &&
                         (() => {
                             switch(searchCategory) {
                             case "Track":
-                                return <TrackSearch result={result} />;
+                                return <TrackSearch result={result} /> 
                             case "Username":
                                 return <UserSearch result={result} />;
                             }
                         })()
-                    )}
+                    }
                     {searchInput.length > 1 && result.length < 1 && <p className="text text-xl mt-20">No results ...</p>}
                 </div>
             </div>

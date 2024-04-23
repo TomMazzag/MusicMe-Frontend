@@ -13,7 +13,7 @@ export const login = async (access_token: string) => {
         body: JSON.stringify(payload),
     };
 
-    const response = await fetch(`${backend_url}/auth/login`, requestOptions);
+    const response = await fetch(`${backend_url}/user/login`, requestOptions);
 
     if (response.status === 200) {
         let data = await response.json();
@@ -34,7 +34,7 @@ export const createAccount = async (payload: any) => {
         body: JSON.stringify(payload),
     };
 
-    const response = await fetch(`${backend_url}/auth/create`, requestOptions);
+    const response = await fetch(`${backend_url}/user/create`, requestOptions);
 
     if (response.status === 200) {
         let data = await response.json();

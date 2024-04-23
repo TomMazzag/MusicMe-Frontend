@@ -129,7 +129,7 @@ export const UsersAccount = () => {
                         </div>
                     ))}
                 </div>}
-            </div> : <p>Loading Profile...</p>
+            </div> : <p className="text text-center mt-20 text-2xl">Loading Profile...</p>
             }
         </>
     )
