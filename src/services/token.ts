@@ -20,6 +20,7 @@ export const getToken = async (code: string, codeVerifier: string) => {
     try {
         const body = await fetch(url, payload);
         const response =await body.json();
+        console.log(response)
         if (response.access_token !== undefined) {
             //console.log(response)
             return {
