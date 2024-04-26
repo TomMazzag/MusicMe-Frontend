@@ -5,10 +5,6 @@ import { Navbar } from "../../components/Navbar"
 import { getAccountDetailsUsersAccount } from "../../services/account";
 
 
-interface Image {
-    url: string;
-}
-
 interface UserProfile {
     full_name: string;
     profile_picture_url: string;
@@ -33,8 +29,16 @@ export const UsersAccount = () => {
             method: "GET", headers: { Authorization: `Bearer ${access_token}` }
         })
         const data = await result.json()
+        if(data.error) {
+            if (data.error.status === 401) {
+                getNewToken()
+                .then(
+                    setAccess_token(localStorage.getItem("access_token"))!
+                )
+            } 
+        }
         const publicPlaylists = data.items.filter((item: Playlist) => item.public === true);
-        console.log(publicPlaylists)
+        //console.log(publicPlaylists)
         // console.log(publicPlaylists) 
         setPlaylists(publicPlaylists)
     }
@@ -44,7 +48,7 @@ export const UsersAccount = () => {
             getAccountDetailsUsersAccount(platform_token!)
             .then((data) => {
                 setProfile(data.userDetails)
-                console.log(data.userDetails)
+                //console.log(data.userDetails)
                 //console.log(data)
                 getPlaylists(data.userDetails.spotify_id)
             })
