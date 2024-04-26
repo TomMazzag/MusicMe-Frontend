@@ -4,6 +4,7 @@ import { getNewToken } from "../../utils/tokenGen"
 import { Navbar } from "../../components/Navbar"
 import { useParams } from "react-router-dom";
 import { getAccountDetailsPublicAccount } from "../../services/account";
+import { followOrUnfollowUser } from "../../services/friend";
 
 
 interface PublicProfile {
@@ -11,7 +12,7 @@ interface PublicProfile {
     profile_picture_url: string;
     followers: number;
     following: number;
-    user_id: number;
+    user_id: string;
 }
 
 interface Playlist {
@@ -25,6 +26,7 @@ export const PublicAccount = () => {
     const [playlists, setPlaylists] = useState<any>()
     const [activeTab, setActiveTab] = useState<string>("Playlists")
     let { user_id } = useParams();
+    const [following, setFollowing] = useState(false)
 
     const getPlaylists = async (id: string) => {
         const result = await fetch(`https://api.spotify.com/v1/users/${id}/playlists?offset=0&limit=50`, {
@@ -39,10 +41,14 @@ export const PublicAccount = () => {
                 )
             } 
         }
-        console.log(data)
         const publicPlaylists = data.items.filter((item: Playlist) => item.public === true);
         // console.log(publicPlaylists) 
         setPlaylists(publicPlaylists)
+    }
+
+    const followUser = async () => {
+        followOrUnfollowUser(platform_token!, profile!.user_id)
+        setFollowing(!following)
     }
 
     useEffect(() => {
@@ -50,6 +56,9 @@ export const PublicAccount = () => {
             getAccountDetailsPublicAccount(platform_token!, user_id!)
             .then((data) => {
                 console.log(data.userDetails)
+                if (data.userDetails.is_following_this_account === "1") {
+                    setFollowing(true)
+                }
                 setProfile(data.userDetails)
                 getPlaylists(data.userDetails.spotify_id)
             })
@@ -58,12 +67,12 @@ export const PublicAccount = () => {
     }, [access_token])
 
     function shortenString(str: string, maxLength: number) {
-    if (str.length <= maxLength) {
-        return str; // Return the original string if it's within the limit
-    } else {
-        return str.slice(0, maxLength) + '...'; // Truncate the string and add ellipsis
+        if (str.length <= maxLength) {
+            return str; // Return the original string if it's within the limit
+        } else {
+            return str.slice(0, maxLength) + '...'; // Truncate the string and add ellipsis
+        }
     }
-}
 
     return (
         <>
@@ -96,6 +105,10 @@ export const PublicAccount = () => {
                         </div>
                         <p className="text-center mt-5 mb-2">Current Favorite Song: Alone - Sainté</p>
                         <p className="text-center">1452 songs linked</p>
+                        <button 
+                            className={`btn btn-sm w-[80%] self-center mt-5 ${following && "btn-primary"}`}
+                            onClick={followUser}
+                        >{following ? "Following" : "Follow"}</button>
                     </div>
                 </div>
 

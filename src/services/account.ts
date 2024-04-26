@@ -1,8 +1,9 @@
 const backend_url = import.meta.env.VITE_BACKEND_URL
 
-export const getAccountDetailsUsersAccount = async () => {
+export const getAccountDetailsUsersAccount = async (token: string) => {
     const requestOptions = {
-        method: "GET"
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` }
     };
 
     const response = await fetch(`${backend_url}/user/account`, requestOptions);

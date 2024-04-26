@@ -2,16 +2,19 @@ import { useEffect, useState } from "react"
 import "./Account.css"
 import { getNewToken } from "../../utils/tokenGen"
 import { Navbar } from "../../components/Navbar"
+import { getAccountDetailsUsersAccount } from "../../services/account";
 
 
 interface Image {
     url: string;
 }
 
-interface Profile {
-    display_name: string;
-    id: string;
-    images: Image[];
+interface UserProfile {
+    full_name: string;
+    profile_picture_url: string;
+    followers: number;
+    following: number;
+    user_id: string;
 }
 
 interface Playlist {
@@ -20,9 +23,10 @@ interface Playlist {
 
 export const UsersAccount = () => {
     const [access_token, setAccess_token] = useState(localStorage.getItem("access_token"))
-    const [profile, setProfile] = useState<Profile>()
+    const [profile, setProfile] = useState<UserProfile>()
     const [playlists, setPlaylists] = useState<any>()
     const [activeTab, setActiveTab] = useState<string>("Playlists")
+    const platform_token = localStorage.getItem("platform_token")
 
     const getPlaylists = async (id: string) => {
         const result = await fetch(`https://api.spotify.com/v1/users/${id}/playlists?offset=0&limit=50`, {
@@ -37,24 +41,13 @@ export const UsersAccount = () => {
 
     useEffect(() => {
         const getProfile = async () => {
-            const result = await fetch("https://api.spotify.com/v1/me", {
-                method: "GET", headers: { Authorization: `Bearer ${access_token}` }
-            })
-            const data = await result.json()
-            if(data.error) {
-                if (data.error.status === 401) {
-                    console.log("Generating new token")
-                    getNewToken()
-                    .then(
-                        setAccess_token(localStorage.getItem("access_token"))!
-                    )
-                    getProfile()
-                } 
-            } else {
-                setProfile(data)
+            getAccountDetailsUsersAccount(platform_token!)
+            .then((data) => {
+                setProfile(data.userDetails)
+                console.log(data.userDetails)
                 //console.log(data)
-                getPlaylists(data.id)
-            }
+                getPlaylists(data.userDetails.spotify_id)
+            })
         }
         getProfile()
     }, [access_token])
@@ -74,24 +67,24 @@ export const UsersAccount = () => {
             {profile ?
             <div className="profile">
                 <div className="account-details-container flex-col md:flex-row">
-                    <img src={profile.images[1].url} alt="" className="profile-pic"/>
+                    <img src={profile.profile_picture_url} alt="" className="profile-pic"/>
                     <div className="account-details">
-                        <h2 className="text-3xl font-bold text-center mb-5">{profile.display_name}</h2>
+                        <h2 className="text-3xl font-bold text-center mb-5">{profile.full_name}</h2>
                         <div className="follower-count">
                             <div className="followers">
-                                <a href={`/user/${profile.id}/followers`}>
-                                    <h2>87</h2>
+                                <a href={`/user/${profile.user_id}/followers`}>
+                                    <h2>{profile.followers}</h2>
                                     <p>Followers</p>
                                 </a>
                             </div>
                             <div className="following">
-                                <a href={`/user/${profile.id}/following`}>
-                                    <h2>100</h2>
+                                <a href={`/user/${profile.user_id}/following`}>
+                                    <h2>{profile.following}</h2>
                                     <p>Following</p>
                                 </a>
                             </div>
                             <div className="following">
-                                <a href={`/user/${profile.id}/reviews`}>
+                                <a href={`/user/${profile.user_id}/reviews`}>
                                     <h2>5</h2>
                                     <p>Reviews</p>
                                 </a>
