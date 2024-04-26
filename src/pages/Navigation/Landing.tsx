@@ -33,6 +33,7 @@ export const Welcome = () => {
         const scope = 'user-read-private user-read-email playlist-read-collaborative playlist-read-private';
         const authUrl = new URL("https://accounts.spotify.com/authorize")
 
+        console.log(codeVerifier)
         window.localStorage.setItem('code_verifier', codeVerifier);
 
         const params =  {
