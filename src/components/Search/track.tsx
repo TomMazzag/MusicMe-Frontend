@@ -1,9 +1,10 @@
 export const TrackSearch = ({result}: any) => {
+    //console.log(result)
     return (
         <>
             {result.map((result: any, index: number) => (
                 <a href={`/songs/${result.id}`} className="result-tile" key={index}>
-                    <img src={result.album.images[0].url} alt="" />
+                    <img src={result.album && result.album.images && result.album.images.length > 0 ? result.album.images[0].url : ""} alt="" />
                     <div className="result-text">
                         <h3>{result.name}</h3>
                         <p>{result.artists[0].name}</p>

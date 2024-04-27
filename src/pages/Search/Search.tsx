@@ -5,6 +5,8 @@ import { TrackSearch } from "../../components/Search/track"
 import { getNewToken } from "../../utils/tokenGen"
 import { searchUser } from "../../services/search"
 import { UserSearch } from "../../components/Search/user"
+import { ArtistSearch } from "../../components/Search/artist"
+import { AlbumSearch } from "../../components/Search/album"
 
 const SearchPage = () => {
     const [searchCategory, setSearchCategory] = useState("Track")
@@ -88,7 +90,11 @@ const SearchPage = () => {
                         (() => {
                             switch(searchCategory) {
                             case "Track":
-                                return <TrackSearch result={result} /> 
+                                return <TrackSearch result={result} />;
+                            case "Artist":
+                                return <ArtistSearch result={result} />;
+                            case "Album":
+                                return <AlbumSearch result={result} />;
                             case "Username":
                                 return <UserSearch result={result} />;
                             }
