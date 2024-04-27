@@ -1,4 +1,18 @@
+import { useEffect, useState } from "react";
+import { getAccountDetailsUsersAccount } from "../services/account";
+
 export const Navbar = () => {
+    const [profile_pic_url, setProfile_pic_url] = useState<string>("")
+
+    const token = localStorage.getItem("platform_token")
+    useEffect(() => {
+        getAccountDetailsUsersAccount(token!)
+        .then((profile) => {
+            //console.log(profile)
+            setProfile_pic_url(profile.userDetails.profile_picture_url)
+        })
+    }, [])
+
     return (
         <nav className="navbar bg-base-100 border-b-2 border-accent">
             <div className="flex-1">
@@ -17,7 +31,7 @@ export const Navbar = () => {
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
-                            <img alt="Tailwind CSS Navbar component" src="https://i.scdn.co/image/ab6775700000ee85cb8d37bd4f069784749ea07a" />
+                            <img alt="Tailwind CSS Navbar component" src={profile_pic_url} />
                         </div>
                     </div>
                     <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-40">

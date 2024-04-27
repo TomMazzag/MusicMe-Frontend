@@ -8,6 +8,7 @@ import SearchPage from './pages/Search/Search';
 import { ErrorPage } from './pages/Error/CatchAll';
 import { ComingSoon } from './pages/Error/ComingSoon';
 import { PublicAccount } from './pages/Account/PublicAccount';
+import { TrackPage } from './pages/SearchResults/Track';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: "/user/:user_id",
     element: <PublicAccount />,
+  },
+  {
+    path: "/songs/:songId",
+    element: <TrackPage />,
   },
 ])
 

@@ -1,5 +1,5 @@
 export const UserSearch = ({result}: any) => {
-    console.log(result)
+    //console.log(result)
 
     return (
         <>

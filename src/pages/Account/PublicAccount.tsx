@@ -35,10 +35,8 @@ export const PublicAccount = () => {
         const data = await result.json()
         if(data.error) {
             if (data.error.status === 401) {
-                getNewToken()
-                .then(
-                    setAccess_token(localStorage.getItem("access_token"))!
-                )
+                const newToken = await getNewToken()
+                setAccess_token(newToken!)
             } 
         }
         const publicPlaylists = data.items.filter((item: Playlist) => item.public === true);
@@ -134,7 +132,7 @@ export const PublicAccount = () => {
                 <div className="playlists mb-20">
                     {playlists.map((playlist: any, index: number) => (
                         <div key={index} className="playlist-tile text-center">
-                            <a href={playlist.external_urls.spotify} target="_blank"><img src={playlist.images[0].url} alt="Playlist artwork" className="border-none rounded-xl"/></a>
+                            <a href={playlist.external_urls.spotify} target="_blank"><img src={playlist.images ? playlist.images[0].url : ""} alt="Playlist artwork" className="border-none rounded-xl"/></a>
                             <h4 className="mt-5">{shortenString(playlist.name, 35)}</h4>
                         </div>
                     ))}
