@@ -18,6 +18,25 @@ export const Navbar = () => {
             <div className="flex-1">
                 <a href="/account" className="btn btn-ghost text-4xl">MusicMe</a>
             </div>
+            <div className="mobile-menu md:hidden">
+                <ul className="menu menu-horizontal rounded-box">
+                    <li>
+                        <a href="/feed">
+                            <i className="fa-brands fa-discourse fa-xl"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/search">
+                            <i className="fa-solid fa-magnifying-glass fa-xl"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/account">
+                            <i className="fa-solid fa-user fa-xl"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
             <div className="flex-none gap-2 hidden md:inline-flex">
                 <div className="flex-1">
                     <a href="/feed" className="btn btn-ghost text-xl">Feed</a>
