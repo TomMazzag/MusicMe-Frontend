@@ -30,12 +30,19 @@ export const Navbar = () => {
                             <i className="fa-solid fa-magnifying-glass fa-xl"></i>
                         </a>
                     </li>
-                    <li>
-                        <a href="/account">
-                            <i className="fa-solid fa-user fa-xl"></i>
-                        </a>
-                    </li>
                 </ul>
+                <div className="dropdown dropdown-end">
+                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                        <div className="w-10 rounded-full">
+                            <img alt="Tailwind CSS Navbar component" src={profile_pic_url} />
+                        </div>
+                    </div>
+                    <ul tabIndex={0} className="mt-3 z-[1] shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-40">
+                        <li><a href="/account">Profile</a></li>
+                        <li><a>Settings</a></li>
+                        <li><a href="/">Logout</a></li>
+                    </ul>
+                </div>
             </div>
             <div className="flex-none gap-2 hidden md:inline-flex">
                 <div className="flex-1">
