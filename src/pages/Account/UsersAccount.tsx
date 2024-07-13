@@ -2,7 +2,8 @@ import { useEffect, useState } from "react"
 import "./Account.css"
 import { getNewToken } from "../../utils/tokenGen"
 import { Navbar } from "../../components/Navbar"
-import { getAccountDetailsUsersAccount } from "../../services/account";
+import { getAccountDetailsUsersAccount, getUsersLikedSongs } from "../../services/account";
+import { LikedSongsTab } from "../../components/LikedSongs/LikedSongsTab";
 
 
 interface UserProfile {
@@ -24,6 +25,7 @@ export const UsersAccount = () => {
     const [playlists, setPlaylists] = useState<any>()
     const [activeTab, setActiveTab] = useState<string>("Playlists")
     const platform_token = localStorage.getItem("platform_token")
+    const [likedSongs, setLikedSongs] = useState([{}])
 
     const getPlaylists = async (id: string) => {
         const result = await fetch(`https://api.spotify.com/v1/users/${id}/playlists?offset=0&limit=50`, {
@@ -54,17 +56,43 @@ export const UsersAccount = () => {
                 //console.log(data)
                 getPlaylists(data.userDetails.spotify_id)
             })
+            getUsersLikedSongs(platform_token!, access_token!).then((data: any) => setLikedSongs(data.likedSongs))
+            return
         }
         getProfile()
+        return
     }, [access_token])
 
     function shortenString(str: string, maxLength: number) {
-    if (str.length <= maxLength) {
-        return str; // Return the original string if it's within the limit
-    } else {
-        return str.slice(0, maxLength) + '...'; // Truncate the string and add ellipsis
+        if (str.length <= maxLength) {
+            return str;
+        } else {
+            return str.slice(0, maxLength) + '...';
+        }
     }
-}
+
+    let tabContent;
+
+    switch(activeTab) {
+        case "Playlists":
+            tabContent = playlists &&
+                <div className="playlists mb-20 grid-cols-1 md:grid-cols-3">
+                    {playlists.map((playlist: any, index: number) => (
+                        <div key={index} className="playlist-tile text-center">
+                            <a href={playlist.external_urls.spotify} target="_blank"><img src={playlist.images[0].url} alt="Playlist artwork" className="border-none rounded-xl"/></a>
+                            <h4 className="mt-5">{shortenString(playlist.name, 35)}</h4>
+                        </div>
+                    ))}
+                </div>
+            break
+        case "Liked":
+            tabContent = (<LikedSongsTab likedSongs={likedSongs} />)
+            break
+        case "Feed":
+            tabContent = <p>Feed section currently being built</p>;
+            break
+    }
+    
 
     return (
         <>
@@ -119,15 +147,9 @@ export const UsersAccount = () => {
                     >Feed</a>
                 </div>
 
-                {playlists &&
-                <div className="playlists mb-20 grid-cols-1 md:grid-cols-3">
-                    {playlists.map((playlist: any, index: number) => (
-                        <div key={index} className="playlist-tile text-center">
-                            <a href={playlist.external_urls.spotify} target="_blank"><img src={playlist.images[0].url} alt="Playlist artwork" className="border-none rounded-xl"/></a>
-                            <h4 className="mt-5">{shortenString(playlist.name, 35)}</h4>
-                        </div>
-                    ))}
-                </div>}
+                <div className="SWITCH">
+                    {tabContent}
+                </div>
             </div> : <p className="text text-center mt-20 text-2xl">Loading Profile...</p>
             }
         </>

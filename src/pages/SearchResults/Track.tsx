@@ -29,7 +29,9 @@ export const TrackPage = () => {
         const fetchDataAndLike = async () => {
             try {
                 await getSongAsync();
-                await likeSong(platform_token!, songId!);
+                if (songId !== undefined ){
+                    await likeSong(platform_token!, songId!);
+                }
             } catch (error) {
                 console.error('Error in fetchDataAndLike:', error);
             }

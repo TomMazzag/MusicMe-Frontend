@@ -23,3 +23,15 @@ export const getAccountDetailsPublicAccount = async (token: string, user_id: str
     let data = await response.json();
     return data
 };
+
+export const getUsersLikedSongs = async (platform_token: string, access_token: string) => {
+    const requestOptions = {
+        method: "GET",
+        headers: { Authorization: `Bearer ${platform_token}` }
+    };
+
+    const response = await fetch(`${backend_url}/user/songs_liked?access_token=${access_token}`, requestOptions);
+
+    let data = await response.json();
+    return data
+}

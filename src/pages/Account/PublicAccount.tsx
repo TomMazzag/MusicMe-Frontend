@@ -5,16 +5,7 @@ import { Navbar } from "../../components/Navbar"
 import { useParams } from "react-router-dom";
 import { getAccountDetailsPublicAccount } from "../../services/account";
 import { followOrUnfollowUser } from "../../services/friend";
-
-
-interface PublicProfile {
-    full_name: string;
-    profile_picture_url: string;
-    followers: number;
-    following: number;
-    liked_song_count: number;
-    user_id: string;
-}
+import { PublicProfile } from "../../types/Profile";
 
 interface Playlist {
     public: boolean;
