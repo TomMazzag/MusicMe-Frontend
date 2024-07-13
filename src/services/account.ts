@@ -35,3 +35,19 @@ export const getUsersLikedSongs = async (platform_token: string, access_token: s
     let data = await response.json();
     return data
 }
+
+export const toggleLikeSong = async (token: string, songId: string) => {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify({songId})
+    };  
+
+    const response = await fetch(`${backend_url}/like/song`, requestOptions);
+
+    let data = await response.json();
+    return data
+}

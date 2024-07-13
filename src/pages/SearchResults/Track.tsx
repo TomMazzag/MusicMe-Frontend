@@ -3,6 +3,7 @@ import { Navbar } from "../../components/Navbar";
 import { useEffect, useState } from "react";
 import { getNewToken } from "../../utils/tokenGen";
 import { getSong } from "../../services/search";
+import { toggleLikeSong } from "../../services/account";
 
 export const TrackPage = () => {
     const {songId} = useParams()
@@ -13,7 +14,8 @@ export const TrackPage = () => {
 
     const getSongAsync = async () => {
         try {
-            const res = await getSong(songId!, access_token!)
+            const res = await getSong(songId!, access_token!, platform_token!)
+            res.spotifyData = {...res.spotifyData, likes: res.likes, userHasLiked: res.user_has_liked}
             setSong(res.spotifyData)
         } catch(error) {
             if (error = "Expired Token") {
@@ -29,9 +31,6 @@ export const TrackPage = () => {
         const fetchDataAndLike = async () => {
             try {
                 await getSongAsync();
-                if (songId !== undefined ){
-                    await likeSong(platform_token!, songId!);
-                }
             } catch (error) {
                 console.error('Error in fetchDataAndLike:', error);
             }
@@ -49,22 +48,11 @@ export const TrackPage = () => {
         }
     };
 
-    const backend_url = import.meta.env.VITE_BACKEND_URL
-
-    const likeSong = async (token: string, songId: string) => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify({songId})
-        };  
-
-        const response = await fetch(`${backend_url}/like/song`, requestOptions);
-
-        let data = await response.json();
-        return data
+    const triggerSongLikeToggle = async () => {
+        if (songId !== undefined ){
+            console.log("Toggling")
+            await toggleLikeSong(platform_token!, songId!);
+        }
     }
 
     return (
@@ -78,7 +66,10 @@ export const TrackPage = () => {
                         <div className="flex flex-col justify-center text-center gap-2 md:gap-4">
                             <h1 className="text text-xl font-semibold md:text-4xl">{song.name}</h1>
                             <h2 className="text text-xl opacity-60 md:text-3xl">{song.artists.map((artist: any) => artist.name).join(', ')}</h2>
-                            <p className="text text-xl">5 Likes</p>
+                            <div className="flex justify-center w-full gap-3">
+                                <button onClick={triggerSongLikeToggle}><i className={song.userHasLiked ? "fa-solid fa-heart" : "fa-regular fa-heart"}></i></button>
+                                <p className="text text-xl">{song.likes} {song === 1 ? "Likes":"Like"}</p>
+                            </div>
                         </div>
                     </div> 
                     <div className={`flex grow ${1 === 1 && "items-center w-[75%] md:w-full" /* Add logic for if theres no comments */}`}>

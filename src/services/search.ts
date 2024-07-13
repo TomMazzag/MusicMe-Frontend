@@ -11,9 +11,13 @@ export const searchUser = async (username: string) => {
     return data
 };
 
-export const getSong = async (songId: string, access_token: string) => {
+export const getSong = async (songId: string, access_token: string, platform_token: string) => {
     const requestOptions = {
-        method: "GET"
+        method: "GET",
+        headers: { 
+            Authorization: `Bearer ${platform_token}`,
+            'Content-Type': 'application/json' 
+        }
     };
 
     try {
