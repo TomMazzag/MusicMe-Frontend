@@ -33,7 +33,8 @@ const SearchPage = () => {
                 if(data.error) {
                     if (data.error.status === 401) {
                         console.log("Generating new token")
-                        getNewToken().then(setAccess_token(localStorage.getItem("access_token"))!)
+                        getNewToken().then((newToken) => setAccess_token(newToken!))
+                        return
                     } 
                 } else {
                     const category = searchCategory.toLowerCase() + "s"
@@ -62,7 +63,7 @@ const SearchPage = () => {
                     
 
                     <div className="dropdown dropdown-hover">
-                        <div tabIndex={0} role="button" className="btn border-none bg-transparent my-0 rounded-bl-full rounded-tl-full h-10 min-h-1">
+                        <div tabIndex={0} role="button" className="btn border-none bg-transparent my-0 rounded-bl-full rounded-tl-full h-10 min-h-1 pr-0">
                             <span>{searchCategory}</span>
                             <i className="fa-solid fa-chevron-down"></i>
                         </div>
@@ -77,7 +78,7 @@ const SearchPage = () => {
                     <input type="text" placeholder={`Search by ${searchCategory}`} value={searchInput} onChange={(e) => {setSearchInput(e.target.value)}}/>
                     <button><i className="fa-solid fa-magnifying-glass"></i></button>
                 </div>
-                <div className="results mb-10">
+                <div className="results mb-10 w-full md:w-[70%]">
                     {isLoading &&
                     <>
                         <div className="skeleton h-28 w-2/3"></div>

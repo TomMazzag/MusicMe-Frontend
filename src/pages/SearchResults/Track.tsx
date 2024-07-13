@@ -2,31 +2,68 @@ import { useParams } from "react-router-dom";
 import { Navbar } from "../../components/Navbar";
 import { useEffect, useState } from "react";
 import { getNewToken } from "../../utils/tokenGen";
+import { getSong } from "../../services/search";
 
 export const TrackPage = () => {
     const {songId} = useParams()
     const [access_token, setAccess_token] = useState(localStorage.getItem("access_token"))
     const [song, setSong] = useState<any>()
+    const [comment, setComment] = useState("")
+    const platform_token = localStorage.getItem("platform_token")
+
+    const getSongAsync = async () => {
+        try {
+            const res = await getSong(songId!, access_token!)
+            setSong(res.spotifyData)
+        } catch(error) {
+            if (error = "Expired Token") {
+                console.log("Generating new token")
+                const newToken = await getNewToken()
+                setAccess_token(newToken!)
+                return
+            }
+        }
+    }
     
     useEffect(() => {
-        fetch(`https://api.spotify.com/v1/tracks/${songId}`, {
-            method: "GET", headers: { Authorization: `Bearer ${access_token}` }
-        })
-        .then(response => response.json())
-        .then(async (data) => {
-            if(data.error) {
-                //console.log(data.error)
-                if (data.error.status === 401) {
-                    console.log("Generating new token")
-                    const newToken = await getNewToken()
-                    setAccess_token(newToken!)
-                } 
-            } else {
-                //console.log(data)
-                setSong(data)
+        const fetchDataAndLike = async () => {
+            try {
+                await getSongAsync();
+                await likeSong(platform_token!, songId!);
+            } catch (error) {
+                console.error('Error in fetchDataAndLike:', error);
             }
-        })
+        };
+
+        fetchDataAndLike();
+        return
     }, [])
+
+    const handleKeyDown = async (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            console.log(comment)
+            setComment("")
+        }
+    };
+
+    const backend_url = import.meta.env.VITE_BACKEND_URL
+
+    const likeSong = async (token: string, songId: string) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({songId})
+        };  
+
+        const response = await fetch(`${backend_url}/like/song`, requestOptions);
+
+        let data = await response.json();
+        return data
+    }
 
     return (
         <>
@@ -50,8 +87,10 @@ export const TrackPage = () => {
                             type="text" 
                             placeholder="This song reminds me of..." 
                             id="comment-input"
-                            className="input input-bordered w-full rounded-3xl md:w-[70%]"
-                        
+                            className="input input-bordered w-full rounded-3xl md:w-[65%]"
+                            value={comment}
+                            onChange={(e) => {setComment(e.target.value)}}
+                            onKeyDown={handleKeyDown}
                         />
                     </div>
                 </>

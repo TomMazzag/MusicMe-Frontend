@@ -10,6 +10,7 @@ interface UserProfile {
     profile_picture_url: string;
     followers: number;
     following: number;
+    liked_song_count: number;
     user_id: string;
 }
 
@@ -32,9 +33,10 @@ export const UsersAccount = () => {
         if(data.error) {
             if (data.error.status === 401) {
                 getNewToken()
-                .then(
-                    setAccess_token(localStorage.getItem("access_token"))!
+                .then((newToken) =>
+                    setAccess_token(newToken!)
                 )
+                return
             } 
         }
         const publicPlaylists = data.items.filter((item: Playlist) => item.public === true);
@@ -95,7 +97,7 @@ export const UsersAccount = () => {
                             </div>
                         </div>
                         <p className="text-center mt-5 mb-2">Current Favorite Song: Alone - Sainté</p>
-                        <p className="text-center">1452 songs linked</p>
+                        <p className="text-center">{profile.liked_song_count} songs liked</p>
                     </div>
                 </div>
 

@@ -12,6 +12,7 @@ interface PublicProfile {
     profile_picture_url: string;
     followers: number;
     following: number;
+    liked_song_count: number;
     user_id: string;
 }
 
@@ -37,6 +38,7 @@ export const PublicAccount = () => {
             if (data.error.status === 401) {
                 const newToken = await getNewToken()
                 setAccess_token(newToken!)
+                return
             } 
         }
         const publicPlaylists = data.items.filter((item: Playlist) => item.public === true);
@@ -66,9 +68,9 @@ export const PublicAccount = () => {
 
     function shortenString(str: string, maxLength: number) {
         if (str.length <= maxLength) {
-            return str; // Return the original string if it's within the limit
+            return str;
         } else {
-            return str.slice(0, maxLength) + '...'; // Truncate the string and add ellipsis
+            return str.slice(0, maxLength) + '...';
         }
     }
 
@@ -102,7 +104,7 @@ export const PublicAccount = () => {
                             </div>
                         </div>
                         <p className="text-center mt-5 mb-2">Current Favorite Song: Alone - Sainté</p>
-                        <p className="text-center">1452 songs linked</p>
+                        <p className="text-center">{profile.liked_song_count} songs lined</p>
                         <button 
                             className={`btn btn-sm w-[80%] self-center mt-5 ${following && "btn-primary"}`}
                             onClick={followUser}
