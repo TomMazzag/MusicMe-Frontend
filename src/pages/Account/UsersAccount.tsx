@@ -147,7 +147,7 @@ export const UsersAccount = () => {
                     >Feed</a>
                 </div>
 
-                <div className="SWITCH">
+                <div>
                     {tabContent}
                 </div>
             </div> : <p className="text text-center mt-20 text-2xl">Loading Profile...</p>

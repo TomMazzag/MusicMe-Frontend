@@ -50,7 +50,14 @@ export const TrackPage = () => {
 
     const triggerSongLikeToggle = async () => {
         if (songId !== undefined ){
-            console.log("Toggling")
+            const liked = song.userHasLiked ? true : false;
+            const newLikes = liked ? song.likes - 1 : song.likes + 1;
+
+            setSong((prevSong: any) => ({
+                ...prevSong,
+                userHasLiked: !liked,
+                likes: newLikes
+            }));
             await toggleLikeSong(platform_token!, songId!);
         }
     }
