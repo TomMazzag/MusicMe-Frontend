@@ -34,8 +34,8 @@ export const StepOne = ({spotifyAccountDetails, setActiveStep, updateAccountDeta
                 <h2>Step one</h2>
                 {spotifyAccountDetails && 
                 <div className="first-page-options mt-10">
-                    <div className="input-and-label-container">
-                        <label htmlFor="">Display Name</label>
+                    <div className="flex flex-col gap-4 self-center justify-between items-center md:flex-row md:w-[500px] md:gap-0">
+                        <label htmlFor="">Full Name</label>
                         <input 
                             type="text" 
                             value={name} 
@@ -44,7 +44,7 @@ export const StepOne = ({spotifyAccountDetails, setActiveStep, updateAccountDeta
                             className="input input-bordered"
                         />
                     </div>
-                    <div className="input-and-label-container">
+                    <div className="flex flex-col gap-4 self-center justify-between items-center md:flex-row md:w-[500px] md:gap-0">
                         <label htmlFor="">Username</label>
                         <input 
                             type="text" 
@@ -56,7 +56,7 @@ export const StepOne = ({spotifyAccountDetails, setActiveStep, updateAccountDeta
                             className="input input-bordered"
                         />
                     </div>
-                    <div className="input-and-label-container">
+                    <div className="flex flex-col gap-4 self-center justify-between items-center md:flex-row md:w-[500px] md:gap-0">
                         <label htmlFor="">Email</label>
                         <input 
                             type="text" 
@@ -67,7 +67,7 @@ export const StepOne = ({spotifyAccountDetails, setActiveStep, updateAccountDeta
                             className="input input-bordered"
                         />
                     </div>
-                    <div className="input-and-label-container">
+                    <div className="flex flex-col gap-4 self-center justify-between items-center md:flex-row md:w-[500px] md:gap-0">
                         <label htmlFor="">Show public playlists on proifle</label>
                         
                         <Switch checked={public_playlists} onChange={() => {setPublic_Playlists(!public_playlists)}}/>
@@ -75,7 +75,7 @@ export const StepOne = ({spotifyAccountDetails, setActiveStep, updateAccountDeta
                 </div>
                 }
             </div>
-            <div className="step-movement">
+            <div className="flex justify-between mx-[10%] mt-[50px] md:mx-[30%]">
                 <button disabled={true} className="btn">Previous</button>
                 <button 
                     className="btn"

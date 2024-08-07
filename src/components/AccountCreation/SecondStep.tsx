@@ -5,9 +5,9 @@ export const StepTwo = ({spotifyAccountDetails, setActiveStep, updateAccountDeta
     return (
         <div className="create-account-form">
             <div className="step-instructions-container">
-                <h2>Step two</h2>
+                <h2 className="mb-5 text-xl font-semibold">Step two</h2>
 
-                <p>Note: Use profile pic from spotify or choose your own!</p>
+                <p className="mb-5">Note: Use profile pic from spotify or choose your own!</p>
                 {spotifyAccountDetails && 
                 <img src={spotifyAccountDetails.images[1].url} alt="" />
                 }

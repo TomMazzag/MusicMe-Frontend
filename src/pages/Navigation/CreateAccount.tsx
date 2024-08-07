@@ -71,7 +71,7 @@ export const CreateAccount = () => {
 
             <h2 className="mb-5">Steps</h2>
             <div className="account-creation-steps">
-                <Stepper style={{width: "50%" }} alternativeLabel activeStep={activeStep}>
+                <Stepper className="w-full md:w-[50%]" alternativeLabel activeStep={activeStep}>
                     <Step>
                         <StepLabel className="step-text">Spotify Settings</StepLabel>
                     </Step>

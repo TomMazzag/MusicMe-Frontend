@@ -22,16 +22,4 @@
     gap: 30px;
 }
 
-.input-and-label-container {
-    display: flex;
-    align-self: center;
-    justify-content: space-between;
-    width: 500px;
-    align-items: center;
-}
-
-.input-and-label-container input {
-    padding: 5px;
-}
-
 
