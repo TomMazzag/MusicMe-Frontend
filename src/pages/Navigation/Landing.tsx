@@ -1,6 +1,8 @@
 import { refreshToken } from "../../services/token";
 
 export const Welcome = () => {
+    const clientId = import.meta.env.VITE_CLIENT_ID;
+
     const authorize = async () => {
         try {
             const generateRandomString = (length: number) => {
@@ -27,7 +29,6 @@ export const Welcome = () => {
             const codeChallenge = base64encode(hashed);
 
             const redirectUri = import.meta.env.VITE_REDIRECT_URI
-            const clientId = import.meta.env.VITE_CLIENT_ID;
 
 
             const scope = 'user-read-private user-read-email playlist-read-collaborative playlist-read-private';
@@ -75,7 +76,14 @@ export const Welcome = () => {
             </div>
 
             <div className="flex flex-col gap-6">
-                <button className="btn btn-outline btn-primary" onClick={authorize}>Click here to begin</button>
+                {clientId ? 
+                    <button className="btn btn-outline btn-primary" onClick={authorize} onTouchStart={authorize}>Click here to begin</button> 
+                    : 
+                    <>
+                        <p className="text-center text-red-500">Missing client ID</p>
+                        <button className="btn btn-outline btn-primary" onClick={authorize} disabled>Click here to begin</button>
+                    </>
+                }
                 <button className="btn btn-outline" onClick={getNewToken}>Refresh Token</button> 
             </div>
         </div>
