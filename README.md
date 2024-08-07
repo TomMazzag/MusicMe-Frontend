@@ -2,14 +2,18 @@
 
 MusicMe is a social media platform creating for sharing music. 
 
+## Build status
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/11f2eb04-ba01-4a40-97af-abde670b7dcd/deploy-status)](https://app.netlify.com/sites/music-me-app/deploys)
+
 ## Roadmap
 
 - [x] Build foundations
 - [x] Account page foundation
-- [ ] Copy all files from test project
-- [ ] Covert all js files to ts files
+- [x] Copy all files from test project
+- [x] Covert all js files to ts files
 - [x] Search page
-- [ ] Song page
+- [x] Song page
 - [ ] Feed page
 
 ## Functionality
