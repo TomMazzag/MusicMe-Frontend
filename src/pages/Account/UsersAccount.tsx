@@ -4,6 +4,7 @@ import { getNewToken } from "../../utils/tokenGen"
 import { Navbar } from "../../components/Navbar"
 import { getAccountDetailsUsersAccount, getUsersLikedSongs } from "../../services/account";
 import { LikedSongsTab } from "../../components/LikedSongs/LikedSongsTab";
+import { shortenString } from "../../utils/stringShorten";
 
 
 interface UserProfile {
@@ -62,14 +63,6 @@ export const UsersAccount = () => {
         getProfile()
         return
     }, [access_token])
-
-    function shortenString(str: string, maxLength: number) {
-        if (str.length <= maxLength) {
-            return str;
-        } else {
-            return str.slice(0, maxLength) + '...';
-        }
-    }
 
     let tabContent;
 

@@ -4,13 +4,18 @@ import { useEffect, useState } from "react";
 import { getNewToken } from "../../utils/tokenGen";
 import { getSong } from "../../services/search";
 import { toggleLikeSong } from "../../services/account";
+import { Song } from "../../types/Song";
+
+//Note this is temp and for visual purposes
+import Snackbar from '@mui/material/Snackbar';
 
 export const TrackPage = () => {
     const {songId} = useParams()
     const [access_token, setAccess_token] = useState(localStorage.getItem("access_token"))
-    const [song, setSong] = useState<any>()
+    const [song, setSong] = useState<Song>()
     const [comment, setComment] = useState("")
     const platform_token = localStorage.getItem("platform_token")
+    const [open, setOpen] = useState(false)
 
     const getSongAsync = async () => {
         try {
@@ -42,6 +47,7 @@ export const TrackPage = () => {
 
     const handleKeyDown = async (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
+            setOpen(true)
             event.preventDefault();
             console.log(comment)
             setComment("")
@@ -49,7 +55,7 @@ export const TrackPage = () => {
     };
 
     const triggerSongLikeToggle = async () => {
-        if (songId !== undefined ){
+        if (songId !== undefined && song){
             const liked = song.userHasLiked ? true : false;
             const newLikes = liked ? song.likes - 1 : song.likes + 1;
 
@@ -62,20 +68,24 @@ export const TrackPage = () => {
         }
     }
 
+    const closePopup = () => {
+        setOpen(false)
+    }
+
     return (
         <>
             <Navbar />
             <div className="flex items-center flex-col justify-between h-[90vh] w-full p-4 text-center md:p-0">
                 {song ? 
                 <>
-                    <div className="flex gap-5 flex-row items-center md:mt-10">
+                    <div className="flex gap-5 flex-row items-center w-full justify-evenly md:mt-10 md:w-[40%]">
                         <img src={song.album.images[0].url} alt="" className="h-[150px] w-[150px]"/>
                         <div className="flex flex-col justify-center text-center gap-2 md:gap-4">
                             <h1 className="text text-xl font-semibold md:text-4xl">{song.name}</h1>
                             <h2 className="text text-xl opacity-60 md:text-3xl">{song.artists.map((artist: any) => artist.name).join(', ')}</h2>
                             <div className="flex justify-center w-full gap-3">
                                 <button onClick={triggerSongLikeToggle}><i className={song.userHasLiked ? "fa-solid fa-heart" : "fa-regular fa-heart"}></i></button>
-                                <p className="text text-xl">{song.likes} {song === 1 ? "Likes":"Like"}</p>
+                                <p className="text text-xl">{song.likes} {song.likes === 1 ? "Like":"Likes"}</p>
                             </div>
                         </div>
                     </div> 
@@ -93,6 +103,13 @@ export const TrackPage = () => {
                             onKeyDown={handleKeyDown}
                         />
                     </div>
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={3000}
+                        onClose={closePopup}
+                        message={"Comment submitted - feature not yet operational"}
+                        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                    />
                 </>
                 : 
                 <div className="skeleton h-[200px] w-[40%] mt-10"></div>
