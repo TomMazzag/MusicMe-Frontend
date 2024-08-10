@@ -114,7 +114,7 @@ export const PublicAccount = () => {
                         <p className="text-center mt-5 mb-2">Current Favorite Song: Alone - Sainté</p>
                         <p className="text-center">{profile.liked_song_count} songs lined</p>
                         <button 
-                            className={`btn btn-sm w-[80%] self-center mt-5 ${following && "btn-primary"}`}
+                            className={`btn btn-sm w-[80%] self-center mt-5 border-primary ${!following && "btn-primary"}`}
                             onClick={followUser}
                         >{following ? "Following" : "Follow"}</button>
                     </div>

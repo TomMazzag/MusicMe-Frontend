@@ -8,6 +8,7 @@ import { ErrorPage } from './pages/Error/CatchAll';
 import { ComingSoon } from './pages/Error/ComingSoon';
 import { PublicAccount } from './pages/Account/PublicAccount';
 import { TrackPage } from './pages/SearchResults/Track';
+import { Connections } from "./pages/Account/Connections";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,14 @@ const router = createBrowserRouter([
   {
     path: "/songs/:songId",
     element: <TrackPage />,
+  },
+  {
+    path: "/user/:user_id/following",
+    element: <Connections ConnectionType="following"/>,
+  },
+    {
+    path: "/user/:user_id/followers",
+    element: <Connections ConnectionType="followers"/>,
   },
 ])
 

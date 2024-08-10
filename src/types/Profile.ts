@@ -6,3 +6,10 @@ export interface PublicProfile {
     liked_song_count: number;
     user_id: string;
 }
+
+export interface ConnecitonProfile {
+    user_id: number;
+    full_name: string;
+    profile_picture_url: string;
+    username: string
+}

@@ -44,7 +44,6 @@ export const UsersAccount = () => {
         }
         const publicPlaylists = data.items.filter((item: Playlist) => item.public === true);
         //console.log(publicPlaylists)
-        // console.log(publicPlaylists) 
         setPlaylists(publicPlaylists)
     }
 
@@ -53,7 +52,6 @@ export const UsersAccount = () => {
             getAccountDetailsUsersAccount(platform_token!)
             .then((data) => {
                 setProfile(data.userDetails)
-                //console.log(data.userDetails)
                 //console.log(data)
                 getPlaylists(data.userDetails.spotify_id)
             })
@@ -90,9 +88,8 @@ export const UsersAccount = () => {
     return (
         <>
             <Navbar />
-            <h1 className="text-2xl font-bold mb-10 mt-10 text-center md:text-6xl">My Account</h1>
             {profile ?
-            <div className="profile">
+            <div className="profile mt-5">
                 <div className="account-details-container flex-col md:flex-row">
                     <img src={profile.profile_picture_url} alt="" className="profile-pic"/>
                     <div className="account-details">

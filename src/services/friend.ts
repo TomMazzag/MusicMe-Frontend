@@ -15,3 +15,17 @@ export const followOrUnfollowUser = async (token: string, follow_id: string) => 
     let data = await response.json();
     return data
 }
+
+export const getFollowers = async (token: string, users_id: string) => {
+    const requestOptions = {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` }
+    };
+
+    const response = await fetch(`${backend_url}/user/${users_id}/followers`, requestOptions);
+
+    let data = await response.json();
+    return data
+}
+
+export const getFollowing = async () => {}

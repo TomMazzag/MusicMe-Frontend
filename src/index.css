@@ -13,3 +13,7 @@
     --warning: "#ec5e00";
     --error: "#be0024";
 }
+
+.debug-outline {
+    border: 1px dashed red;
+}
