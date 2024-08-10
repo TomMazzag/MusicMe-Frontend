@@ -3,7 +3,6 @@ import { getToken } from "../../services/token";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/auth";
 import PropagateLoader from "react-spinners/PropagateLoader"
-import "./Success.css"
 
 export const Success = () => {
     
@@ -37,7 +36,7 @@ export const Success = () => {
     }, [])
 
     return (
-        <div className="success-redirect flex justify-center items-center h-screen">
+        <div className="success-redirect flex flex-col justify-center items-center h-screen text-center gap-12">
             <h1>Welcome to social media for music!</h1>
           
             <p>Loading...</p>

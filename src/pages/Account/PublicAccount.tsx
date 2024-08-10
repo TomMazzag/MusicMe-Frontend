@@ -6,6 +6,8 @@ import { useParams } from "react-router-dom";
 import { getAccountDetailsPublicAccount } from "../../services/account";
 import { followOrUnfollowUser } from "../../services/friend";
 import { PublicProfile } from "../../types/Profile";
+import { shortenString } from "../../utils/stringShorten";
+import { LikedSongsTab } from "../../components/LikedSongs/LikedSongsTab";
 
 interface Playlist {
     public: boolean;
@@ -19,6 +21,7 @@ export const PublicAccount = () => {
     const [activeTab, setActiveTab] = useState<string>("Playlists")
     let { user_id } = useParams();
     const [following, setFollowing] = useState(false)
+    const [likedSongs, setLikedSongs] = useState([])
 
     const getPlaylists = async (id: string) => {
         const result = await fetch(`https://api.spotify.com/v1/users/${id}/playlists?offset=0&limit=50`, {
@@ -57,12 +60,26 @@ export const PublicAccount = () => {
         getProfile()
     }, [access_token])
 
-    function shortenString(str: string, maxLength: number) {
-        if (str.length <= maxLength) {
-            return str;
-        } else {
-            return str.slice(0, maxLength) + '...';
-        }
+    let tabContent;
+
+    switch(activeTab) {
+        case "Playlists":
+            tabContent = playlists &&
+                <div className="playlists mb-20 grid-cols-1 md:grid-cols-3">
+                    {playlists.map((playlist: any, index: number) => (
+                        <div key={index} className="playlist-tile text-center">
+                            <a href={playlist.external_urls.spotify} target="_blank"><img src={playlist.images[0].url} alt="Playlist artwork" className="border-none rounded-xl"/></a>
+                            <h4 className="mt-5">{shortenString(playlist.name, 35)}</h4>
+                        </div>
+                    ))}
+                </div>
+            break
+        case "Liked":
+            tabContent = (<LikedSongsTab likedSongs={likedSongs} />)
+            break
+        case "Feed":
+            tabContent = <p>Feed section currently being built</p>;
+            break
     }
 
     return (
@@ -121,15 +138,9 @@ export const PublicAccount = () => {
                     >Feed</a>
                 </div>
 
-                {playlists &&
-                <div className="playlists mb-20">
-                    {playlists.map((playlist: any, index: number) => (
-                        <div key={index} className="playlist-tile text-center">
-                            <a href={playlist.external_urls.spotify} target="_blank"><img src={playlist.images ? playlist.images[0].url : ""} alt="Playlist artwork" className="border-none rounded-xl"/></a>
-                            <h4 className="mt-5">{shortenString(playlist.name, 35)}</h4>
-                        </div>
-                    ))}
-                </div>}
+                <div>
+                    {tabContent}
+                </div>
             </div> : <p className="text text-center mt-20 text-2xl">Loading Profile...</p>
             }
         </>

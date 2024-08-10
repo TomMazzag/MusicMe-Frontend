@@ -1,4 +1,10 @@
 export const LikedSongsTab = ({ likedSongs }: any) => {
+    if(likedSongs.length === 0) {
+        return (
+            <p className="pb-10">No liked songs</p>
+        )
+    }
+
     return (
         <>
             {likedSongs.map((song: any, index: number) => (
