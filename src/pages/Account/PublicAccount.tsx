@@ -21,7 +21,7 @@ export const PublicAccount = () => {
     const [activeTab, setActiveTab] = useState<string>("Playlists")
     let { user_id } = useParams();
     const [following, setFollowing] = useState(false)
-    const [likedSongs, setLikedSongs] = useState([])
+    const [likedSongs] = useState([])
 
     const getPlaylists = async (id: string) => {
         const result = await fetch(`https://api.spotify.com/v1/users/${id}/playlists?offset=0&limit=50`, {
