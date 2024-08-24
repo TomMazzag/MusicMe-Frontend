@@ -9,6 +9,7 @@ import { ComingSoon } from './pages/Error/ComingSoon';
 import { PublicAccount } from './pages/Account/PublicAccount';
 import { TrackPage } from './pages/SearchResults/Track';
 import { Connections } from "./pages/Account/Connections";
+import { AccountSettings } from "./pages/Account/AccountSettings";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/account/create",
     element: <CreateAccount />,
+  },
+  {
+    path: "/account/settings",
+    element: <AccountSettings />,
   },
   {
     path: "/search",

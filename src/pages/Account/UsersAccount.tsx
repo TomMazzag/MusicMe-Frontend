@@ -5,16 +5,7 @@ import { Navbar } from "../../components/Navbar"
 import { getAccountDetailsUsersAccount, getUsersLikedSongs } from "../../services/account";
 import { LikedSongsTab } from "../../components/LikedSongs/LikedSongsTab";
 import { shortenString } from "../../utils/stringShorten";
-
-
-interface UserProfile {
-    full_name: string;
-    profile_picture_url: string;
-    followers: number;
-    following: number;
-    liked_song_count: number;
-    user_id: string;
-}
+import { UsersProfile } from "../../types/Profile";
 
 interface Playlist {
     public: boolean;
@@ -22,7 +13,7 @@ interface Playlist {
 
 export const UsersAccount = () => {
     const [access_token, setAccess_token] = useState(localStorage.getItem("access_token"))
-    const [profile, setProfile] = useState<UserProfile>()
+    const [profile, setProfile] = useState<UsersProfile>()
     const [playlists, setPlaylists] = useState<any>()
     const [activeTab, setActiveTab] = useState<string>("Playlists")
     const platform_token = localStorage.getItem("platform_token")
