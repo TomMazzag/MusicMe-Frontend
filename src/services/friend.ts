@@ -1,6 +1,6 @@
 const backend_url = import.meta.env.VITE_BACKEND_URL
 
-export const followOrUnfollowUser = async (token: string, follow_id: string) => {
+export const followOrUnfollowUser = async (token: string, follow_id: number) => {
     const requestOptions = {
         method: 'POST',
         headers: { 

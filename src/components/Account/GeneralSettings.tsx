@@ -9,7 +9,15 @@ interface GeneralSettingsProps {
 }
 
 export const GeneralSettings = ({account, isError, isLoading}: GeneralSettingsProps) => {
-    console.log(account, isError, isLoading)
+    //console.log(account)
+
+    if (isError) {
+        return (
+            <>
+                Error loading page please return to homepage
+            </>
+        )
+    }
 
     return (
         <div className="flex flex-col gap-6 text-center lg:w-[30%]">

@@ -4,7 +4,7 @@ export interface UsersProfile {
     followers: number;
     following: number;
     liked_song_count: number;
-    user_id: string;
+    user_id: number;
     email?: string
 }
 
@@ -14,7 +14,7 @@ export interface PublicProfile {
     followers: number;
     following: number;
     liked_song_count: number;
-    user_id: string;
+    user_id: number;
 }
 
 export interface ConnecitonProfile {
@@ -22,4 +22,6 @@ export interface ConnecitonProfile {
     full_name: string;
     profile_picture_url: string;
     username: string
+    is_following: boolean,
+    currentUserId: number
 }

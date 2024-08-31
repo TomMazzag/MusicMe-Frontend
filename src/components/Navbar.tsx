@@ -37,7 +37,7 @@ export const Navbar = () => {
                             <img alt="Tailwind CSS Navbar component" src={profile_pic_url} />
                         </div>
                     </div>
-                    <ul tabIndex={0} className="mt-3 z-[1] shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-40">
+                    <ul tabIndex={0} className="mt-3 z-[1] shadow menu menu-sm dropdown-content bg-base-300 rounded-box w-40">
                         <li><a href="/account">Profile</a></li>
                         <li><a href="/account/settings">Settings</a></li>
                         <li><a href="/">Logout</a></li>
@@ -60,7 +60,7 @@ export const Navbar = () => {
                             <img alt="Tailwind CSS Navbar component" src={profile_pic_url} />
                         </div>
                     </div>
-                    <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-40">
+                    <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-300 rounded-box w-40">
                         <li><a href="/account">Profile</a></li>
                         <li><a href="/account/settings">Settings</a></li>
                         <li><a href="/">Logout</a></li>

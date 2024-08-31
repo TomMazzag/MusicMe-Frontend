@@ -4,6 +4,7 @@ import { Navbar } from "../../components/Navbar";
 import { useEffect, useState } from "react";
 import { getFollowers } from "../../services/friend";
 import { ConnecitonProfile } from "../../types/Profile";
+import { JwtPayload, jwtDecode } from "jwt-decode";
 
 interface ConnnecitonProps {
     ConnectionType: string;
@@ -13,11 +14,17 @@ interface User {
     full_name: string
 }
 
+interface DecodedToken extends JwtPayload {
+    userId: number
+}
+
 export const Connections = ({ConnectionType}: ConnnecitonProps) => {
     const { user_id } = useParams();
     const platform_token = localStorage.getItem("platform_token")
     const [connections, setConnections] = useState([])
     const [user, setUser] = useState<User>()
+    const decodedToken: DecodedToken = jwtDecode(platform_token!)
+    const currentUserId = decodedToken.userId
 
     useEffect(() => {
         getFollowers(platform_token!, user_id!)
@@ -39,7 +46,15 @@ export const Connections = ({ConnectionType}: ConnnecitonProps) => {
                     <div className="flex flex-col w-full gap-3 py-5 md:w-[50%]">
                         {connections.length > 0 ? ( 
                             connections.map((connection: ConnecitonProfile) => (
-                                <UserProfileTile user_id={connection.user_id} full_name={connection.full_name} profile_picture_url={connection.profile_picture_url} username={connection.username}/>
+                                <UserProfileTile 
+                                    key={connection.user_id} 
+                                    user_id={connection.user_id} 
+                                    full_name={connection.full_name} 
+                                    profile_picture_url={connection.profile_picture_url} 
+                                    username={connection.username} 
+                                    is_following={connection.is_following} 
+                                    currentUserId={currentUserId}
+                                />
                             ))
                         )
                         : <>No followers found</>}

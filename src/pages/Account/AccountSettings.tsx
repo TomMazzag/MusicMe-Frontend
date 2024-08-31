@@ -34,7 +34,7 @@ export const AccountSettings = () => {
             <Navbar />
             <div className="drawer md:drawer-open">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content flex flex-col items-center justify-center sm:h-[100vh]">
+                <div className="drawer-content flex flex-col items-center justify-center mt-8 sm:mt-0 sm:h-[100vh]">
                     {pageContent}
                 </div>
                 <div className="drawer-side">
