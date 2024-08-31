@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { UserProfileTile } from "../../components/Account/UserProfileTile";
 import { Navbar } from "../../components/Navbar";
 import { useEffect, useState } from "react";
-import { getFollowers } from "../../services/friend";
+import { getFollowers, getFollowing } from "../../services/friend";
 import { ConnecitonProfile } from "../../types/Profile";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 
@@ -25,9 +25,10 @@ export const Connections = ({ConnectionType}: ConnnecitonProps) => {
     const [user, setUser] = useState<User>()
     const decodedToken: DecodedToken = jwtDecode(platform_token!)
     const currentUserId = decodedToken.userId
+    const dataFunction = ConnectionType === 'following' ? getFollowing : getFollowers
 
     useEffect(() => {
-        getFollowers(platform_token!, user_id!)
+        dataFunction(platform_token!, user_id!)
         .then((data) => {
             console.log(data)
             setConnections(data.friends)
@@ -57,7 +58,7 @@ export const Connections = ({ConnectionType}: ConnnecitonProps) => {
                                 />
                             ))
                         )
-                        : <>No followers found</>}
+                        : <p className="text text-center py-20">No {ConnectionType} found</p>}
                     </div> 
                 </>
                     : 
