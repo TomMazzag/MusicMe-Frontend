@@ -85,66 +85,80 @@ export const PublicAccount = () => {
     return (
         <>
             <Navbar />
-            {profile ?
-            <div className="profile mt-10">
-                <div className="flex mb-[35px] flex-col">
-                    <div className="flex px-4 mb-4">
-                        <img src={profile.profile_picture_url} alt="" className="rounded-[50%] w-[35%] h-[35%] mr-4 lg:w-[50%] lg:mr-10 object-cover"/>
-                        <div className="account-details">
-                            <h2 className="text-3xl font-bold text-center mb-5">{profile.full_name}</h2>
-                            <div className="follower-count text-center">
-                                <div>
-                                    <a href={`/user/${profile.user_id}/followers`}>
-                                        <h2>{profile.followers}</h2>
-                                        <p>Followers</p>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a href={`/user/${profile.user_id}/following`}>
-                                        <h2>{profile.following}</h2>
-                                        <p>Following</p>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a href={`/user/${profile.user_id}/reviews`}>
-                                        <h2>5</h2>
-                                        <p>Reviews</p>
-                                    </a>
+            {profile ? (
+                <div className="profile mt-10">
+                    <div className="flex mb-[35px] flex-col">
+                        <div className="flex px-4 mb-4">
+                            <img
+                                src={profile.profile_picture_url}
+                                alt=""
+                                className="rounded-[50%] w-[35%] h-[35%] mr-4 lg:w-[50%] lg:mr-10 object-cover"
+                            />
+                            <div className="account-details">
+                                <h2 className="text-3xl font-bold text-center mb-5">{profile.full_name}</h2>
+                                <div className="follower-count text-center">
+                                    <div>
+                                        <a href={`/user/${profile.user_id}/followers`}>
+                                            <h2>{profile.followers}</h2>
+                                            <p className="text-sm">followers</p>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href={`/user/${profile.user_id}/following`}>
+                                            <h2>{profile.following}</h2>
+                                            <p className="text-sm">following</p>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a href={`/user/${profile.user_id}/reviews`}>
+                                            <h2>5</h2>
+                                            <p className="text-sm">reviews</p>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                            <button 
-                                className={`btn btn-sm w-[80%] self-center mt-5 border-primary ${!following && "btn-primary"}`}
-                                onClick={followUser}
-                            >{following ? "Following" : "Follow"}</button>
                         </div>
+                        <p className="text-center mt-5 mb-2">Current Favorite Song: Alone - Sainté</p>
+                        <p className="text-center">{profile.liked_song_count} songs liked</p>
+                        <button
+                            className={`btn btn-sm w-[80%] self-center mt-5 border-primary ${
+                                !following && 'btn-primary'
+                            }`}
+                            onClick={followUser}
+                        >
+                            {following ? 'Following' : 'Follow'}
+                        </button>
                     </div>
-                    <p className="text-center mt-5 mb-2">Current Favorite Song: Alone - Sainté</p>
-                    <p className="text-center">{profile.liked_song_count} songs lined</p>
-                </div>
 
-                <div role="tablist" className="tabs tabs-boxed mb-10">
-                    <a 
-                        role="tab" 
-                        className={`tab ${activeTab === "Playlists" ? "tab-active" : ""}`} 
-                        onClick={() => setActiveTab("Playlists")}
-                    >Playlists</a>
-                    <a 
-                        role="tab" 
-                        className={`tab ${activeTab === "Liked" ? "tab-active" : ""}`}
-                        onClick={() => setActiveTab("Liked")}
-                    >Liked songs</a>
-                    <a 
-                        role="tab" 
-                        className={`tab ${activeTab === "Feed" ? "tab-active" : ""}`}
-                        onClick={() => setActiveTab("Feed")}
-                    >Feed</a>
-                </div>
+                    <div role="tablist" className="tabs tabs-boxed mb-10">
+                        <a
+                            role="tab"
+                            className={`tab ${activeTab === 'Playlists' ? 'tab-active' : ''}`}
+                            onClick={() => setActiveTab('Playlists')}
+                        >
+                            Playlists
+                        </a>
+                        <a
+                            role="tab"
+                            className={`tab ${activeTab === 'Liked' ? 'tab-active' : ''}`}
+                            onClick={() => setActiveTab('Liked')}
+                        >
+                            Liked songs
+                        </a>
+                        <a
+                            role="tab"
+                            className={`tab ${activeTab === 'Feed' ? 'tab-active' : ''}`}
+                            onClick={() => setActiveTab('Feed')}
+                        >
+                            Feed
+                        </a>
+                    </div>
 
-                <div>
-                    {tabContent}
+                    <div>{tabContent}</div>
                 </div>
-            </div> : <p className="text text-center mt-20 text-2xl">Loading Profile...</p>
-            }
+            ) : (
+                <p className="text text-center mt-20 text-2xl">Loading Profile...</p>
+            )}
         </>
-    )
+    );
 }

@@ -51,11 +51,3 @@
 .follower-count a:hover {
     color: #00cdb7;
 }
-
-.follower-count h2 {
-    margin-bottom: 5px;
-}
-
-.follower-count p {
-    margin: 0;
-}
