@@ -1,14 +1,14 @@
-const backend_url = import.meta.env.VITE_BACKEND_URL
+const backend_url = import.meta.env.VITE_BACKEND_URL;
 
 export const login = async (access_token: string) => {
     const payload = {
-        access_token
-    }
+        access_token,
+    };
 
     const requestOptions = {
-        method: "POST",
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
     };
@@ -17,19 +17,18 @@ export const login = async (access_token: string) => {
 
     if (response.status === 200) {
         let data = await response.json();
-        return data.token
+        return data.token;
     } else {
         let data = await response.json();
-        return data
+        return data;
     }
-}
+};
 
 export const createAccount = async (payload: any) => {
-
     const requestOptions = {
-        method: "POST",
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
     };
@@ -38,9 +37,9 @@ export const createAccount = async (payload: any) => {
 
     if (response.status === 200) {
         let data = await response.json();
-        return data.token
+        return data.token;
     } else {
         let data = await response.json();
-        return data
+        return data;
     }
 };

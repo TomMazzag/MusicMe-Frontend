@@ -1,8 +1,6 @@
 export const LikedSongsTab = ({ likedSongs }: any) => {
-    if(likedSongs.length === 0) {
-        return (
-            <p className="pb-10">No liked songs</p>
-        )
+    if (likedSongs.length === 0) {
+        return <p className="pb-10">No liked songs</p>;
     }
 
     return (
@@ -20,9 +18,11 @@ export const LikedSongsTab = ({ likedSongs }: any) => {
                             <p>Repost</p>
                         </div>
                     </a>
-                    <a href={song.url} target="_blank" ><i className="fa-brands fa-spotify fa-2xl px-2"></i></a>
+                    <a href={song.url} target="_blank">
+                        <i className="fa-brands fa-spotify fa-2xl px-2"></i>
+                    </a>
                 </div>
             ))}
         </>
-    )
-}
+    );
+};

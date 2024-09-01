@@ -1,6 +1,4 @@
-export const AlbumSearch = ({result}: any) => {
-    console.log(result)
-    return (
-        <></>
-    )
+export const AlbumSearch = ({ result }: any) => {
+    console.log(result);
+    return <></>;
 };

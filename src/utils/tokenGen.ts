@@ -1,4 +1,4 @@
-import { refreshToken } from "../services/token"
+import { refreshToken } from '../services/token';
 
 export const getNewToken = async () => {
     interface tokenResponse {
@@ -6,11 +6,11 @@ export const getNewToken = async () => {
         refresh_token?: string;
     }
 
-    const response = await refreshToken(localStorage.getItem("refresh_token") as string) as tokenResponse
-    localStorage.setItem("access_token", response.access_token!)
-    localStorage.setItem("refresh_token", response.refresh_token!)
+    const response = (await refreshToken(localStorage.getItem('refresh_token') as string)) as tokenResponse;
+    localStorage.setItem('access_token', response.access_token!);
+    localStorage.setItem('refresh_token', response.refresh_token!);
 
-    return response.access_token
-}
+    return response.access_token;
+};
 
 // Place in utils folder in final build

@@ -1,4 +1,4 @@
-import { Navbar } from "../../components/Navbar";
+import { Navbar } from '../../components/Navbar';
 
 export const ComingSoon = () => {
     return (
@@ -9,5 +9,5 @@ export const ComingSoon = () => {
                 <p className="text-xl">Go back to homepage or checkout some of the other pages on the navbar</p>
             </div>
         </>
-    )
+    );
 };

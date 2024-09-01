@@ -1,23 +1,19 @@
-import { UsersProfile } from "../../types/Profile";
-import { ChangePasswordModal } from "./ChangePasswordModal";
+import { UsersProfile } from '../../types/Profile';
+import { ChangePasswordModal } from './ChangePasswordModal';
 
 interface GeneralSettingsProps {
     account: {
-        userDetails: UsersProfile
-    },
-    isError: boolean,
-    isLoading: boolean
+        userDetails: UsersProfile;
+    };
+    isError: boolean;
+    isLoading: boolean;
 }
 
-export const GeneralSettings = ({account, isError, isLoading}: GeneralSettingsProps) => {
+export const GeneralSettings = ({ account, isError, isLoading }: GeneralSettingsProps) => {
     //console.log(account)
 
     if (isError) {
-        return (
-            <>
-                Error loading page please return to homepage
-            </>
-        )
+        return <>Error loading page please return to homepage</>;
     }
 
     return (

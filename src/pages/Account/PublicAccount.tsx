@@ -1,85 +1,92 @@
-import { useEffect, useState } from "react"
-import "./Account.css"
-import { getNewToken } from "../../utils/tokenGen"
-import { Navbar } from "../../components/Navbar"
-import { useParams } from "react-router-dom";
-import { getAccountDetailsPublicAccount } from "../../services/account";
-import { followOrUnfollowUser } from "../../services/friend";
-import { PublicProfile } from "../../types/Profile";
-import { shortenString } from "../../utils/stringShorten";
-import { LikedSongsTab } from "../../components/LikedSongs/LikedSongsTab";
+import { useEffect, useState } from 'react';
+import './Account.css';
+import { getNewToken } from '../../utils/tokenGen';
+import { Navbar } from '../../components/Navbar';
+import { useParams } from 'react-router-dom';
+import { getAccountDetailsPublicAccount } from '../../services/account';
+import { followOrUnfollowUser } from '../../services/friend';
+import { PublicProfile } from '../../types/Profile';
+import { shortenString } from '../../utils/stringShorten';
+import { LikedSongsTab } from '../../components/LikedSongs/LikedSongsTab';
 
 interface Playlist {
     public: boolean;
 }
 
 export const PublicAccount = () => {
-    const [access_token, setAccess_token] = useState(localStorage.getItem("access_token"))
-    const platform_token = localStorage.getItem("platform_token")
-    const [profile, setProfile] = useState<PublicProfile>()
-    const [playlists, setPlaylists] = useState<any>()
-    const [activeTab, setActiveTab] = useState<string>("Playlists")
+    const [access_token, setAccess_token] = useState(localStorage.getItem('access_token'));
+    const platform_token = localStorage.getItem('platform_token');
+    const [profile, setProfile] = useState<PublicProfile>();
+    const [playlists, setPlaylists] = useState<any>();
+    const [activeTab, setActiveTab] = useState<string>('Playlists');
     let { user_id } = useParams();
-    const [following, setFollowing] = useState(false)
-    const [likedSongs] = useState([])
+    const [following, setFollowing] = useState(false);
+    const [likedSongs] = useState([]);
 
     const getPlaylists = async (id: string) => {
         const result = await fetch(`https://api.spotify.com/v1/users/${id}/playlists?offset=0&limit=50`, {
-            method: "GET", headers: { Authorization: `Bearer ${access_token}` }
-        })
-        const data = await result.json()
-        if(data.error) {
+            method: 'GET',
+            headers: { Authorization: `Bearer ${access_token}` },
+        });
+        const data = await result.json();
+        if (data.error) {
             if (data.error.status === 401) {
-                const newToken = await getNewToken()
-                setAccess_token(newToken!)
-                return
-            } 
+                const newToken = await getNewToken();
+                setAccess_token(newToken!);
+                return;
+            }
         }
         const publicPlaylists = data.items.filter((item: Playlist) => item.public === true);
-        // console.log(publicPlaylists) 
-        setPlaylists(publicPlaylists)
-    }
+        // console.log(publicPlaylists)
+        setPlaylists(publicPlaylists);
+    };
 
     const followUser = async () => {
-        followOrUnfollowUser(platform_token!, profile!.user_id)
-        setFollowing(!following)
-    }
+        followOrUnfollowUser(platform_token!, profile!.user_id);
+        setFollowing(!following);
+    };
 
     useEffect(() => {
         const getProfile = async () => {
-            getAccountDetailsPublicAccount(platform_token!, user_id!)
-            .then((data) => {
-                console.log(data.userDetails)
-                if (data.userDetails.is_following_this_account === "1") {
-                    setFollowing(true)
+            getAccountDetailsPublicAccount(platform_token!, user_id!).then((data) => {
+                console.log(data.userDetails);
+                if (data.userDetails.is_following_this_account === '1') {
+                    setFollowing(true);
                 }
-                setProfile(data.userDetails)
-                getPlaylists(data.userDetails.spotify_id)
-            })
-        }
-        getProfile()
-    }, [access_token])
+                setProfile(data.userDetails);
+                getPlaylists(data.userDetails.spotify_id);
+            });
+        };
+        getProfile();
+    }, [access_token]);
 
     let tabContent;
 
-    switch(activeTab) {
-        case "Playlists":
-            tabContent = playlists &&
+    switch (activeTab) {
+        case 'Playlists':
+            tabContent = playlists && (
                 <div className="playlists mb-20 grid-cols-1 md:grid-cols-3">
                     {playlists.map((playlist: any, index: number) => (
                         <div key={index} className="playlist-tile text-center">
-                            <a href={playlist.external_urls.spotify} target="_blank"><img src={playlist.images?.[0].url || undefined} alt="Playlist artwork" className="border-none rounded-xl"/></a>
+                            <a href={playlist.external_urls.spotify} target="_blank">
+                                <img
+                                    src={playlist.images?.[0].url || undefined}
+                                    alt="Playlist artwork"
+                                    className="border-none rounded-xl"
+                                />
+                            </a>
                             <h4 className="mt-5">{shortenString(playlist.name, 35)}</h4>
                         </div>
                     ))}
                 </div>
-            break
-        case "Liked":
-            tabContent = (<LikedSongsTab likedSongs={likedSongs} />)
-            break
-        case "Feed":
+            );
+            break;
+        case 'Liked':
+            tabContent = <LikedSongsTab likedSongs={likedSongs} />;
+            break;
+        case 'Feed':
             tabContent = <p>Feed section currently being built</p>;
-            break
+            break;
     }
 
     return (
@@ -161,4 +168,4 @@ export const PublicAccount = () => {
             )}
         </>
     );
-}
+};

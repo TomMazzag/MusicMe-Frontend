@@ -5,13 +5,13 @@ export const ChangePasswordModal = () => {
                 <h3 className="font-bold text-lg mb-6">Change password</h3>
                 <div className="flex flex-col gap-4 w-[60%]">
                     <label className="input input-bordered flex items-center gap-2">
-                        <input type="text" className="grow" placeholder='Old password' />
+                        <input type="text" className="grow" placeholder="Old password" />
                     </label>
                     <label className="input input-bordered flex items-center gap-2">
-                        <input type="text" className="grow" placeholder='New password' />
+                        <input type="text" className="grow" placeholder="New password" />
                     </label>
                     <label className="input input-bordered flex items-center gap-2">
-                        <input type="text" className="grow" placeholder='Confirm new password' />
+                        <input type="text" className="grow" placeholder="Confirm new password" />
                     </label>
                     <button className="btn">Save</button>
                 </div>
@@ -20,5 +20,5 @@ export const ChangePasswordModal = () => {
                 <button>close</button>
             </form>
         </dialog>
-    )
-}
+    );
+};
