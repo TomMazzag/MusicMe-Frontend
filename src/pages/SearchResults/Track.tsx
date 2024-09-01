@@ -68,6 +68,7 @@ export const TrackPage = () => {
         }
     }
 
+    // Needs removing once review functionality is added
     const closePopup = () => {
         setOpen(false)
     }

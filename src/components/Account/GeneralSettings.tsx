@@ -1,4 +1,5 @@
 import { UsersProfile } from "../../types/Profile";
+import { ChangePasswordModal } from "./ChangePasswordModal";
 
 interface GeneralSettingsProps {
     account: {
@@ -40,6 +41,10 @@ export const GeneralSettings = ({account, isError, isLoading}: GeneralSettingsPr
                 <input type="text" className="grow" placeholder={account.userDetails.full_name} />
             </label>
             <label className="input input-bordered flex items-center gap-2">
+                <i className="fa-solid fa-address-card opacity-70"></i>
+                <input type="text" className="grow" placeholder={account.userDetails.username} />
+            </label>
+            <label className="input input-bordered flex items-center gap-2">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
@@ -52,7 +57,10 @@ export const GeneralSettings = ({account, isError, isLoading}: GeneralSettingsPr
                 </svg>
                 <input type="text" className="grow" placeholder={account.userDetails.email} />
             </label>
-            <button className="btn btn-sm">
+            <button className="btn btn-sm" onClick={() => {
+                const modal = document.getElementById('passwordModal') as HTMLDialogElement;
+                modal.showModal()
+            }}>
                 <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -65,6 +73,7 @@ export const GeneralSettings = ({account, isError, isLoading}: GeneralSettingsPr
                 </svg>
                 Change Password
             </button>
+            {<ChangePasswordModal />}
             <button className="btn mt-12">Save</button>
         </>}
         </div>

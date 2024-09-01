@@ -5,7 +5,8 @@ export interface UsersProfile {
     following: number;
     liked_song_count: number;
     user_id: number;
-    email?: string
+    email?: string;
+    username: string
 }
 
 export interface PublicProfile {

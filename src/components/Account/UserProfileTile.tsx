@@ -14,7 +14,7 @@ export const UserProfileTile = ({user_id, full_name, profile_picture_url, userna
 
     return (
         <div className="flex justify-between py-2 px-2">
-            <a className="flex gap-4 cursor-pointer flex-grow" href={`/user/${user_id}`}>
+            <a className="flex gap-4 cursor-pointer flex-grow" href={currentUserId !== user_id ? `/user/${user_id}` : '/account'}>
                 <img src={profile_picture_url} alt="" className="w-[80px] h-[80px] object-cover rounded-[50%]"/>
                 <div className="flex flex-col justify-center">
                     <h3>{full_name}</h3>

@@ -87,37 +87,39 @@ export const PublicAccount = () => {
             <Navbar />
             {profile ?
             <div className="profile mt-10">
-                <div className="account-details-container flex-col md:flex-row">
-                    <img src={profile.profile_picture_url} alt="" className="profile-pic w-[300px] h-[300px] object-cover"/>
-                    <div className="account-details">
-                        <h2 className="text-3xl font-bold text-center mb-5">{profile.full_name}</h2>
-                        <div className="follower-count">
-                            <div className="followers">
-                                <a href={`/user/${profile.user_id}/followers`}>
-                                    <h2>{profile.followers}</h2>
-                                    <p>Followers</p>
-                                </a>
+                <div className="flex mb-[35px] flex-col">
+                    <div className="flex px-4 mb-4">
+                        <img src={profile.profile_picture_url} alt="" className="rounded-[50%] w-[35%] h-[35%] mr-4 lg:w-[50%] lg:mr-10 object-cover"/>
+                        <div className="account-details">
+                            <h2 className="text-3xl font-bold text-center mb-5">{profile.full_name}</h2>
+                            <div className="follower-count text-center">
+                                <div>
+                                    <a href={`/user/${profile.user_id}/followers`}>
+                                        <h2>{profile.followers}</h2>
+                                        <p>Followers</p>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href={`/user/${profile.user_id}/following`}>
+                                        <h2>{profile.following}</h2>
+                                        <p>Following</p>
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href={`/user/${profile.user_id}/reviews`}>
+                                        <h2>5</h2>
+                                        <p>Reviews</p>
+                                    </a>
+                                </div>
                             </div>
-                            <div className="following">
-                                <a href={`/user/${profile.user_id}/following`}>
-                                    <h2>{profile.following}</h2>
-                                    <p>Following</p>
-                                </a>
-                            </div>
-                            <div className="following">
-                                <a href={`/user/${profile.user_id}/reviews`}>
-                                    <h2>5</h2>
-                                    <p>Reviews</p>
-                                </a>
-                            </div>
+                            <button 
+                                className={`btn btn-sm w-[80%] self-center mt-5 border-primary ${!following && "btn-primary"}`}
+                                onClick={followUser}
+                            >{following ? "Following" : "Follow"}</button>
                         </div>
-                        <p className="text-center mt-5 mb-2">Current Favorite Song: Alone - Sainté</p>
-                        <p className="text-center">{profile.liked_song_count} songs lined</p>
-                        <button 
-                            className={`btn btn-sm w-[80%] self-center mt-5 border-primary ${!following && "btn-primary"}`}
-                            onClick={followUser}
-                        >{following ? "Following" : "Follow"}</button>
                     </div>
+                    <p className="text-center mt-5 mb-2">Current Favorite Song: Alone - Sainté</p>
+                    <p className="text-center">{profile.liked_song_count} songs lined</p>
                 </div>
 
                 <div role="tablist" className="tabs tabs-boxed mb-10">
