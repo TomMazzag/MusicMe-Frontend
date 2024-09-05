@@ -89,7 +89,7 @@ export const UsersAccount = () => {
                             <img
                                 src={profile.profile_picture_url}
                                 alt=""
-                                className="rounded-[50%] w-[35%] h-[35%] mr-4 lg:w-[50%] lg:mr-10"
+                                className="rounded-full w-[32vw] h-[32vw] mr-4 lg:w-[15vw] lg:h-[15vw] lg:mr-10 object-cover"
                             />
                             <div className="account-details flex-grow">
                                 <h2 className="text-3xl font-bold text-center mb-5">{profile.full_name}</h2>

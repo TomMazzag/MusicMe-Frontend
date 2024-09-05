@@ -8,6 +8,7 @@ import { Song } from '../../types/Song';
 
 //Note this is temp and for visual purposes
 import Snackbar from '@mui/material/Snackbar';
+import { createReview } from '../../services/rating';
 
 export const TrackPage = () => {
     const { songId } = useParams();
@@ -17,9 +18,17 @@ export const TrackPage = () => {
     const platform_token = localStorage.getItem('platform_token');
     const [open, setOpen] = useState(false);
 
+    if (!songId) {
+        throw new Error('songId is required but was not found.');
+    }
+
+    if (!platform_token) {
+        throw new Error('platform_token is required but was not found.');
+    }
+
     const getSongAsync = async () => {
         try {
-            const res = await getSong(songId!, access_token!, platform_token!);
+            const res = await getSong(songId, access_token!, platform_token);
             res.spotifyData = { ...res.spotifyData, likes: res.likes, userHasLiked: res.user_has_liked };
             setSong(res.spotifyData);
         } catch (error) {
@@ -49,6 +58,7 @@ export const TrackPage = () => {
         if (event.key === 'Enter') {
             setOpen(true);
             event.preventDefault();
+            createReview(platform_token, comment, songId).then((data) => console.log(data))
             console.log(comment);
             setComment('');
         }
@@ -64,7 +74,7 @@ export const TrackPage = () => {
                 userHasLiked: !liked,
                 likes: newLikes,
             }));
-            await toggleLikeSong(platform_token!, songId!);
+            await toggleLikeSong(platform_token, songId);
         }
     };
 
@@ -79,7 +89,7 @@ export const TrackPage = () => {
             <div className="flex items-center flex-col justify-between h-[90vh] w-full p-4 text-center md:p-0">
                 {song ? (
                     <>
-                        <div className="flex gap-5 flex-row items-center w-full justify-evenly md:mt-10 md:w-[40%]">
+                        <div className="flex gap-5 flex-row items-center w-full justify-evenly md:mt-10 md:w-[50%]">
                             <img src={song.album.images[0].url} alt="" className="h-[150px] w-[150px]" />
                             <div className="flex flex-col justify-center text-center gap-2 md:gap-4">
                                 <h1 className="text text-xl font-semibold md:text-4xl">{song.name}</h1>
