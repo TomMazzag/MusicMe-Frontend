@@ -4,7 +4,7 @@ import { Navbar } from '../../components/Navbar';
 import { useEffect, useState } from 'react';
 import { getFollowers, getFollowing } from '../../services/friend';
 import { ConnecitonProfile } from '../../types/Profile';
-import { JwtPayload, jwtDecode } from 'jwt-decode';
+import { getCurrentUserId } from '../../utils/user';
 
 interface ConnnecitonProps {
     ConnectionType: string;
@@ -14,17 +14,12 @@ interface User {
     full_name: string;
 }
 
-interface DecodedToken extends JwtPayload {
-    userId: number;
-}
-
 export const Connections = ({ ConnectionType }: ConnnecitonProps) => {
     const { user_id } = useParams();
     const platform_token = localStorage.getItem('platform_token');
     const [connections, setConnections] = useState([]);
     const [user, setUser] = useState<User>();
-    const decodedToken: DecodedToken = jwtDecode(platform_token!);
-    const currentUserId = decodedToken.userId;
+    const currentUserId = getCurrentUserId(platform_token!);
     const dataFunction = ConnectionType === 'following' ? getFollowing : getFollowers;
 
     useEffect(() => {

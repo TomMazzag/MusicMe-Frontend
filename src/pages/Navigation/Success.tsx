@@ -39,7 +39,7 @@ export const Success = () => {
 
             <p>Loading...</p>
 
-            <PropagateLoader color="lightgreen" style={{ display: 'inherit', position: 'relative', left: '-5px' }} />
+            <PropagateLoader color="lightgreen" style={{ display: 'inherit', position: 'relative', left: '-7px' }} />
         </div>
     );
 };

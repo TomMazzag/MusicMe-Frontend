@@ -5,6 +5,9 @@ import { getNewToken } from '../../utils/tokenGen';
 import { getSong } from '../../services/search';
 import { toggleLikeSong } from '../../services/account';
 import { Song } from '../../types/Song';
+import { ReviewBox } from '../../components/Review/ReviewBox';
+import { Review } from '../../types/Review';
+import { getCurrentUserId } from '../../utils/user';
 
 //Note this is temp and for visual purposes
 import Snackbar from '@mui/material/Snackbar';
@@ -17,6 +20,8 @@ export const TrackPage = () => {
     const [comment, setComment] = useState('');
     const platform_token = localStorage.getItem('platform_token');
     const [open, setOpen] = useState(false);
+    const reviews: Review[] = [];
+    const currentUserId = getCurrentUserId(platform_token!);
 
     if (!songId) {
         throw new Error('songId is required but was not found.');
@@ -58,7 +63,7 @@ export const TrackPage = () => {
         if (event.key === 'Enter') {
             setOpen(true);
             event.preventDefault();
-            createReview(platform_token, comment, songId).then((data) => console.log(data))
+            createReview(platform_token, comment, songId).then((data) => console.log(data));
             console.log(comment);
             setComment('');
         }
@@ -89,7 +94,7 @@ export const TrackPage = () => {
             <div className="flex items-center flex-col justify-between h-[90vh] w-full p-4 text-center md:p-0">
                 {song ? (
                     <>
-                        <div className="flex gap-5 flex-row items-center w-full justify-evenly md:mt-10 md:w-[50%]">
+                        <div className="flex gap-5 flex-row items-center w-full justify-evenly md:mt-8 mb-2 md:w-[50%]">
                             <img src={song.album.images[0].url} alt="" className="h-[150px] w-[150px]" />
                             <div className="flex flex-col justify-center text-center gap-2 md:gap-4">
                                 <h1 className="text text-xl font-semibold md:text-4xl">{song.name}</h1>
@@ -109,9 +114,17 @@ export const TrackPage = () => {
                             </div>
                         </div>
                         <div
-                            className={`flex grow ${1 === 1 && 'items-center w-[75%] md:w-full' /* Add logic for if theres no comments */}`}
+                            className={`flex ${
+                                reviews.length > 0
+                                    ? 'w-[90%] md:w-[50%] justify-start my-4 flex-col grow overflow-y-auto gap-4'
+                                    : 'grow items-center w-[75%] md:w-full' /* Add logic for if theres no comments */
+                            }`}
                         >
-                            <p className="grow">No comments yet! Be the first to leave a comment about this song</p>
+                            {reviews.length > 0 ? (
+                                reviews.map((review) => <ReviewBox review={review} currentUserId={currentUserId}/>)
+                            ) : (
+                                <p className="grow">No comments yet! Be the first to leave a comment about this song</p>
+                            )}
                         </div>
                         <div className="w-full flex justify-center md:mb-4">
                             <input
