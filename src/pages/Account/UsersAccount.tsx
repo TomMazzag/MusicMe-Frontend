@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Account.css';
-import { getNewToken } from '../../utils/tokenGen';
+import { getNewToken, getPlatformToken } from '../../utils/tokenGen';
 import { Navbar } from '../../components/Navbar';
 import { getAccountDetailsUsersAccount, getUsersLikedSongs } from '../../services/account';
 import { LikedSongsTab } from '../../components/LikedSongs/LikedSongsTab';
@@ -16,7 +16,7 @@ export const UsersAccount = () => {
     const [profile, setProfile] = useState<UsersProfile>();
     const [playlists, setPlaylists] = useState<any>();
     const [activeTab, setActiveTab] = useState<string>('Playlists');
-    const platform_token = localStorage.getItem('platform_token');
+    const platform_token = getPlatformToken();
     const [likedSongs, setLikedSongs] = useState([{}]);
 
     const getPlaylists = async (id: string) => {
@@ -38,12 +38,12 @@ export const UsersAccount = () => {
 
     useEffect(() => {
         const getProfile = async () => {
-            getAccountDetailsUsersAccount(platform_token!).then((data) => {
+            getAccountDetailsUsersAccount(platform_token).then((data) => {
                 setProfile(data.userDetails);
                 //console.log(data)
                 getPlaylists(data.userDetails.spotify_id);
             });
-            getUsersLikedSongs(platform_token!, access_token!).then((data: any) => setLikedSongs(data.likedSongs));
+            getUsersLikedSongs(platform_token, access_token!).then((data: any) => setLikedSongs(data.likedSongs));
             return;
         };
         getProfile();

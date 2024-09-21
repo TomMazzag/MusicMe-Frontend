@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { followOrUnfollowUser } from '../../services/friend';
 import { ConnecitonProfile } from '../../types/Profile';
+import { getPlatformToken } from '../../utils/tokenGen';
 
 export const UserProfileTile = ({
     user_id,
@@ -11,10 +12,10 @@ export const UserProfileTile = ({
     currentUserId,
 }: ConnecitonProfile) => {
     const [following, setFollowing] = useState(is_following);
-    const platform_token = localStorage.getItem('platform_token');
+    const platform_token = getPlatformToken();
 
     const followUser = async () => {
-        followOrUnfollowUser(platform_token!, user_id);
+        followOrUnfollowUser(platform_token, user_id);
         setFollowing(!following);
     };
 

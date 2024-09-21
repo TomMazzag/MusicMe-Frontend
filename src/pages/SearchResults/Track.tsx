@@ -1,34 +1,27 @@
 import { useParams } from 'react-router-dom';
 import { Navbar } from '../../components/Navbar';
 import { useEffect, useState } from 'react';
-import { getNewToken } from '../../utils/tokenGen';
+import { getNewToken, getPlatformToken } from '../../utils/tokenGen';
 import { getSong } from '../../services/search';
 import { toggleLikeSong } from '../../services/account';
 import { Song } from '../../types/Song';
 import { ReviewBox } from '../../components/Review/ReviewBox';
 import { Review } from '../../types/Review';
 import { getCurrentUserId } from '../../utils/user';
-
-//Note this is temp and for visual purposes
-import Snackbar from '@mui/material/Snackbar';
-import { createReview } from '../../services/rating';
+import { createReview, getReviews } from '../../services/rewiew';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const TrackPage = () => {
     const { songId } = useParams();
     const [access_token, setAccess_token] = useState(localStorage.getItem('access_token'));
     const [song, setSong] = useState<Song>();
     const [comment, setComment] = useState('');
-    const platform_token = localStorage.getItem('platform_token');
-    const [open, setOpen] = useState(false);
-    const reviews: Review[] = [];
+    const platform_token = getPlatformToken();
     const currentUserId = getCurrentUserId(platform_token!);
+    const queryClient = useQueryClient();
 
     if (!songId) {
         throw new Error('songId is required but was not found.');
-    }
-
-    if (!platform_token) {
-        throw new Error('platform_token is required but was not found.');
     }
 
     const getSongAsync = async () => {
@@ -46,6 +39,18 @@ export const TrackPage = () => {
         }
     };
 
+    const {
+        data: reviews,
+        isError,
+        isLoading,
+    } = useQuery({
+        queryKey: ['reviews', songId],
+        queryFn: async () => {
+            const response = await getReviews(platform_token, songId);
+            return response.reviews;
+        },
+    });
+
     useEffect(() => {
         const fetchDataAndLike = async () => {
             try {
@@ -61,10 +66,11 @@ export const TrackPage = () => {
 
     const handleKeyDown = async (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
-            setOpen(true);
             event.preventDefault();
-            createReview(platform_token, comment, songId).then((data) => console.log(data));
-            console.log(comment);
+            await createReview(platform_token, comment, songId).then((data) => {
+                console.log(data)
+            });
+            queryClient.invalidateQueries({queryKey: ['reviews', songId]});
             setComment('');
         }
     };
@@ -81,11 +87,6 @@ export const TrackPage = () => {
             }));
             await toggleLikeSong(platform_token, songId);
         }
-    };
-
-    // Needs removing once review functionality is added
-    const closePopup = () => {
-        setOpen(false);
     };
 
     return (
@@ -121,7 +122,7 @@ export const TrackPage = () => {
                             }`}
                         >
                             {reviews.length > 0 ? (
-                                reviews.map((review) => <ReviewBox review={review} currentUserId={currentUserId}/>)
+                                reviews.map((review: Review) => <ReviewBox review={review} currentUserId={currentUserId} queryClient={queryClient} key={review.id}/>)
                             ) : (
                                 <p className="grow">No comments yet! Be the first to leave a comment about this song</p>
                             )}
@@ -139,13 +140,6 @@ export const TrackPage = () => {
                                 onKeyDown={handleKeyDown}
                             />
                         </div>
-                        <Snackbar
-                            open={open}
-                            autoHideDuration={3000}
-                            onClose={closePopup}
-                            message={'Comment submitted - feature not yet operational'}
-                            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                        />
                     </>
                 ) : (
                     <div className="skeleton h-[200px] w-[40%] mt-10"></div>

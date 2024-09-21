@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Account.css';
-import { getNewToken } from '../../utils/tokenGen';
+import { getNewToken, getPlatformToken } from '../../utils/tokenGen';
 import { Navbar } from '../../components/Navbar';
 import { useParams } from 'react-router-dom';
 import { getAccountDetailsPublicAccount } from '../../services/account';
@@ -15,7 +15,7 @@ interface Playlist {
 
 export const PublicAccount = () => {
     const [access_token, setAccess_token] = useState(localStorage.getItem('access_token'));
-    const platform_token = localStorage.getItem('platform_token');
+    const platform_token = getPlatformToken();
     const [profile, setProfile] = useState<PublicProfile>();
     const [playlists, setPlaylists] = useState<any>();
     const [activeTab, setActiveTab] = useState<string>('Playlists');
@@ -42,13 +42,13 @@ export const PublicAccount = () => {
     };
 
     const followUser = async () => {
-        followOrUnfollowUser(platform_token!, profile!.user_id);
+        followOrUnfollowUser(platform_token, profile!.user_id);
         setFollowing(!following);
     };
 
     useEffect(() => {
         const getProfile = async () => {
-            getAccountDetailsPublicAccount(platform_token!, user_id!).then((data) => {
+            getAccountDetailsPublicAccount(platform_token, user_id!).then((data) => {
                 console.log(data.userDetails);
                 if (data.userDetails.is_following_this_account === '1') {
                     setFollowing(true);

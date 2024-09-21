@@ -13,4 +13,13 @@ export const getNewToken = async () => {
     return response.access_token;
 };
 
-// Place in utils folder in final build
+
+export const getPlatformToken = () => {
+    const platform_token = localStorage.getItem('platform_token');
+
+    if (!platform_token) {
+        throw new Error('platform_token is required but was not found.');
+    }
+
+    return platform_token
+}

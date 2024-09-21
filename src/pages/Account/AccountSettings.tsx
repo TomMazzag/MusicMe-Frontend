@@ -3,10 +3,11 @@ import { Navbar } from '../../components/Navbar';
 import { GeneralSettings } from '../../components/Account/GeneralSettings';
 import { useQuery } from '@tanstack/react-query';
 import { getAccountDetailsUsersAccount } from '../../services/account';
+import { getPlatformToken } from '../../utils/tokenGen';
 
 export const AccountSettings = () => {
     const [page, setPage] = useState('');
-    const platform_token = localStorage.getItem('platform_token');
+    const platform_token = getPlatformToken();
 
     const {
         data: account,
@@ -14,7 +15,7 @@ export const AccountSettings = () => {
         isLoading,
     } = useQuery({
         queryKey: ['account'],
-        queryFn: async () => getAccountDetailsUsersAccount(platform_token!),
+        queryFn: async () => getAccountDetailsUsersAccount(platform_token),
     });
 
     let pageContent;

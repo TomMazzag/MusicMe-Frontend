@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getFollowers, getFollowing } from '../../services/friend';
 import { ConnecitonProfile } from '../../types/Profile';
 import { getCurrentUserId } from '../../utils/user';
+import { getPlatformToken } from '../../utils/tokenGen';
 
 interface ConnnecitonProps {
     ConnectionType: string;
@@ -16,14 +17,14 @@ interface User {
 
 export const Connections = ({ ConnectionType }: ConnnecitonProps) => {
     const { user_id } = useParams();
-    const platform_token = localStorage.getItem('platform_token');
+    const platform_token = getPlatformToken();
     const [connections, setConnections] = useState([]);
     const [user, setUser] = useState<User>();
-    const currentUserId = getCurrentUserId(platform_token!);
+    const currentUserId = getCurrentUserId(platform_token);
     const dataFunction = ConnectionType === 'following' ? getFollowing : getFollowers;
 
     useEffect(() => {
-        dataFunction(platform_token!, user_id!).then((data) => {
+        dataFunction(platform_token, user_id!).then((data) => {
             console.log(data);
             setConnections(data.friends);
             setUser(data.user);

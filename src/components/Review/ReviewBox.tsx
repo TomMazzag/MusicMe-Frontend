@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { Review } from '../../types/Review';
 import { ReviewBoxUserOptions } from './ReviewBoxUserOptions';
+import { QueryClient } from '@tanstack/react-query';
 
 interface ReviewProps {
     review: Review;
-    currentUserId: number
+    currentUserId: number;
+    queryClient: QueryClient;
 }
 
-export const ReviewBox = ({ review, currentUserId }: ReviewProps) => {
+export const ReviewBox = ({ review, currentUserId, queryClient }: ReviewProps) => {
     const [likedStatus, setLikedStatus] = useState({
         liked: review.userHasLiked,
         likeCount: 0,
@@ -27,13 +29,13 @@ export const ReviewBox = ({ review, currentUserId }: ReviewProps) => {
         <div className="text-left px-4 py-4 bg-base-200 rounded-[20px] relative">
             <div className="flex items-center gap-2 mb-2 lg:mb-4">
                 <img
-                    src={review.user.profile_pic_url}
+                    src={review.profile_picture_url}
                     alt="Users profile picture"
                     className="rounded-full h-12 w-12 lg:h-16 lg:w-16"
                 />
                 <div className="flex flex-col">
-                    <h2 className="font-bold">{review.user.full_name}</h2>
-                    <h3 className="opacity-70 text-sm">@{review.user.username}</h3>
+                    <h2 className="font-bold">{review.full_name}</h2>
+                    <h3 className="opacity-70 text-sm">@{review.username}</h3>
                 </div>
             </div>
             <div className="pl-2 mr-[10%]">
@@ -46,8 +48,8 @@ export const ReviewBox = ({ review, currentUserId }: ReviewProps) => {
                 ></i>
                 <span className='ml-[4px]'>{likedStatus.likeCount}</span>
             </button>
-            {review.user.user_id === currentUserId && <>
-                <ReviewBoxUserOptions />
+            {review.user_id === currentUserId && <>
+                <ReviewBoxUserOptions reviewId={review.id} queryClient={queryClient}/>
             </>}
         </div>
     );
