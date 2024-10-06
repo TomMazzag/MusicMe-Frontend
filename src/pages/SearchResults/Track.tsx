@@ -40,9 +40,7 @@ export const TrackPage = () => {
     };
 
     const {
-        data: reviews,
-        isError,
-        isLoading,
+        data: reviews
     } = useQuery({
         queryKey: ['reviews', songId],
         queryFn: async () => {
