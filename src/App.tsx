@@ -10,6 +10,7 @@ import { PublicAccount } from './pages/Account/PublicAccount';
 import { TrackPage } from './pages/SearchResults/Track';
 import { Connections } from './pages/Account/Connections';
 import { AccountSettings } from './pages/Account/AccountSettings';
+import { BetaSignUp } from './pages/Navigation/BetaSignUp';
 
 const router = createBrowserRouter([
     {
@@ -22,15 +23,20 @@ const router = createBrowserRouter([
     },
     {
         path: '/account',
-        element: <UsersAccount />,
-    },
-    {
-        path: '/account/create',
-        element: <CreateAccount />,
-    },
-    {
-        path: '/account/settings',
-        element: <AccountSettings />,
+        children: [
+            {
+                index: true,
+                element: <UsersAccount />,
+            },
+            {
+                path: 'create',
+                element: <CreateAccount />,
+            },
+            {
+                path: 'settings',
+                element: <AccountSettings />,
+            },
+        ],
     },
     {
         path: '/search',
@@ -50,20 +56,29 @@ const router = createBrowserRouter([
     },
     {
         path: '/user/:user_id',
-        element: <PublicAccount />,
+        children: [
+            {
+                index: true,
+                element: <PublicAccount />,
+            },
+            {
+                path: 'following',
+                element: <Connections ConnectionType="following" />,
+            },
+            {
+                path: 'followers',
+                element: <Connections ConnectionType="followers" />,
+            },
+        ],
     },
     {
         path: '/songs/:songId',
         element: <TrackPage />,
     },
     {
-        path: '/user/:user_id/following',
-        element: <Connections ConnectionType="following" />,
-    },
-    {
-        path: '/user/:user_id/followers',
-        element: <Connections ConnectionType="followers" />,
-    },
+        path: '/register',
+        element: <BetaSignUp />
+    }
 ]);
 
 function App() {

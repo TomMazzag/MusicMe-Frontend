@@ -1,7 +1,8 @@
-import { refreshToken } from '../../services/token';
+import { useNavigate } from 'react-router-dom';
 
 export const Welcome = () => {
     const clientId = import.meta.env.VITE_CLIENT_ID;
+    const navigate = useNavigate()
 
     const authorize = async () => {
         try {
@@ -53,18 +54,6 @@ export const Welcome = () => {
         }
     };
 
-    const getNewToken = async () => {
-        interface tokenResponse {
-            access_token?: string;
-            refresh_token?: string;
-        }
-
-        const response = (await refreshToken(localStorage.getItem('refresh_token') as string)) as tokenResponse;
-
-        localStorage.setItem('access_token', response.access_token!);
-        localStorage.setItem('refresh_token', response.refresh_token!);
-    };
-
     return (
         <div className="flex flex-col justify-evenly items-center h-screen">
             <div className="text-center mt-10">
@@ -72,7 +61,7 @@ export const Welcome = () => {
                 <p className="text-xl italic">Social media for music</p>
             </div>
 
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 text-center">
                 {clientId ? (
                     <button className="btn btn-outline btn-primary" onClick={authorize} onTouchStart={authorize}>
                         Click here to begin
@@ -85,9 +74,12 @@ export const Welcome = () => {
                         </button>
                     </>
                 )}
-                <button className="btn btn-outline" onClick={getNewToken}>
-                    Refresh Token
-                </button>
+                <div className='w-[100%] mt-8'>
+                    <p className='pb-2 opacity-75'>Dont have an account? <br></br> Sign up for the beta below!</p>
+                    <button className="btn btn-outline w-full" onClick={() => {navigate('/register')}}>
+                        Sign up for the beta
+                    </button>
+                </div>
             </div>
         </div>
     );

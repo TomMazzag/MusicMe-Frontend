@@ -1,4 +1,6 @@
+import { useNavigate } from 'react-router-dom';
 import { refreshToken } from '../services/token';
+const navigate = useNavigate();
 
 export const getNewToken = async () => {
     interface tokenResponse {
@@ -13,13 +15,13 @@ export const getNewToken = async () => {
     return response.access_token;
 };
 
-
 export const getPlatformToken = () => {
     const platform_token = localStorage.getItem('platform_token');
 
     if (!platform_token) {
+        navigate('/');
         throw new Error('platform_token is required but was not found.');
     }
 
-    return platform_token
-}
+    return platform_token;
+};
