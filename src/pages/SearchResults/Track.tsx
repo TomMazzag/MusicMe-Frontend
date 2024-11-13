@@ -92,7 +92,7 @@ export const TrackPage = () => {
             <Navbar />
             <div className="flex items-center flex-col justify-between h-[90vh] w-full p-4 text-center md:p-0">
                 {song ? (
-                    <>
+                    <> 
                         <div className="flex gap-5 flex-row items-center w-full justify-evenly md:mt-8 mb-2 md:w-[50%]">
                             <img src={song.album.images[0].url} alt="" className="h-[150px] w-[150px]" />
                             <div className="flex flex-col justify-center text-center gap-2 md:gap-4">
@@ -120,7 +120,14 @@ export const TrackPage = () => {
                             }`}
                         >
                             {reviews.length > 0 ? (
-                                reviews.map((review: Review) => <ReviewBox review={review} currentUserId={currentUserId} queryClient={queryClient} key={review.id}/>)
+                                reviews.map((review: Review) => (
+                                    <ReviewBox
+                                        review={review}
+                                        currentUserId={currentUserId}
+                                        queryClient={queryClient}
+                                        key={review.id}
+                                    />
+                                ))
                             ) : (
                                 <p className="grow">No comments yet! Be the first to leave a comment about this song</p>
                             )}

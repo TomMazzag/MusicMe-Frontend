@@ -6,6 +6,7 @@ import { getAccountDetailsUsersAccount, getUsersLikedSongs } from '../../service
 import { LikedSongsTab } from '../../components/LikedSongs/LikedSongsTab';
 import { shortenString } from '../../utils/stringShorten';
 import { UsersProfile } from '../../types/Profile';
+import { MetaWrapper } from '../../components/Util/MetaWrapper';
 
 interface Playlist {
     public: boolean;
@@ -81,6 +82,7 @@ export const UsersAccount = () => {
 
     return (
         <>
+            <MetaWrapper title='My Account' />
             <Navbar />
             {profile ? (
                 <div className="profile mt-5">

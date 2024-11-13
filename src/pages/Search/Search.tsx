@@ -7,6 +7,7 @@ import { searchUser } from '../../services/search';
 import { UserSearch } from '../../components/Search/user';
 import { ArtistSearch } from '../../components/Search/artist';
 import { AlbumSearch } from '../../components/Search/album';
+import { MetaWrapper } from '../../components/Util/MetaWrapper';
 
 const SearchPage = () => {
     const [searchCategory, setSearchCategory] = useState('Track');
@@ -56,6 +57,7 @@ const SearchPage = () => {
 
     return (
         <>
+            <MetaWrapper title="Search" />
             <Navbar />
             <div className="search-page">
                 <div className="search-bar w-[90%] md:w-[60%]">
