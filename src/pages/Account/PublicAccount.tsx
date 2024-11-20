@@ -8,6 +8,8 @@ import { followOrUnfollowUser } from '../../services/friend';
 import { PublicProfile } from '../../types/Profile';
 import { shortenString } from '../../utils/stringShorten';
 import { LikedSongsTab } from '../../components/LikedSongs/LikedSongsTab';
+import { Tablist } from '../../components/Account/Tablist';
+import { AnalyticsTile } from '../../components/Account/Analytics/AnalyticsTile';
 
 interface Playlist {
     public: boolean;
@@ -85,7 +87,14 @@ export const PublicAccount = () => {
             tabContent = <LikedSongsTab likedSongs={likedSongs} />;
             break;
         case 'Feed':
-            tabContent = <p>Feed section currently being built</p>;
+            tabContent = (
+                <AnalyticsTile
+                    data={{
+                        playlistCount: playlists.length,
+                        likedSongs: profile?.liked_song_count,
+                    }}
+                />
+            );
             break;
     }
 
@@ -137,31 +146,7 @@ export const PublicAccount = () => {
                         </button>
                     </div>
 
-                    <div role="tablist" className="tabs tabs-boxed mb-10">
-                        <a
-                            role="tab"
-                            className={`tab ${activeTab === 'Playlists' ? 'tab-active' : ''}`}
-                            onClick={() => setActiveTab('Playlists')}
-                        >
-                            Playlists
-                        </a>
-                        <a
-                            role="tab"
-                            className={`tab ${activeTab === 'Liked' ? 'tab-active' : ''}`}
-                            onClick={() => setActiveTab('Liked')}
-                        >
-                            Liked songs
-                        </a>
-                        <a
-                            role="tab"
-                            className={`tab ${activeTab === 'Feed' ? 'tab-active' : ''}`}
-                            onClick={() => setActiveTab('Feed')}
-                        >
-                            Feed
-                        </a>
-                    </div>
-
-                    <div>{tabContent}</div>
+                    <Tablist activeTab={activeTab} setActiveTab={setActiveTab} tabContent={tabContent} />
                 </div>
             ) : (
                 <p className="text text-center mt-20 text-2xl">Loading Profile...</p>

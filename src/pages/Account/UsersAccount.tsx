@@ -7,6 +7,8 @@ import { LikedSongsTab } from '../../components/LikedSongs/LikedSongsTab';
 import { shortenString } from '../../utils/stringShorten';
 import { UsersProfile } from '../../types/Profile';
 import { MetaWrapper } from '../../components/Util/MetaWrapper';
+import { AnalyticsTile } from '../../components/Account/Analytics/AnalyticsTile';
+import { Tablist } from '../../components/Account/Tablist';
 
 interface Playlist {
     public: boolean;
@@ -75,14 +77,21 @@ export const UsersAccount = () => {
         case 'Liked':
             tabContent = <LikedSongsTab likedSongs={likedSongs} />;
             break;
-        case 'Feed':
-            tabContent = <p>Feed section currently being built</p>;
+        case 'Analytics':
+            tabContent = (
+                <AnalyticsTile
+                    data={{
+                        playlistCount: playlists.length,
+                        likedSongs: profile?.liked_song_count
+                    }}
+                />
+            );
             break;
     }
 
     return (
         <>
-            <MetaWrapper title='My Account' />
+            <MetaWrapper title="My Account" />
             <Navbar />
             {profile ? (
                 <div className="profile mt-5">
@@ -121,31 +130,8 @@ export const UsersAccount = () => {
                         <p className="text-center">{profile.liked_song_count} songs liked</p>
                     </div>
 
-                    <div role="tablist" className="tabs tabs-boxed mb-10">
-                        <a
-                            role="tab"
-                            className={`tab ${activeTab === 'Playlists' ? 'tab-active' : ''}`}
-                            onClick={() => setActiveTab('Playlists')}
-                        >
-                            Playlists
-                        </a>
-                        <a
-                            role="tab"
-                            className={`tab ${activeTab === 'Liked' ? 'tab-active' : ''}`}
-                            onClick={() => setActiveTab('Liked')}
-                        >
-                            Liked songs
-                        </a>
-                        <a
-                            role="tab"
-                            className={`tab ${activeTab === 'Feed' ? 'tab-active' : ''}`}
-                            onClick={() => setActiveTab('Feed')}
-                        >
-                            Feed
-                        </a>
-                    </div>
-
-                    <div>{tabContent}</div>
+                    <Tablist activeTab={activeTab} setActiveTab={setActiveTab} tabContent={tabContent}/>
+                    
                 </div>
             ) : (
                 <p className="text text-center mt-20 text-2xl">Loading Profile...</p>

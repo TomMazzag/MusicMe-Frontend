@@ -26,3 +26,13 @@ export interface ConnecitonProfile {
     is_following: boolean;
     currentUserId: number;
 }
+
+export interface ProfileAnalytics {
+    message: string;
+    topArtists: {
+        items: SpotifyApi.ArtistObjectFull[];
+    };
+    topTracks: {
+        items: SpotifyApi.TrackObjectFull[];
+    };
+}
