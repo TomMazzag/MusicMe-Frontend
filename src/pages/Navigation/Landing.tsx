@@ -31,7 +31,8 @@ export const Welcome = () => {
 
             const redirectUri = import.meta.env.VITE_REDIRECT_URI;
 
-            const scope = 'user-read-private user-read-email playlist-read-collaborative playlist-read-private';
+            const scope =
+                'user-read-private user-read-email playlist-read-collaborative playlist-read-private user-top-read';
             const authUrl = new URL('https://accounts.spotify.com/authorize');
 
             console.log('VERIFIER: ' + codeVerifier);
