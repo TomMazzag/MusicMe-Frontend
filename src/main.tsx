@@ -16,6 +16,7 @@ if (typeof window !== 'undefined') {
         loaded: (posthog) => {
             if (import.meta.env.MODE === 'development') posthog.debug(); // debug mode in development
         },
+        disable_session_recording: import.meta.env.MODE === 'development' ? true : false,
     });
 }
 

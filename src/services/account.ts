@@ -1,3 +1,5 @@
+import { ProfileAnalytics } from "../types/Profile";
+
 const backend_url = import.meta.env.VITE_BACKEND_URL;
 
 export const getAccountDetailsUsersAccount = async (token: string) => {
@@ -49,5 +51,17 @@ export const toggleLikeSong = async (token: string, songId: string) => {
     const response = await fetch(`${backend_url}/like/song`, requestOptions);
 
     let data = await response.json();
+    return data;
+};
+
+export const getAccountAnalytics = async (platform_token: string, access_token: string) => {
+    const requestOptions = {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${platform_token}` },
+    };
+
+    const response = await fetch(`${backend_url}/user/analytics?access_token=${access_token}`, requestOptions);
+
+    let data: ProfileAnalytics = await response.json();
     return data;
 };
