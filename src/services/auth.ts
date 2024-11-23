@@ -43,3 +43,15 @@ export const createAccount = async (payload: any) => {
         return data;
     }
 };
+
+export const generateToken = async (code: string, state: string) => {
+    const response = await fetch(`${backend_url}/auth/callback?code=${code}&state=${state}`, {method: 'GET'});
+    if (response.status === 200) {
+        let data = await response.json();
+        console.log("Success", data)
+        return data;
+    } else {
+        let data = await response.json();
+        return data;
+    }
+}
