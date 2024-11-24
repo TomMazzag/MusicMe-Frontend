@@ -81,7 +81,7 @@ export const UsersAccount = () => {
             tabContent = (
                 <AnalyticsTile
                     data={{
-                        playlistCount: playlists.length,
+                        playlistCount: playlists.length || 0,
                         likedSongs: profile?.liked_song_count
                     }}
                 />
@@ -126,8 +126,6 @@ export const UsersAccount = () => {
                                 </div>
                             </div>
                         </div>
-                        <p className="text-center mt-5 mb-2">Current Favorite Song: Alone - Sainté</p>
-                        <p className="text-center">{profile.liked_song_count} songs liked</p>
                     </div>
 
                     <Tablist activeTab={activeTab} setActiveTab={setActiveTab} tabContent={tabContent}/>

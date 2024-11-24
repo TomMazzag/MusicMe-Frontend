@@ -25,6 +25,10 @@ export const PublicAccount = () => {
     const [following, setFollowing] = useState(false);
     const [likedSongs] = useState([]);
 
+    if (user_id === undefined) {
+        return window.location.href = '/account'
+    }
+
     const getPlaylists = async (id: string) => {
         const result = await fetch(`https://api.spotify.com/v1/users/${id}/playlists?offset=0&limit=50`, {
             method: 'GET',
@@ -86,13 +90,14 @@ export const PublicAccount = () => {
         case 'Liked':
             tabContent = <LikedSongsTab likedSongs={likedSongs} />;
             break;
-        case 'Feed':
+        case 'Analytics':
             tabContent = (
                 <AnalyticsTile
                     data={{
                         playlistCount: playlists.length,
                         likedSongs: profile?.liked_song_count,
                     }}
+                    profileId={user_id}
                 />
             );
             break;
@@ -134,8 +139,6 @@ export const PublicAccount = () => {
                                 </div>
                             </div>
                         </div>
-                        <p className="text-center mt-5 mb-2">Current Favorite Song: Alone - Sainté</p>
-                        <p className="text-center">{profile.liked_song_count} songs liked</p>
                         <button
                             className={`btn btn-sm w-[80%] self-center mt-5 border-primary ${
                                 !following && 'btn-primary'

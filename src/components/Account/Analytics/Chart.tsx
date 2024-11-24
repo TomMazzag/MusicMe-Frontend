@@ -20,8 +20,8 @@ export const Chart = ({ title, rowData }: ChartProps) => {
                     key={row.name}
                     data={
                         isTrack(row)
-                            ? { index, imageUrl: row.album.images[0].url, value1: row.name, value2: row.artists[0].name, url: row.external_urls.spotify }
-                            : { index, imageUrl: row.images[0].url, value1: row.name, value2: '', url: row.external_urls.spotify }
+                            ? { index, imageUrl: row.album.images[0].url, value1: row.name, value2: row.artists[0].name, clickableUrl: `/songs/${row.id}`} // Track
+                            : { index, imageUrl: row.images[0].url, value1: row.name, clickableUrl: row.external_urls.spotify } // Artist
                     }
                 />
             ))}

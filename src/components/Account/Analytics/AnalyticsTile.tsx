@@ -3,19 +3,28 @@ import { getPlatformToken } from '../../../utils/tokenGen';
 import { getAccountAnalytics } from '../../../services/account';
 import { ScaleLoader } from 'react-spinners';
 import { Chart } from './Chart';
-//import { getCurrentUserId } from '../../../utils/user';
+import { HighlightedSong } from './HighlightedSong';
 
 interface StatsProps {
     data: {
         playlistCount: number;
         likedSongs: number | undefined
     };
+    profileId?: string
 }
 
-export const AnalyticsTile = ({ data }: StatsProps) => {
+export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
     const platform_token = getPlatformToken();
-    //const userId = getCurrentUserId(platform_token);
     const access_token = localStorage.getItem('access_token');
+
+    if (profileId) {
+        return (
+            <div>
+                <p>Total Playlists: {data.playlistCount}</p>
+                <p className="text-center">Songs liked: {data.likedSongs}</p>
+            </div>
+        );
+    }
 
     const { data: analytics, isLoading, isSuccess } = useQuery({
         queryKey: ['analytics'],
@@ -31,12 +40,15 @@ export const AnalyticsTile = ({ data }: StatsProps) => {
     }
 
     return (
-        <div className="text-center mb-10">
-            <p className="mb-4">Stats section</p>
-
+        <div className="flex flex-col text-center mb-10 items-center gap-10">
             {data && analytics && (
                 <>
-                    <div className="mb-10">
+                    <div>
+                        <p className="text-center mb-4 text-2xl">Highligted Song:</p>
+                        <HighlightedSong track={analytics.topTracks.items[0]} />
+                    </div>
+
+                    <div>
                         <p>Total Playlists: {data.playlistCount}</p>
                         <p className="text-center">Songs liked: {data.likedSongs}</p>
                     </div>
