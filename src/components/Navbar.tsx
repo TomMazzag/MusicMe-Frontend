@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { getAccountDetailsUsersAccount } from '../services/account';
+import { getPlatformToken } from '../utils/tokenGen';
 
 export const Navbar = () => {
     const [profile_pic_url, setProfile_pic_url] = useState<string>('');
 
-    const token = localStorage.getItem('platform_token');
+    const platform_token = getPlatformToken();
     useEffect(() => {
-        getAccountDetailsUsersAccount(token!).then((profile) => {
-            //console.log(profile)
+        getAccountDetailsUsersAccount(platform_token).then((profile) => {
             setProfile_pic_url(profile.userDetails.profile_picture_url);
         });
     }, []);

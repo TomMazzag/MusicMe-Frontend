@@ -26,9 +26,15 @@ export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
         );
     }
 
-    const { data: analytics, isLoading, isSuccess } = useQuery({
+    const {
+        data: analytics,
+        isLoading,
+        isSuccess,
+    } = useQuery({
         queryKey: ['analytics'],
         queryFn: async () => getAccountAnalytics(platform_token, access_token!),
+        refetchOnWindowFocus: false,
+        staleTime: 1000 * 60 * 5,
     });
 
     if (isSuccess) {

@@ -132,7 +132,7 @@ export const PublicAccount = () => {
                                     </div>
                                     <div>
                                         <a href={`/user/${profile.user_id}/reviews`}>
-                                            <h2>5</h2>
+                                            <h2>{profile.review_count}</h2>
                                             <p className="text-sm">reviews</p>
                                         </a>
                                     </div>
