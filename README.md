@@ -6,15 +6,40 @@ MusicMe is a social media platform creating for sharing music.
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/11f2eb04-ba01-4a40-97af-abde670b7dcd/deploy-status)](https://app.netlify.com/sites/music-me-app/deploys)
 
+## Getting started
+
+To start this project you will need access to the backend repo (private)
+<br>
+Make sure you have [docker](https://www.docker.com/) installed
+
+To build the containers run
+
+```shell
+npm run docker:build
+```
+
+To start the container run
+
+```shell
+npm run docker:run
+```
+
+## Built with
+
+-   [![React](https://img.shields.io/badge/React-%2320232a.svg?logo=react&logoColor=%2361DAFB)](https://react.dev/)
+-   [![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+-   [![DaisyUI](https://img.shields.io/badge/DaisyUI-5A0EF8?logo=daisyui&logoColor=fff)](https://daisyui.com/)
+-   [![Postgres](https://img.shields.io/badge/Postgres-%23316192.svg?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+-   [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)](https://www.typescriptlang.org/)
+-   [![Spotify API](https://img.shields.io/badge/Spotify-1ED760?logo=spotify&logoColor=white)](https://developer.spotify.com/documentation/web-api)
+
 ## Roadmap
 
--   [x] Build foundations
--   [x] Account page foundation
--   [x] Copy all files from test project
--   [x] Covert all js files to ts files
--   [x] Search page
--   [x] Song page
+-   [x] Switch to UUID for profile ids
 -   [ ] Feed page
+-   [ ] Better analytics - last login, more analytics for song
+-   [ ] Option to pick top song
+-   [ ] Create publically accessible pages
 
 ## Functionality
 
@@ -25,13 +50,6 @@ MusicMe is a social media platform creating for sharing music.
 ### Optional funcitonality
 
 -   Users can view favorite artists shows coming out
-
-## Built with
-
--   React
--   Tailwind
--   DaisyUI
--   Spotify API
 
 ## Contact
 
