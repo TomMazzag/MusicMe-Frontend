@@ -67,3 +67,19 @@ export const deleteReview = async (platform_token: string, reviewId: number) => 
         return data;
     }
 };
+
+export const toggleLikeReview = async (token: string, reviewId: number) => {
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ reviewId }),
+    };
+
+    const response = await fetch(`${backend_url}/like/review`, requestOptions);
+
+    let data = await response.json();
+    return data;
+};

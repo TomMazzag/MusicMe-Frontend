@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Review } from '../../types/Review';
 import { ReviewBoxUserOptions } from './ReviewBoxUserOptions';
 import { QueryClient } from '@tanstack/react-query';
+import { toggleLikeReview } from '../../services/rewiew';
+import { getPlatformToken } from '../../utils/tokenGen';
 
 interface ReviewProps {
     review: Review;
@@ -12,17 +14,27 @@ interface ReviewProps {
 export const ReviewBox = ({ review, currentUserId, queryClient }: ReviewProps) => {
     const [likedStatus, setLikedStatus] = useState({
         liked: review.userHasLiked,
-        likeCount: 0,
+        likeCount: review.likes,
     });
 
     const toggleLike = async () => {
         setLikedStatus((prevStatus) => {
-            const newLikes = prevStatus.likeCount + 1;
+            const newLikes = prevStatus.liked ? prevStatus.likeCount - 1 : prevStatus.likeCount + 1;
             return {
                 liked: !prevStatus.liked,
                 likeCount: newLikes
             };
         });
+
+        try {
+            await toggleLikeReview(getPlatformToken(), review.id);
+        } catch (error) {
+            console.error('Error toggling like:', error);
+            setLikedStatus((prevStatus) => ({
+                liked: !prevStatus.liked, 
+                likeCount: prevStatus.liked ? prevStatus.likeCount + 1 : prevStatus.likeCount - 1,
+            }));
+        }
     };
 
     return (
@@ -42,7 +54,7 @@ export const ReviewBox = ({ review, currentUserId, queryClient }: ReviewProps) =
                 <p>{review.comment}</p>
                 <p>{review.rating} / 5</p>
             </div>
-            <button className="absolute top-[40%] right-[20px] lg:right-[20px]" onClick={toggleLike}>
+            <button className="absolute top-[40%] right-[10px] lg:right-[20px]" onClick={toggleLike}>
                 <i
                     className={likedStatus.liked ? 'fa-solid fa-heart text-[20px]' : 'fa-regular fa-heart text-[20px]'}
                 ></i>

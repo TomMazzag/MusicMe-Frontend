@@ -116,7 +116,8 @@ export const PublicAccount = () => {
                                 className="rounded-full w-[32vw] h-[32vw] mr-4 lg:w-[15vw] lg:h-[15vw] lg:mr-10 object-cover"
                             />
                             <div className="account-details">
-                                <h2 className="text-3xl font-bold text-center mb-5">{profile.full_name}</h2>
+                                <h2 className="text-3xl font-bold text-center">{profile.full_name}</h2>
+                                <p className="text-center opacity-70 mb-5">@{profile.username}</p>
                                 <div className="follower-count text-center">
                                     <div>
                                         <a href={`/user/${profile.user_id}/followers`}>

@@ -6,11 +6,11 @@ interface BaseProfile {
     liked_song_count: number;
     user_id: number;
     review_count: number;
+    username: string;
 }
 
 export interface UsersProfile extends BaseProfile {
     email?: string;
-    username: string;
 }
 
 export interface PublicProfile extends BaseProfile {

@@ -16,7 +16,7 @@ export const ReviewBoxUserOptions = ({ reviewId, queryClient }: OptionsProps) =>
     };
 
     return (
-        <div className="dropdown dropdown-end absolute top-[-3px] right-[10px] h-0 z-50">
+        <div className="dropdown dropdown-end absolute top-[-3px] right-[0px] md:right-[10px] h-0 z-50">
             <div tabIndex={0} role="button" className="btn m-1 rounded-full h-0">
                 <i className="fa-solid fa-ellipsis"></i>
             </div>
