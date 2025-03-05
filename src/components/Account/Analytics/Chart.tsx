@@ -13,7 +13,7 @@ const isTrack = (
 
 export const Chart = ({ title, rowData }: ChartProps) => {
     return (
-        <div className="p-6 rounded-2xl md:rounded-md bg-base-300 flex flex-col gap-4">
+        <div className="py-6 px-10 rounded-2xl md:rounded-md bg-base-300 flex flex-col gap-4">
             <h1 className='text text-2xl'>{title}</h1>
             {rowData.map((row, index) => (
                 <ChartTile
