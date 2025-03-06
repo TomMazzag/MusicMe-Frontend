@@ -1,16 +1,7 @@
-export interface Artist {
+export interface Song extends SpotifyApi.TrackObjectFull {
     name: string;
-}
-
-export interface Album {
-    images: { url: string }[];
-}
-
-export interface Song {
-    name: string;
-    artists: Artist[];
-    album: Album;
     likes: number;
     userHasLiked: boolean;
+    views: number;
     spotifyData?: Record<string, any>; // Optional additional data from Spotify
 }

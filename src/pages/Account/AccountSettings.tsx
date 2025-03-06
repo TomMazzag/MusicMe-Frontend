@@ -1,12 +1,15 @@
-import { useState } from 'react';
 import { Navbar } from '../../components/Navbar';
 import { GeneralSettings } from '../../components/Account/GeneralSettings';
 import { useQuery } from '@tanstack/react-query';
 import { getAccountDetailsUsersAccount } from '../../services/account';
 import { getPlatformToken } from '../../utils/tokenGen';
+import { useSearchParams } from 'react-router-dom';
+
+type Tabs = 'general' | 'spotify'
 
 export const AccountSettings = () => {
-    const [page, setPage] = useState('');
+    const [searchParams, setSearchParams] = useSearchParams();
+    const tab: Tabs | null = searchParams.get('tab') ? (searchParams.get('tab') as Tabs) : 'general';
     const platform_token = getPlatformToken();
 
     const {
@@ -18,8 +21,14 @@ export const AccountSettings = () => {
         queryFn: async () => getAccountDetailsUsersAccount(platform_token),
     });
 
+    const updateTab = (tabTitle: Tabs) => {
+        const newParams = new URLSearchParams(searchParams);
+        newParams.set('tab', tabTitle);
+        setSearchParams(newParams);
+    };
+
     let pageContent;
-    switch (page) {
+    switch (tab) {
         case 'general':
             pageContent = <GeneralSettings account={account} isError={isError} isLoading={isLoading} />;
             break;
@@ -33,19 +42,23 @@ export const AccountSettings = () => {
     return (
         <>
             <Navbar />
-            <div className="drawer md:drawer-open">
+            <div className="drawer md:drawer-open overflow-hidden">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content flex flex-col items-center justify-center mt-8 sm:mt-0 sm:h-[100vh]">
+                <div className="drawer-content flex flex-col items-center justify-center mt-8 sm:mt-0 sm:h-[90vh]">
                     {pageContent}
                 </div>
                 <div className="drawer-side">
                     <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-                    <ul className="menu bg-base-300 text-base-content min-h-full w-56 p-4">
+                    <ul className="menu bg-base-300 text-base-content min-h-full w-56 p-4 text-lg">
                         <li>
-                            <a onClick={() => setPage('general')}>General</a>
+                            <a className={tab === 'general' ? 'text-accent' : ''} onClick={() => updateTab('general')}>
+                                General
+                            </a>
                         </li>
                         <li>
-                            <a onClick={() => setPage('spotify')}>Spotify Settings</a>
+                            <a className={tab === 'spotify' ? 'text-accent' : ''} onClick={() => updateTab('spotify')}>
+                                Spotify Settings
+                            </a>
                         </li>
                     </ul>
                 </div>

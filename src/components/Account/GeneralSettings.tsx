@@ -10,8 +10,6 @@ interface GeneralSettingsProps {
 }
 
 export const GeneralSettings = ({ account, isError, isLoading }: GeneralSettingsProps) => {
-    //console.log(account)
-
     if (isError) {
         return <>Error loading page please return to homepage</>;
     }
@@ -22,8 +20,6 @@ export const GeneralSettings = ({ account, isError, isLoading }: GeneralSettings
                 <div>Content loading</div>
             ) : (
                 <>
-                    <h1 className="text text-accent text-2xl mb-10">Account Settings</h1>
-
                     <img
                         src={account.userDetails.profile_picture_url}
                         alt="Users Profile Picture"

@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { Navbar } from '../../components/Navbar';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getNewToken, getPlatformToken } from '../../utils/tokenGen';
 import { getSong } from '../../services/search';
 import { toggleLikeSong } from '../../services/account';
@@ -10,6 +10,7 @@ import { Review } from '../../types/Review';
 import { getCurrentUserId } from '../../utils/user';
 import { createReview, getReviews } from '../../services/rewiew';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { addTrackView } from '../../services/song';
 
 export const TrackPage = () => {
     const { songId } = useParams();
@@ -19,6 +20,7 @@ export const TrackPage = () => {
     const platform_token = getPlatformToken();
     const currentUserId = getCurrentUserId(platform_token!);
     const queryClient = useQueryClient();
+    const hasTrackedView = useRef(false);
 
     if (!songId) {
         throw new Error('songId is required but was not found.');
@@ -27,7 +29,7 @@ export const TrackPage = () => {
     const getSongAsync = async () => {
         try {
             const res = await getSong(songId, access_token!, platform_token);
-            res.spotifyData = { ...res.spotifyData, likes: res.likes, userHasLiked: res.user_has_liked };
+            res.spotifyData = { ...res.spotifyData, likes: res.likes, userHasLiked: res.user_has_liked, views: res.views };
             setSong(res.spotifyData);
         } catch (error) {
             if ((error = 'Expired Token')) {
@@ -39,9 +41,7 @@ export const TrackPage = () => {
         }
     };
 
-    const {
-        data: reviews
-    } = useQuery({
+    const { data: reviews } = useQuery({
         queryKey: ['reviews', songId],
         queryFn: async () => {
             const response = await getReviews(platform_token, songId);
@@ -59,6 +59,10 @@ export const TrackPage = () => {
         };
 
         fetchDataAndLike();
+        if (!hasTrackedView.current) {
+            addTrackView(platform_token, songId);
+            hasTrackedView.current = true;
+        }
         return;
     }, []);
 
@@ -66,9 +70,9 @@ export const TrackPage = () => {
         if (event.key === 'Enter') {
             event.preventDefault();
             await createReview(platform_token, comment, songId).then((data) => {
-                console.log(data)
+                console.log(data);
             });
-            queryClient.invalidateQueries({queryKey: ['reviews', songId]});
+            queryClient.invalidateQueries({ queryKey: ['reviews', songId] });
             setComment('');
         }
     };
@@ -92,7 +96,7 @@ export const TrackPage = () => {
             <Navbar />
             <div className="flex items-center flex-col justify-between h-[90vh] w-full p-4 text-center md:p-0">
                 {song ? (
-                    <> 
+                    <>
                         <div className="flex gap-5 flex-row items-center w-full justify-evenly md:mt-8 mb-2 md:w-[50%]">
                             <img src={song.album.images[0].url} alt="" className="h-[150px] w-[150px]" />
                             <div className="flex flex-col justify-center text-center gap-2 md:gap-4">
@@ -109,6 +113,10 @@ export const TrackPage = () => {
                                     <p className="text text-xl">
                                         {song.likes} {song.likes === 1 ? 'Like' : 'Likes'}
                                     </p>
+                                    <div className='flex gap-2 items-center ml-6' title='Views today'>
+                                        <i className="fa-solid fa-eye" aria-label='Eye icon'></i>
+                                        <p className="text text-xl" aria-label='song views'>{song.views}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
