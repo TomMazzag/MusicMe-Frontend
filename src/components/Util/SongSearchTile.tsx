@@ -3,7 +3,7 @@ interface ChartTitleProp {
         imageUrl: string;
         value1: string;
         value2?: string;
-        clickableUrl: string;
+        clickableUrl?: string;
         trackId: string
     };
     onClickHandler: (trackId: string) => void;

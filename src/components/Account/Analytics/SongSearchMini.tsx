@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { ScaleLoader } from 'react-spinners';
-import { SongSearchTile } from './SongSearchTile';
+import { SongSearchTile } from '../../Util/SongSearchTile';
 
 interface Props {
     open: boolean;
@@ -29,8 +29,8 @@ export const SongSearchModalSmall = ({ open, modalId }: Props) => {
     });
 
     const setNewHighlightedSong = (trackId: String) => {
-        return trackId
-    }
+        return trackId;
+    };
 
     return (
         <dialog className={`modal ${open ? 'visible' : 'hidden'}`} id={modalId}>
@@ -72,7 +72,7 @@ export const SongSearchModalSmall = ({ open, modalId }: Props) => {
                                                         value1: track.name,
                                                         value2: track.artists[0].name,
                                                         clickableUrl: `/songs/${track.id}`,
-                                                        trackId: track.id
+                                                        trackId: track.id,
                                                     }}
                                                     onClickHandler={setNewHighlightedSong}
                                                 />
@@ -80,7 +80,7 @@ export const SongSearchModalSmall = ({ open, modalId }: Props) => {
                                         );
                                     })
                                 ) : (
-                                    <p className='opacity-50'>Search to begin</p>
+                                    <p className="opacity-50">Search to begin</p>
                                 )}
                             </div>
                         )}

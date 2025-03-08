@@ -11,6 +11,7 @@ import { TrackPage } from './pages/SearchResults/Track';
 import { Connections } from './pages/Account/Connections';
 import { AccountSettings } from './pages/Account/AccountSettings';
 import { BetaSignUp } from './pages/Navigation/BetaSignUp';
+import { DiscoverPage } from './pages/Discover/Discover';
 
 const router = createBrowserRouter([
     {
@@ -52,7 +53,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/discover',
-        element: <ComingSoon />,
+        element: <DiscoverPage />,
     },
     {
         path: '/user/:user_id',

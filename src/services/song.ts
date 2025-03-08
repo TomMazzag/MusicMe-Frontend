@@ -23,3 +23,15 @@ export const addTrackView = async (token: string, song_id: string) => {
     let data = await response.json();
     return data;
 };
+
+export const getTopViewedTracks = async (token: string, spotify_token: string) => {
+    const requestOptions = {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` },
+    };
+
+    const response = await fetch(`${backend_url}/song/views/top?spotify_token=${spotify_token}`, requestOptions);
+
+    let data = await response.json();
+    return data;
+};
