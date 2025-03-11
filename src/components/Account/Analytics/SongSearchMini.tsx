@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { ScaleLoader } from 'react-spinners';
 import { SongSearchTile } from '../../Util/SongSearchTile';
+import { getSpotifyToken } from '../../../utils/tokenGen';
 
 interface Props {
     open: boolean;
@@ -10,7 +11,7 @@ interface Props {
 
 export const SongSearchModalSmall = ({ open, modalId }: Props) => {
     const [searchInput, setSearchInput] = useState('');
-    const access_token = localStorage.getItem('access_token');
+    const access_token = getSpotifyToken();
     const encodedURI = `https://api.spotify.com/v1/search?q=${searchInput}&type=track`;
 
     const { data: tracks, isLoading } = useQuery({

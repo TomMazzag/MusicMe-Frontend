@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Account.css';
-import { getNewToken, getPlatformToken } from '../../utils/tokenGen';
+import { getNewToken, getPlatformToken, getSpotifyToken } from '../../utils/tokenGen';
 import { Navbar } from '../../components/Navbar';
 import { getAccountDetailsUsersAccount, getUsersLikedSongs } from '../../services/account';
 import { LikedSongsTab } from '../../components/LikedSongs/LikedSongsTab';
@@ -15,7 +15,7 @@ interface Playlist {
 }
 
 export const UsersAccount = () => {
-    const [access_token, setAccess_token] = useState(localStorage.getItem('access_token'));
+    const [access_token, setAccess_token] = useState(getSpotifyToken());
     const [profile, setProfile] = useState<UsersProfile>();
     const [playlists, setPlaylists] = useState<any>();
     const [activeTab, setActiveTab] = useState<string>('Playlists');

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getPlatformToken } from '../../../utils/tokenGen';
+import { getPlatformToken, getSpotifyToken } from '../../../utils/tokenGen';
 import { getAccountAnalytics } from '../../../services/account';
 import { ScaleLoader } from 'react-spinners';
 import { Chart } from './Chart';
@@ -15,7 +15,7 @@ interface StatsProps {
 
 export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
     const platform_token = getPlatformToken();
-    const access_token = localStorage.getItem('access_token');
+    const access_token = getSpotifyToken();
 
     if (profileId) {
         return (
@@ -32,7 +32,7 @@ export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
         isSuccess,
     } = useQuery({
         queryKey: ['analytics'],
-        queryFn: async () => getAccountAnalytics(platform_token, access_token!),
+        queryFn: async () => getAccountAnalytics(platform_token, access_token),
         refetchOnWindowFocus: false,
         staleTime: 1000 * 60 * 5,
     });

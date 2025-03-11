@@ -1,38 +1,28 @@
 import { ProfileAnalytics } from "../types/Profile";
+import { BACKEND_URL, createAuthenticatedGetRequestOptions } from "./util";
 
-const backend_url = import.meta.env.VITE_BACKEND_URL;
+export const getAccountDetailsUsersAccount = async (platform_token: string) => {
+    const requestOptions = createAuthenticatedGetRequestOptions(platform_token);
 
-export const getAccountDetailsUsersAccount = async (token: string) => {
-    const requestOptions = {
-        method: 'GET',
-        headers: { Authorization: `Bearer ${token}` },
-    };
-
-    const response = await fetch(`${backend_url}/user/account`, requestOptions);
+    const response = await fetch(`${BACKEND_URL}/user/account`, requestOptions);
 
     let data = await response.json();
     return data;
 };
 
-export const getAccountDetailsPublicAccount = async (token: string, user_id: string) => {
-    const requestOptions = {
-        method: 'GET',
-        headers: { Authorization: `Bearer ${token}` },
-    };
+export const getAccountDetailsPublicAccount = async (platform_token: string, user_id: string) => {
+    const requestOptions = createAuthenticatedGetRequestOptions(platform_token);
 
-    const response = await fetch(`${backend_url}/user/account/${user_id}`, requestOptions);
+    const response = await fetch(`${BACKEND_URL}/user/account/${user_id}`, requestOptions);
 
     let data = await response.json();
     return data;
 };
 
 export const getUsersLikedSongs = async (platform_token: string, access_token: string) => {
-    const requestOptions = {
-        method: 'GET',
-        headers: { Authorization: `Bearer ${platform_token}` },
-    };
+    const requestOptions = createAuthenticatedGetRequestOptions(platform_token);
 
-    const response = await fetch(`${backend_url}/user/songs_liked?access_token=${access_token}`, requestOptions);
+    const response = await fetch(`${BACKEND_URL}/user/songs_liked?access_token=${access_token}`, requestOptions);
 
     let data = await response.json();
     return data;
@@ -48,19 +38,16 @@ export const toggleLikeSong = async (token: string, songId: string) => {
         body: JSON.stringify({ songId }),
     };
 
-    const response = await fetch(`${backend_url}/like/song`, requestOptions);
+    const response = await fetch(`${BACKEND_URL}/like/song`, requestOptions);
 
     let data = await response.json();
     return data;
 };
 
 export const getAccountAnalytics = async (platform_token: string, access_token: string) => {
-    const requestOptions = {
-        method: 'GET',
-        headers: { Authorization: `Bearer ${platform_token}` },
-    };
+    const requestOptions = createAuthenticatedGetRequestOptions(platform_token);
 
-    const response = await fetch(`${backend_url}/user/analytics?access_token=${access_token}`, requestOptions);
+    const response = await fetch(`${BACKEND_URL}/user/analytics?access_token=${access_token}`, requestOptions);
 
     let data: ProfileAnalytics = await response.json();
     return data;

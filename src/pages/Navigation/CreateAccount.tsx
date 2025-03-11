@@ -6,11 +6,12 @@ import { StepTwo } from '../../components/AccountCreation/SecondStep';
 import { StepThree } from '../../components/AccountCreation/ThirdStep';
 import { useNavigate } from 'react-router-dom';
 import { createAccount } from '../../services/auth';
+import { getSpotifyToken } from '../../utils/tokenGen';
 
 export const CreateAccount = () => {
     // Get spotify details
 
-    const access_token = localStorage.getItem('access_token');
+    const access_token = getSpotifyToken();
     const [profile, setProfile] = useState();
     const [errorMessage, setErrorMessage] = useState<string>();
 

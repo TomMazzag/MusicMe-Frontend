@@ -1,4 +1,4 @@
-const backend_url = import.meta.env.VITE_BACKEND_URL;
+import { BACKEND_URL } from "./util";
 
 export const login = async (access_token: string) => {
     const payload = {
@@ -13,7 +13,7 @@ export const login = async (access_token: string) => {
         body: JSON.stringify(payload),
     };
 
-    const response = await fetch(`${backend_url}/user/login`, requestOptions);
+    const response = await fetch(`${BACKEND_URL}/user/login`, requestOptions);
 
     if (response.status === 401) {
         return window.location.href = '/'
@@ -37,7 +37,7 @@ export const createAccount = async (payload: any) => {
         body: JSON.stringify(payload),
     };
 
-    const response = await fetch(`${backend_url}/user/create`, requestOptions);
+    const response = await fetch(`${BACKEND_URL}/user/create`, requestOptions);
 
     if (response.status === 200) {
         let data = await response.json();
@@ -49,7 +49,7 @@ export const createAccount = async (payload: any) => {
 };
 
 export const generateToken = async (code: string, state: string) => {
-    const response = await fetch(`${backend_url}/auth/callback?code=${code}&state=${state}`, {method: 'GET'});
+    const response = await fetch(`${BACKEND_URL}/auth/callback?code=${code}&state=${state}`, { method: 'GET' });
     if (response.status === 200) {
         let data = await response.json();
         console.log("Success", data)

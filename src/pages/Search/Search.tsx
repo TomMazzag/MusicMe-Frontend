@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './Search.css';
 import { Navbar } from '../../components/Navbar';
 import { TrackSearch } from '../../components/Search/track';
-import { getNewToken } from '../../utils/tokenGen';
+import { getNewToken, getSpotifyToken } from '../../utils/tokenGen';
 import { searchUser } from '../../services/search';
 import { UserSearch } from '../../components/Search/user';
 import { ArtistSearch } from '../../components/Search/artist';
@@ -12,7 +12,7 @@ import { MetaWrapper } from '../../components/Util/MetaWrapper';
 const SearchPage = () => {
     const [searchCategory, setSearchCategory] = useState('Track');
     const [searchInput, setSearchInput] = useState('');
-    const [access_token, setAccess_token] = useState(localStorage.getItem('access_token'));
+    const [access_token, setAccess_token] = useState(getSpotifyToken());
     const [result, setResult] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -35,7 +35,7 @@ const SearchPage = () => {
                     if (data.error) {
                         if (data.error.status === 401) {
                             console.log('Generating new token');
-                            getNewToken().then((newToken) => setAccess_token(newToken!));
+                            getNewToken().then((newToken) => setAccess_token(newToken));
                             return;
                         }
                     } else {

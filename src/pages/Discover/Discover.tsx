@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Navbar } from '../../components/Navbar';
 import { SongSearchTile } from '../../components/Util/SongSearchTile';
 import { getTopViewedTracks } from '../../services/song';
-import { getPlatformToken } from '../../utils/tokenGen';
+import { getPlatformToken, getSpotifyToken } from '../../utils/tokenGen';
 import { useQuery } from '@tanstack/react-query';
 import { ScaleLoader } from 'react-spinners';
 
@@ -12,13 +12,13 @@ interface TrackWithViews extends SpotifyApi.TrackObjectFull {
 
 export const DiscoverPage = ({}) => {
     const platform_token = getPlatformToken();
-    const spotify_token = localStorage.getItem('access_token');
+    const spotify_token = getSpotifyToken();
     const navigate = useNavigate();
 
     const { data: tracks, isLoading } = useQuery({
         queryKey: ['song'],
         queryFn: async (): Promise<TrackWithViews[]> =>
-            getTopViewedTracks(platform_token, spotify_token!).then((data) => {
+            getTopViewedTracks(platform_token, spotify_token).then((data) => {
                 return data.songsData;
             }),
     });

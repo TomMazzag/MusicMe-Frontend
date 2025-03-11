@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { Navbar } from '../../components/Navbar';
 import { useEffect, useRef, useState } from 'react';
-import { getNewToken, getPlatformToken } from '../../utils/tokenGen';
+import { getNewToken, getPlatformToken, getSpotifyToken } from '../../utils/tokenGen';
 import { getSong } from '../../services/search';
 import { toggleLikeSong } from '../../services/account';
 import { Song } from '../../types/Song';
@@ -14,7 +14,7 @@ import { addTrackView } from '../../services/song';
 
 export const TrackPage = () => {
     const { songId } = useParams();
-    const [access_token, setAccess_token] = useState(localStorage.getItem('access_token'));
+    const [access_token, setAccess_token] = useState(getSpotifyToken());
     const [song, setSong] = useState<Song>();
     const [comment, setComment] = useState('');
     const platform_token = getPlatformToken();
@@ -28,14 +28,14 @@ export const TrackPage = () => {
 
     const getSongAsync = async () => {
         try {
-            const res = await getSong(songId, access_token!, platform_token);
+            const res = await getSong(songId, access_token, platform_token);
             res.spotifyData = { ...res.spotifyData, likes: res.likes, userHasLiked: res.user_has_liked, views: res.views };
             setSong(res.spotifyData);
         } catch (error) {
             if ((error = 'Expired Token')) {
                 console.log('Generating new token');
                 const newToken = await getNewToken();
-                setAccess_token(newToken!);
+                setAccess_token(newToken);
                 return;
             }
         }

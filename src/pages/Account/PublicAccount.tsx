@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Account.css';
-import { getNewToken, getPlatformToken } from '../../utils/tokenGen';
+import { getNewToken, getPlatformToken, getSpotifyToken } from '../../utils/tokenGen';
 import { Navbar } from '../../components/Navbar';
 import { useParams } from 'react-router-dom';
 import { getAccountDetailsPublicAccount } from '../../services/account';
@@ -16,7 +16,7 @@ interface Playlist {
 }
 
 export const PublicAccount = () => {
-    const [access_token, setAccess_token] = useState(localStorage.getItem('access_token'));
+    const [access_token, setAccess_token] = useState(getSpotifyToken());
     const platform_token = getPlatformToken();
     const [profile, setProfile] = useState<PublicProfile>();
     const [playlists, setPlaylists] = useState<any>();

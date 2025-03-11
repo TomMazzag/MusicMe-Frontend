@@ -17,8 +17,21 @@ export const getNewToken = async () => {
     return response.access_token;
 };
 
+const PLATFORM_TOKEN_STORAGE_KEY = 'platform_token';
 export const getPlatformToken = () => {
-    const platform_token = localStorage.getItem('platform_token');
+    const platform_token = localStorage.getItem(PLATFORM_TOKEN_STORAGE_KEY);
+
+    if (!platform_token) {
+        window.location.href = '/';
+        throw new Error('platform_token is required but was not found.');
+    }
+
+    return platform_token;
+};
+
+const SPOTIFY_TOKEN_STORAGE_KEY = 'access_token';
+export const getSpotifyToken = () => {
+    const platform_token = localStorage.getItem(SPOTIFY_TOKEN_STORAGE_KEY);
 
     if (!platform_token) {
         window.location.href = '/';
