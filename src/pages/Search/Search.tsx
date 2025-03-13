@@ -8,10 +8,17 @@ import { UserSearch } from '../../components/Search/user';
 import { ArtistSearch } from '../../components/Search/artist';
 import { AlbumSearch } from '../../components/Search/album';
 import { MetaWrapper } from '../../components/Util/MetaWrapper';
+import { useSearchParams } from 'react-router-dom';
+
+type Category = 'Track' | 'Artist' | 'Album' | 'Username'
+type Params = 'query' | 'category'
 
 const SearchPage = () => {
-    const [searchCategory, setSearchCategory] = useState('Track');
-    const [searchInput, setSearchInput] = useState('');
+    const [searchParams, setSearchParams] = useSearchParams();
+    const query = searchParams.get('query');
+    const category = searchParams.get('category') as Category | null;
+    const [searchCategory, setSearchCategory] = useState<Category>(category ? category : 'Track');
+    const [searchInput, setSearchInput] = useState(query ? query : '');
     const [access_token, setAccess_token] = useState(getSpotifyToken());
     const [result, setResult] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -55,6 +62,23 @@ const SearchPage = () => {
         }
     }, [searchCategory, searchInput]);
 
+    const updateCategory = (value: Category) => {
+        setSearchInput('');
+        updateSearchParameter('category', value);
+        setSearchCategory(value);
+    }
+
+    const updateSearchInput = (value: string ) => {
+        updateSearchParameter('query', value);
+        setSearchInput(value);
+    };
+
+    const updateSearchParameter = (parameter: Params, value: string) => {
+        const newParams = new URLSearchParams(searchParams);
+        newParams.set(parameter, value);
+        setSearchParams(newParams);
+    };
+
     return (
         <>
             <MetaWrapper title="Search" />
@@ -76,28 +100,28 @@ const SearchPage = () => {
                         >
                             <li
                                 onClick={() => {
-                                    setSearchCategory('Track');
+                                    updateCategory('Track');
                                 }}
                             >
                                 <a>Song</a>
                             </li>
                             <li
                                 onClick={() => {
-                                    setSearchCategory('Artist');
+                                    updateCategory('Artist');
                                 }}
                             >
                                 <a>Artist</a>
                             </li>
                             <li
                                 onClick={() => {
-                                    setSearchCategory('Album');
+                                    updateCategory('Album');
                                 }}
                             >
                                 <a>Album</a>
                             </li>
                             <li
                                 onClick={() => {
-                                    setSearchCategory('Username');
+                                    updateCategory('Username')
                                 }}
                             >
                                 <a>People</a>
@@ -110,7 +134,7 @@ const SearchPage = () => {
                         placeholder={`Search by ${searchCategory}`}
                         value={searchInput}
                         onChange={(e) => {
-                            setSearchInput(e.target.value);
+                            updateSearchInput(e.target.value)
                         }}
                     />
                     <button>

@@ -29,7 +29,12 @@ export const TrackPage = () => {
     const getSongAsync = async () => {
         try {
             const res = await getSong(songId, access_token, platform_token);
-            res.spotifyData = { ...res.spotifyData, likes: res.likes, userHasLiked: res.user_has_liked, views: res.views };
+            res.spotifyData = {
+                ...res.spotifyData,
+                likes: res.likes,
+                userHasLiked: res.user_has_liked,
+                views: res.views,
+            };
             setSong(res.spotifyData);
         } catch (error) {
             if ((error = 'Expired Token')) {
@@ -113,21 +118,24 @@ export const TrackPage = () => {
                                     <p className="text text-xl">
                                         {song.likes} {song.likes === 1 ? 'Like' : 'Likes'}
                                     </p>
-                                    <div className='flex gap-2 items-center ml-6' title='Views today'>
-                                        <i className="fa-solid fa-eye" aria-label='Eye icon'></i>
-                                        <p className="text text-xl" aria-label='song views'>{song.views}</p>
+                                    <div className="flex gap-2 items-center ml-6" title="Views today">
+                                        <i className="fa-solid fa-eye" aria-label="Eye icon"></i>
+                                        <p className="text text-xl" aria-label="song views">
+                                            {song.views}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div
                             className={`flex ${
-                                reviews.length > 0
+                                reviews && reviews.length > 0
                                     ? 'w-[90%] md:w-[50%] justify-start my-4 flex-col grow overflow-y-auto gap-4'
                                     : 'grow items-center w-[75%] md:w-full' /* Add logic for if theres no comments */
                             }`}
                         >
                             {reviews.length > 0 ? (
+                                reviews &&
                                 reviews.map((review: Review) => (
                                     <ReviewBox
                                         review={review}
