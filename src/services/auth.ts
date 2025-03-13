@@ -16,7 +16,7 @@ export const login = async (access_token: string) => {
     const response = await fetch(`${BACKEND_URL}/user/login`, requestOptions);
 
     if (response.status === 401) {
-        return window.location.href = '/'
+        return (window.location.href = '/');
     }
 
     if (response.status === 200) {
