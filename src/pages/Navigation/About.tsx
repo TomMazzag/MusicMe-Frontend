@@ -12,24 +12,24 @@ export const AboutPage = () => {
             </Helmet>
             <nav className="navbar bg-base-100 border-b-2 border-accent">
                 <div className="flex-1">
-                    <a href="/" className="btn btn-ghost text-4xl">
+                    <a href="/" className="btn btn-ghost text-xl md:text-4xl">
                         MusicMe
                     </a>
                 </div>
                 <ul className="flex-none gap-2 inline-flex"></ul>
                 <li>
-                    <a href="/" className="btn btn-ghost text-xl">
+                    <a href="/" className="btn btn-sm md:btn-md btn-ghost md:text-xl">
                         Login
                     </a>
                 </li>
                 <li>
-                    <a href="/register" className="btn btn-ghost text-xl">
+                    <a href="/register" className="btn btn-sm md:btn-md btn-ghost md:text-xl">
                         Sign up for the beta
                     </a>
                 </li>
             </nav>
 
-            <div className="p-4 grid grid-cols-2">
+            <div className="p-4 md:grid md:grid-cols-2">
                 <SectionTile title="What is MusicMe?">
                     <p>
                         MusicMe is an online platformed aimed to allow users to share their music taste with others,
