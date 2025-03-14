@@ -12,11 +12,16 @@ import { Connections } from './pages/Account/Connections';
 import { AccountSettings } from './pages/Account/AccountSettings';
 import { BetaSignUp } from './pages/Navigation/BetaSignUp';
 import { DiscoverPage } from './pages/Discover/Discover';
+import { AboutPage } from './pages/Navigation/About';
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Welcome />,
+    },
+    {
+        path: '/about',
+        element: <AboutPage />,
     },
     {
         path: '/success',
@@ -78,8 +83,8 @@ const router = createBrowserRouter([
     },
     {
         path: '/register',
-        element: <BetaSignUp />
-    }
+        element: <BetaSignUp />,
+    },
 ]);
 
 function App() {

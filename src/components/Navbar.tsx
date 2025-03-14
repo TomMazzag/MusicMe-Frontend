@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getAccountDetailsUsersAccount } from '../services/account';
 import { getPlatformToken } from '../utils/tokenGen';
+import { Helmet } from 'react-helmet-async';
 
 export const Navbar = () => {
     const [profile_pic_url, setProfile_pic_url] = useState<string>('');
@@ -14,6 +15,12 @@ export const Navbar = () => {
 
     return (
         <nav className="navbar bg-base-100 border-b-2 border-accent">
+            <Helmet>
+                <meta
+                    name="description"
+                    content="MusicMe: A social media platform for sharing music taste, discovering new tunes, and connecting with fellow music lovers. Join the beta today!"
+                />
+            </Helmet>
             <div className="flex-1">
                 <a href="/account" className="btn btn-ghost text-4xl">
                     MusicMe
