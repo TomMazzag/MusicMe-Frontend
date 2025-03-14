@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import platformImage from '../../assets/platform.webp';
 const backend_url = import.meta.env.VITE_BACKEND_URL;
 
 export const Welcome = () => {
@@ -66,7 +67,7 @@ export const Welcome = () => {
                 </div>
                 <img
                     className="h-full border-l-4 border-accent object-cover object-left hidden md:block"
-                    src="./src/assets/platform.webp"
+                    src={platformImage}
                     alt="Platform image"
                 />
             </div>
