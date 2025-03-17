@@ -15,23 +15,21 @@ type Params = 'query' | 'category'
 
 const SearchPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const query = searchParams.get('query');
-    const category = searchParams.get('category') as Category | null;
-    const [searchCategory, setSearchCategory] = useState<Category>(category ? category : 'Track');
-    const [searchInput, setSearchInput] = useState(query ? query : '');
+    const query = searchParams.get('query') || '';
+    const category = searchParams.get('category') as Category || 'Track';
     const [access_token, setAccess_token] = useState(getSpotifyToken());
     const [result, setResult] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const url = `https://api.spotify.com/v1/search?q=${searchInput}&type=${searchCategory.toLowerCase()}`;
+    const url = `https://api.spotify.com/v1/search?q=${query}&type=${category.toLowerCase()}`;
     let encodedURI = encodeURI(url);
 
     useEffect(() => {
-        if (searchInput.length === 0) {
+        if (query.length === 0) {
             setResult([]);
         }
 
-        if (searchInput.length > 1 && searchCategory !== 'Username') {
+        if (query.length > 1 && category !== 'Username') {
             setIsLoading(true);
             fetch(encodedURI, {
                 method: 'GET',
@@ -46,32 +44,21 @@ const SearchPage = () => {
                             return;
                         }
                     } else {
-                        const category = searchCategory.toLowerCase() + 's';
+                        const transformedCategory = category.toLowerCase() + 's';
                         setIsLoading(false);
-                        setResult(data[category].items);
+                        setResult(data[transformedCategory].items);
                     }
                 });
-        } else if (searchInput.length > 1) {
+        } else if (query.length > 1) {
             const userSearch = async () => {
                 setIsLoading(true);
-                const userSearch = await searchUser(searchInput);
+                const userSearch = await searchUser(query);
                 setIsLoading(false);
                 setResult(userSearch.request);
             };
             userSearch();
         }
-    }, [searchCategory, searchInput]);
-
-    const updateCategory = (value: Category) => {
-        setSearchInput('');
-        updateSearchParameter('category', value);
-        setSearchCategory(value);
-    }
-
-    const updateSearchInput = (value: string ) => {
-        updateSearchParameter('query', value);
-        setSearchInput(value);
-    };
+    }, [category, query]);
 
     const updateSearchParameter = (parameter: Params, value: string) => {
         const newParams = new URLSearchParams(searchParams);
@@ -91,7 +78,7 @@ const SearchPage = () => {
                             role="button"
                             className="btn border-none bg-transparent my-0 rounded-bl-full rounded-tl-full h-10 min-h-1 pr-0"
                         >
-                            <span>{searchCategory}</span>
+                            <span>{category}</span>
                             <i className="fa-solid fa-chevron-down"></i>
                         </div>
                         <ul
@@ -100,28 +87,28 @@ const SearchPage = () => {
                         >
                             <li
                                 onClick={() => {
-                                    updateCategory('Track');
+                                    updateSearchParameter('category', 'Track');
                                 }}
                             >
                                 <a>Song</a>
                             </li>
                             <li
                                 onClick={() => {
-                                    updateCategory('Artist');
+                                    updateSearchParameter('category', 'Artist');
                                 }}
                             >
                                 <a>Artist</a>
                             </li>
                             <li
                                 onClick={() => {
-                                    updateCategory('Album');
+                                    updateSearchParameter('category', 'Album');
                                 }}
                             >
                                 <a>Album</a>
                             </li>
                             <li
                                 onClick={() => {
-                                    updateCategory('Username')
+                                    updateSearchParameter('category', 'Username')
                                 }}
                             >
                                 <a>People</a>
@@ -131,10 +118,10 @@ const SearchPage = () => {
 
                     <input
                         type="text"
-                        placeholder={`Search by ${searchCategory}`}
-                        value={searchInput}
+                        placeholder={`Search by ${category}`}
+                        value={query}
                         onChange={(e) => {
-                            updateSearchInput(e.target.value)
+                            updateSearchParameter('query', e.target.value)
                         }}
                     />
                     <button>
@@ -150,9 +137,9 @@ const SearchPage = () => {
                             <div className="skeleton h-28 w-2/3"></div>
                         </>
                     )}
-                    {searchInput.length > 1 &&
+                    {query.length > 1 &&
                         (() => {
-                            switch (searchCategory) {
+                            switch (category) {
                                 case 'Track':
                                     return <TrackSearch result={result} />;
                                 case 'Artist':
@@ -163,7 +150,7 @@ const SearchPage = () => {
                                     return <UserSearch result={result} />;
                             }
                         })()}
-                    {searchInput.length > 1 && result.length < 1 && (
+                    {query.length > 1 && result.length < 1 && (
                         <p className="text text-xl mt-20">No results ...</p>
                     )}
                 </div>

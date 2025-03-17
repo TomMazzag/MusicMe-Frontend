@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
+import userProfileImage from '../../assets/exampleProfilePage.webp';
+import analyticsExample from '../../assets/profileAnalytics.webp';
 
 export const AboutPage = () => {
     return (
@@ -30,25 +32,25 @@ export const AboutPage = () => {
             </nav>
 
             <div className="p-4 md:grid md:grid-cols-2">
-                <SectionTile title="What is MusicMe?">
+                <TextTile title="What is MusicMe?">
                     <p>
                         MusicMe is an online platformed aimed to allow users to share their music taste with others,
                         discover new music, gain and share insights into their music taste
                     </p>
-                </SectionTile>
-                <div></div>
+                </TextTile>
+                <ImageTile src={userProfileImage} />
 
-                <div></div>
-                <SectionTile title="Why use our platform?">
+                <ImageTile src={analyticsExample} />
+                <TextTile title="Why use our platform?">
                     <p>Our platform is a way to give your opinion on songs and give them a rating</p>
                     <br />
                     <p>
                         In the start we will aim to create as many new features as users feel necessary. We want to
                         create a platform for the music community
                     </p>
-                </SectionTile>
+                </TextTile>
 
-                <SectionTile title="Future goals">
+                <TextTile title="Future goals">
                     <p>As mentioned above we will be happy to listen to any product requests from users</p>
                     <br />
                     <p>Some of the goals we already have planned are:</p>
@@ -57,22 +59,34 @@ export const AboutPage = () => {
                         <li>Greater profile analytics</li>
                         <li>Song suggestions using AI/ML</li>
                     </ul>
-                </SectionTile>
+                </TextTile>
             </div>
         </>
     );
 };
 
-interface SectionTileProps {
+interface TextTileProps {
     title: string;
     children?: ReactNode;
 }
 
-const SectionTile = ({ title, children }: SectionTileProps) => {
+const TextTile = ({ title, children }: TextTileProps) => {
     return (
         <div className="bg-base-300 px-10 py-6 rounded-xl mx-14 my-6">
             <h1 className="text-accent text-3xl mb-2">{title}</h1>
             {children}
+        </div>
+    );
+};
+
+interface ImageTileProps {
+    src: string;
+}
+
+const ImageTile = ({ src }: ImageTileProps) => {
+    return (
+        <div className="mx-14 my-6 px-10 py-6 rounded-xl border border-accent">
+            <img src={src} alt="" />
         </div>
     );
 };
