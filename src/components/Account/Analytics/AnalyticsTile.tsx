@@ -4,13 +4,14 @@ import { getAccountAnalytics } from '../../../services/account';
 import { ScaleLoader } from 'react-spinners';
 import { Chart } from './Chart';
 import { HighlightedSong } from './HighlightedSong';
+import { GenreSelector } from '../GenreSelector';
 
 interface StatsProps {
     data: {
         playlistCount: number;
-        likedSongs: number | undefined
+        likedSongs: number | undefined;
     };
-    profileId?: string
+    profileId?: string;
 }
 
 export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
@@ -38,7 +39,7 @@ export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
     });
 
     if (isSuccess) {
-        console.log("Analytics: ", analytics)
+        console.log('Analytics: ', analytics);
     }
 
     if (isLoading) {
@@ -46,7 +47,7 @@ export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
     }
 
     return (
-        <div className="flex flex-col text-center mb-10 items-center gap-10">
+        <div className="flex flex-col text-center mb-10 items-center gap-14">
             {data && analytics && (
                 <>
                     <div>
@@ -54,17 +55,32 @@ export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
                         <HighlightedSong track={analytics.topTracks.items[0]} />
                     </div>
 
-                    <div>
-                        <p>Total Playlists: {data.playlistCount}</p>
-                        <p className="text-center">Songs liked: {data.likedSongs}</p>
-                    </div>
-
                     <div className="grid md:grid-cols-2 gap-14 px-10">
+                        <div className="grid grid-cols-2 gap-8">
+                            <StatsTile heading="Total Playlists" statValue={String(data.playlistCount)} />
+                            <StatsTile heading="Songs liked" statValue={String(data.likedSongs)} />
+                        </div>
+                        <div aria-label="Genre badges container" className="md:w-[480px]">
+                            <GenreSelector selectedGenres={[]} />
+                        </div>
                         <Chart title="Top Artists" rowData={analytics.topArtists.items} />
                         <Chart title="Top Songs" rowData={analytics.topTracks.items} />
                     </div>
                 </>
             )}
+        </div>
+    );
+};
+
+interface StatsTileProps {
+    heading: string;
+    statValue: string;
+}
+export const StatsTile = ({ heading, statValue }: StatsTileProps) => {
+    return (
+        <div className="flex items-center flex-col bg-base-300 rounded-2xl md:rounded-md p-4 px-2 gap-2">
+            <h1 className='text-xl'>{heading}</h1>
+            <p className='flex-1 text-4xl font-semibold text-accent'>{statValue}</p>
         </div>
     );
 };

@@ -1,3 +1,4 @@
+import { shortenString } from '../../../utils/stringShorten';
 import { ClickableDiv } from '../../Util/ClickableDiv';
 import { SongSearchModalSmall } from './SongSearchMini';
 
@@ -21,7 +22,7 @@ export const HighlightedSong = ({ track }: Props) => {
                 <div className="flex items-center gap-3 bg-base-300 w-[280px] rounded-l-lg overflow-hidden">
                     <img src={track.album.images[0].url} alt="" className="h-16" />
                     <div className="text-start flex-1">
-                        <p>{track.name}</p>
+                        <p>{shortenString(track.name, 25)}</p>
                         <p className="opacity-60">{track.artists[0].name}</p>
                     </div>
                 </div>

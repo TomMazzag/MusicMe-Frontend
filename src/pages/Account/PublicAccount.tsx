@@ -10,6 +10,7 @@ import { shortenString } from '../../utils/stringShorten';
 import { LikedSongsTab } from '../../components/LikedSongs/LikedSongsTab';
 import { Tablist } from '../../components/Account/Tablist';
 import { AnalyticsTile } from '../../components/Account/Analytics/AnalyticsTile';
+import { ProfileImageAndNumbers } from '../../components/Account/ProfilePicAndUserStats';
 
 interface Playlist {
     public: boolean;
@@ -109,37 +110,7 @@ export const PublicAccount = () => {
             {profile ? (
                 <div className="profile mt-10">
                     <div className="flex mb-[35px] flex-col">
-                        <div className="flex px-4 mb-4">
-                            <img
-                                src={profile.profile_picture_url}
-                                alt=""
-                                className="rounded-full w-[32vw] h-[32vw] mr-4 lg:w-[15vw] lg:h-[15vw] lg:mr-10 object-cover"
-                            />
-                            <div className="account-details">
-                                <h2 className="text-3xl font-bold text-center">{profile.full_name}</h2>
-                                <p className="text-center opacity-70 mb-5">@{profile.username}</p>
-                                <div className="follower-count text-center">
-                                    <div>
-                                        <a href={`/user/${profile.user_id}/followers`}>
-                                            <h2>{profile.followers}</h2>
-                                            <p className="text-sm">followers</p>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <a href={`/user/${profile.user_id}/following`}>
-                                            <h2>{profile.following}</h2>
-                                            <p className="text-sm">following</p>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <a href={`/user/${profile.user_id}/reviews`}>
-                                            <h2>{profile.review_count}</h2>
-                                            <p className="text-sm">reviews</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <ProfileImageAndNumbers profile={profile} />
                         <button
                             className={`btn btn-sm w-[80%] self-center mt-5 border-primary ${
                                 !following && 'btn-primary'
