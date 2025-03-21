@@ -27,6 +27,7 @@ export interface ConnecitonProfile {
 
 export interface ProfileAnalytics {
     message: string;
+    highlightedSong: SpotifyApi.TrackObjectFull;
     topArtists: {
         items: SpotifyApi.ArtistObjectFull[];
     };

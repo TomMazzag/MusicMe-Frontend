@@ -6,13 +6,13 @@ interface Props {
     track: SpotifyApi.TrackObjectFull;
 }
 
-const selectNewHighlightedSong = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+const showNewHighlightedSongModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
-    const modal = document.getElementById('song-search-modal') as HTMLDialogElement | null; 
+    const modal = document.getElementById('song-search-modal') as HTMLDialogElement | null;
     if (!modal) {
-        return console.log('Modal missing from page')
+        return console.log('Modal missing from page');
     }
-    modal.showModal()
+    modal.showModal();
 };
 
 export const HighlightedSong = ({ track }: Props) => {
@@ -29,11 +29,11 @@ export const HighlightedSong = ({ track }: Props) => {
             </ClickableDiv>
             <button
                 className="w-10 bg-gray-700 h-full flex items-center rounded-r-lg"
-                onClick={(e) => selectNewHighlightedSong(e)}
+                onClick={(e) => showNewHighlightedSongModal(e)}
             >
                 <i className="fa-regular fa-pen-to-square fa-small flex-1"></i>
             </button>
-            <SongSearchModalSmall open={true} modalId="song-search-modal" />
+            <SongSearchModalSmall modalId="song-search-modal"/>
         </div>
     );
 };

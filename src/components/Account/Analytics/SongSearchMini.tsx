@@ -1,18 +1,20 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { ScaleLoader } from 'react-spinners';
 import { SongSearchTile } from '../../Util/SongSearchTile';
-import { getSpotifyToken } from '../../../utils/tokenGen';
+import { getPlatformToken, getSpotifyToken } from '../../../utils/tokenGen';
+import { setHighlightedSong } from '../../../services/account';
 
 interface Props {
-    open: boolean;
     modalId: string;
 }
 
-export const SongSearchModalSmall = ({ open, modalId }: Props) => {
+export const SongSearchModalSmall = ({ modalId }: Props) => {
     const [searchInput, setSearchInput] = useState('');
     const access_token = getSpotifyToken();
+    const platform_token = getPlatformToken();
     const encodedURI = `https://api.spotify.com/v1/search?q=${searchInput}&type=track`;
+    const queryClient = useQueryClient()
 
     const { data: tracks, isLoading } = useQuery({
         queryKey: ['song', searchInput],
@@ -29,12 +31,18 @@ export const SongSearchModalSmall = ({ open, modalId }: Props) => {
         enabled: searchInput.length > 2,
     });
 
-    const setNewHighlightedSong = (trackId: String) => {
-        return trackId;
+    const setNewHighlightedSong = async (trackId: string) => {
+        await setHighlightedSong(platform_token, trackId)
+        const modal = document.getElementById('song-search-modal') as HTMLDialogElement | null;
+        if (!modal) {
+            return console.log('Modal missing from page');
+        }
+        modal.close();
+        queryClient.invalidateQueries({ queryKey: ['analytics'], refetchType: 'active' });
     };
 
     return (
-        <dialog className={`modal ${open ? 'visible' : 'hidden'}`} id={modalId}>
+        <dialog className="modal" id={modalId}>
             <div className="modal-box">
                 <div>
                     <label className="input w-full flex gap-2 items-center mb-4">
@@ -76,6 +84,7 @@ export const SongSearchModalSmall = ({ open, modalId }: Props) => {
                                                         trackId: track.id,
                                                     }}
                                                     onClickHandler={setNewHighlightedSong}
+                                                    key={track.id}
                                                 />
                                             </>
                                         );

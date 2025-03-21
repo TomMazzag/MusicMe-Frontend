@@ -14,9 +14,9 @@ export const GenreSelector = ({ selectedGenres }: GenreSelectorProps) => {
                 Add your favourite genre badges
             </div>
             <div className="collapse-content text-sm">
-                <div className="grid grid-cols-3 md:grid-cols-4 gap-2 justify-items-center max-h-40 overflow-scroll">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 justify-items-center md:max-h-[4.5rem] overflow-scroll">
                     {genres.map((genreName) => {
-                        return <>{ProfileBadges[genreName].component}</>;
+                        return <div key={genreName}>{ProfileBadges[genreName].component}</div>;
                     })}
                 </div>
             </div>

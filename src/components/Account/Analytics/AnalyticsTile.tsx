@@ -27,20 +27,12 @@ export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
         );
     }
 
-    const {
-        data: analytics,
-        isLoading,
-        isSuccess,
-    } = useQuery({
+    const { data: analytics, isLoading } = useQuery({
         queryKey: ['analytics'],
         queryFn: async () => getAccountAnalytics(platform_token, access_token),
         refetchOnWindowFocus: false,
         staleTime: 1000 * 60 * 5,
     });
-
-    if (isSuccess) {
-        console.log('Analytics: ', analytics);
-    }
 
     if (isLoading) {
         return <ScaleLoader color={'#22c55e'} />;
@@ -52,7 +44,9 @@ export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
                 <>
                     <div>
                         <p className="text-center mb-4 text-2xl">Highligted Song:</p>
-                        <HighlightedSong track={analytics.topTracks.items[0]} />
+                        <HighlightedSong
+                            track={analytics.highlightedSong ? analytics.highlightedSong : analytics.topTracks.items[0]}
+                        />
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-14 px-10">
@@ -60,7 +54,7 @@ export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
                             <StatsTile heading="Total Playlists" statValue={String(data.playlistCount)} />
                             <StatsTile heading="Songs liked" statValue={String(data.likedSongs)} />
                         </div>
-                        <div aria-label="Genre badges container" className="md:w-[480px]">
+                        <div aria-label="Genre badges container">
                             <GenreSelector selectedGenres={[]} />
                         </div>
                         <Chart title="Top Artists" rowData={analytics.topArtists.items} />
@@ -79,8 +73,8 @@ interface StatsTileProps {
 export const StatsTile = ({ heading, statValue }: StatsTileProps) => {
     return (
         <div className="flex items-center flex-col bg-base-300 rounded-2xl md:rounded-md p-4 px-2 gap-2">
-            <h1 className='text-xl'>{heading}</h1>
-            <p className='flex-1 text-4xl font-semibold text-accent'>{statValue}</p>
+            <h1 className="text-xl">{heading}</h1>
+            <p className="flex-1 text-4xl font-semibold text-accent">{statValue}</p>
         </div>
     );
 };

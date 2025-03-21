@@ -1,5 +1,5 @@
-import { ProfileAnalytics } from "../types/Profile";
-import { BACKEND_URL, createAuthenticatedGetRequestOptions } from "./util";
+import { ProfileAnalytics } from '../types/Profile';
+import { BACKEND_URL, createAuthenticatedGetRequestOptions } from './util';
 
 export const getAccountDetailsUsersAccount = async (platform_token: string) => {
     const requestOptions = createAuthenticatedGetRequestOptions(platform_token);
@@ -50,5 +50,21 @@ export const getAccountAnalytics = async (platform_token: string, access_token: 
     const response = await fetch(`${BACKEND_URL}/user/analytics?access_token=${access_token}`, requestOptions);
 
     let data: ProfileAnalytics = await response.json();
+    return data;
+};
+
+export const setHighlightedSong = async (platform_token: string, songId: string) => {
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${platform_token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ songId }),
+    };
+
+    const response = await fetch(`${BACKEND_URL}/user/highlighted_song`, requestOptions);
+
+    let data = await response.json();
     return data;
 };
