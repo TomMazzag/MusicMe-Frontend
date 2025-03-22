@@ -1,4 +1,4 @@
-import { HighlightText } from "../../components/Util/HighlightedText";
+import { HighlightText } from '../../components/Util/TextComponents';
 
 export const BetaSignUp = () => {
     return (

@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import userProfileImage from '../../assets/exampleProfilePage.webp';
 import analyticsExample from '../../assets/profileAnalytics.webp';
-import { HighlightText } from '../../components/Util/HighlightedText';
+import { HighlightText } from '../../components/Util/TextComponents';
 
 export const AboutPage = () => {
     return (
@@ -53,14 +53,14 @@ export const AboutPage = () => {
                     <p>Some of the things were actively working on are:</p>
                     <ul className="ml-3 list-disc">
                         <li>
-                            <HighlightText bold={true}>Dedicated pages</HighlightText> for genres where you can find out about
-                            events happening neaby, new trending music for a specific genre and some of the top
+                            <HighlightText bold={true}>Dedicated pages</HighlightText> for genres where you can find out
+                            about events happening neaby, new trending music for a specific genre and some of the top
                             reccomended songs recently for a genre
                         </li>
                         <li>
-                            Showing you <HighlightText bold={true}>live analytics</HighlightText> of what the top searched songs on
-                            the platform are each day as well as the top artists and top reviews and providing you as
-                            much insight into these songs as possible
+                            Showing you <HighlightText bold={true}>live analytics</HighlightText> of what the top
+                            searched songs on the platform are each day as well as the top artists and top reviews and
+                            providing you as much insight into these songs as possible
                         </li>
                     </ul>
                 </TextTile>

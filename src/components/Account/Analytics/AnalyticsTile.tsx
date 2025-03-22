@@ -20,9 +20,9 @@ export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
 
     if (profileId) {
         return (
-            <div>
-                <p>Total Playlists: {data.playlistCount}</p>
-                <p className="text-center">Songs liked: {data.likedSongs}</p>
+            <div className="grid grid-cols-2 gap-8">
+                <StatsTile heading="Total Playlists" statValue={String(data.playlistCount)} />
+                <StatsTile heading="Songs liked" statValue={String(data.likedSongs)} />
             </div>
         );
     }
