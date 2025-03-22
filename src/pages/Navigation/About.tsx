@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import userProfileImage from '../../assets/exampleProfilePage.webp';
 import analyticsExample from '../../assets/profileAnalytics.webp';
+import { HighlightText } from '../../components/Util/HighlightedText';
 
 export const AboutPage = () => {
     return (
@@ -12,7 +13,7 @@ export const AboutPage = () => {
                     content="Find out more about the MusicMe platform. Learn about how you can share music, our long term goals and why you should use our platform."
                 />
             </Helmet>
-            <nav className="navbar bg-base-100 border-b-2 border-accent">
+            <nav className="navbar border-b-2 border-accent">
                 <div className="flex-1">
                     <a href="/" className="btn btn-ghost text-xl md:text-4xl">
                         MusicMe
@@ -52,13 +53,14 @@ export const AboutPage = () => {
                     <p>Some of the things were actively working on are:</p>
                     <ul className="ml-3 list-disc">
                         <li>
-                            Dedicated pages for genres where you can find out about events happening neaby, new trending
-                            music for a specific genre and some of the top reccomended songs recently for a genre
+                            <HighlightText bold={true}>Dedicated pages</HighlightText> for genres where you can find out about
+                            events happening neaby, new trending music for a specific genre and some of the top
+                            reccomended songs recently for a genre
                         </li>
                         <li>
-                            Showing you live analytics of what the top searched songs on the platform are each day as
-                            well as the top artists and top reviews and providing you as much insight into these songs
-                            as possible
+                            Showing you <HighlightText bold={true}>live analytics</HighlightText> of what the top searched songs on
+                            the platform are each day as well as the top artists and top reviews and providing you as
+                            much insight into these songs as possible
                         </li>
                     </ul>
                 </TextTile>
@@ -74,6 +76,20 @@ export const AboutPage = () => {
                     </ul>
                 </TextTile>
             </div>
+
+            <footer className="md:mt-10">
+                <div className="bg-base-300 flex justify-between px-10 py-8">
+                    Created by Thomas Mazzag
+                    <div aria-label="links" className="flex gap-2">
+                        <a href="https://www.linkedin.com/in/thomas-mazzag/" className="linkedin" target="_blank">
+                            <i className="fa-brands fa-linkedin fa-2xl" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://github.com/TomMazzag" className="github" target="_blank">
+                            <i className="fa-brands fa-github fa-2xl" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </footer>
         </>
     );
 };
@@ -85,7 +101,7 @@ interface TextTileProps {
 
 const TextTile = ({ title, children }: TextTileProps) => {
     return (
-        <div className="bg-base-300 px-10 py-6 rounded-xl mx-14 my-6">
+        <div className="bg-base-300 px-10 py-6 rounded-xl md:mx-14 my-6">
             <h1 className="text-accent text-3xl mb-2">{title}</h1>
             {children}
         </div>
@@ -98,7 +114,7 @@ interface ImageTileProps {
 
 const ImageTile = ({ src }: ImageTileProps) => {
     return (
-        <div className="mx-14 my-6 px-10 py-6 rounded-xl border border-accent">
+        <div className="md:mx-14 my-6 md:px-10  py-2 md:py-6 rounded-xl border border-accent">
             <img src={src} alt="" />
         </div>
     );
