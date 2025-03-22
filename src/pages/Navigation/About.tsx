@@ -34,8 +34,8 @@ export const AboutPage = () => {
             <div className="p-4 md:grid md:grid-cols-2">
                 <TextTile title="What is MusicMe?">
                     <p>
-                        MusicMe is an online platformed aimed to allow users to share their music taste with others,
-                        discover new music, gain and share insights into their music taste
+                        MusicMe is an online social media platform aimed at allow users to share their music taste with
+                        others, discover new music, gain and share insights into their music taste.
                     </p>
                 </TextTile>
                 <ImageTile src={userProfileImage} />
@@ -48,6 +48,19 @@ export const AboutPage = () => {
                         In the start we will aim to create as many new features as users feel necessary. We want to
                         create a platform for the music community
                     </p>
+                    <br />
+                    <p>Some of the things were actively working on are:</p>
+                    <ul className="ml-3 list-disc">
+                        <li>
+                            Dedicated pages for genres where you can find out about events happening neaby, new trending
+                            music for a specific genre and some of the top reccomended songs recently for a genre
+                        </li>
+                        <li>
+                            Showing you live analytics of what the top searched songs on the platform are each day as
+                            well as the top artists and top reviews and providing you as much insight into these songs
+                            as possible
+                        </li>
+                    </ul>
                 </TextTile>
 
                 <TextTile title="Future goals">

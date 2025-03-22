@@ -66,7 +66,7 @@ export const Welcome = () => {
                     </a>
                 </div>
                 <img
-                    className="h-full border-l-4 border-accent object-cover object-left hidden md:block"
+                    className="h-full border-l-4 border-accent object-cover object-right hidden md:block"
                     src={platformImage}
                     alt="Platform image"
                 />
