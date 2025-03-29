@@ -11,7 +11,7 @@ interface ChartTitleProp {
 
 export const SongSearchTile = ({ data, onClickHandler }: ChartTitleProp) => {
     return (
-        <div className="flex items-center gap-4 cursor-pointer" onClick={() => onClickHandler(data.trackId)}>
+        <div className="flex items-center gap-4 cursor-pointer flex-1" onClick={() => onClickHandler(data.trackId)}>
             <img src={data.imageUrl} alt="" className="h-14 rounded" />
             <div className="text-start">
                 <p>{data.value1}</p>

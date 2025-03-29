@@ -1,3 +1,4 @@
+import { PlatformGenres } from '../../types/Genre';
 import { ProfileBadges } from '../GenreBadges/GenreBadges';
 
 interface GenreSelectorProps {
@@ -6,7 +7,7 @@ interface GenreSelectorProps {
 
 export const GenreSelector = ({ selectedGenres }: GenreSelectorProps) => {
     console.log(selectedGenres)
-    const genres = Object.keys(ProfileBadges);
+    const genres = Object.keys(ProfileBadges) as PlatformGenres[];
     return (
         <div className="collapse bg-base-100 border-base-300 border">
             <input type="checkbox" />

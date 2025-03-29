@@ -85,6 +85,10 @@ const router = createBrowserRouter([
         path: '/register',
         element: <BetaSignUp />,
     },
+    {
+        path: '/genre/:genreKey',
+        element: <ComingSoon />,
+    },
 ]);
 
 function App() {

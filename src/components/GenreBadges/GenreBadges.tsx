@@ -1,4 +1,5 @@
 import { Disc3, Drum, Guitar, House, LucideIcon, MicVocal, PartyPopper, Piano, Speaker, Zap } from 'lucide-react';
+import { PlatformGenres } from '../../types/Genre';
 
 const BASE_STYLING = 'flex items-center gap-2 border rounded-lg p-1 px-2 w-[100px] text-sm text-bold cursor-pointer ';
 
@@ -13,7 +14,7 @@ const ProfileGenreBadge = ({ Icon, text, color }: BadgeProps) => (
     </div>
 );
 
-export const ProfileBadges: Record<string, { component: JSX.Element }> = {
+export const ProfileBadges: Record<PlatformGenres, { component: JSX.Element }> = {
     dnb: {
         component: <ProfileGenreBadge Icon={Drum} text="DNB" color="#00cdb7" />,
     },

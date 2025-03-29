@@ -1,5 +1,5 @@
-import { Genre } from "../../types/Genre";
-import { Title } from "../Util/TextComponents";
+import { Genre } from '../../types/Genre';
+import { ProfileBadges } from '../GenreBadges/GenreBadges';
 
 interface GenreTileProps {
     genre: Genre;
@@ -7,9 +7,11 @@ interface GenreTileProps {
 
 export const GenreTile = ({ genre }: GenreTileProps) => {
     return (
-        <div className="bg-base-300 cursor-pointer p-4 w-52 h-52 rounded-lg flex-none">
-            <Title>{genre.genre_name}</Title>
-            <p className="mt-2 opacity-70">{genre.short_description}</p>
-        </div>
+        <a href={`/genre/${genre.genre_key}`}>
+            <div className="bg-base-300 cursor-pointer px-4 py-6 w-52 h-48 rounded-lg flex-none text-center">
+                <div className="flex justify-center">{ProfileBadges[genre.genre_key].component}</div>
+                <p className="mt-4 opacity-70 text-sm">{genre.short_description}</p>
+            </div>
+        </a>
     );
 };
