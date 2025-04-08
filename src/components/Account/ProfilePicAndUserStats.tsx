@@ -1,6 +1,6 @@
-import { UsersProfile } from "../../types/Profile";
+import { Profile } from '../../types/Profile';
 
-export const ProfileImageAndNumbers = ({ profile }: { profile: UsersProfile }) => {
+export const ProfileImageAndNumbers = ({ profile }: { profile: Profile.User }) => {
     return (
         <div className="flex px-4 mb-4">
             <img

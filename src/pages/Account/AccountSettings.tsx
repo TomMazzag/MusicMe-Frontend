@@ -1,11 +1,11 @@
-import { Navbar } from '../../components/Navbar';
+import { Navbar } from '@MusicMe/components/navbar';
 import { GeneralSettings } from '../../components/Account/GeneralSettings';
 import { useQuery } from '@tanstack/react-query';
 import { getAccountDetailsUsersAccount } from '../../services/account';
-import { getPlatformToken } from '../../utils/tokenGen';
+import { getPlatformToken } from '@MusicMe/utils';
 import { useSearchParams } from 'react-router-dom';
 
-type Tabs = 'general' | 'spotify'
+type Tabs = 'general' | 'spotify';
 
 export const AccountSettings = () => {
     const [searchParams, setSearchParams] = useSearchParams();

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getSpotifyToken, SPOTIFY_TOKEN_STORAGE_KEY } from '../utils/tokenGen';
+import { getSpotifyToken, SPOTIFY_TOKEN_STORAGE_KEY } from '@MusicMe/utils';
 
 export const useSpotifyToken = () => {
     const [spotifyToken, setSpotifyToken] = useState(getSpotifyToken());

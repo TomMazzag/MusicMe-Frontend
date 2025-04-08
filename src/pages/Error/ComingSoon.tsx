@@ -1,4 +1,4 @@
-import { Navbar } from '../../components/Navbar';
+import { Navbar } from '@MusicMe/components/navbar';
 
 export const ComingSoon = () => {
     return (

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import './Account.css';
-import { getNewToken, getPlatformToken, getSpotifyToken } from '../../utils/tokenGen';
-import { Navbar } from '../../components/Navbar';
+import { getNewToken, getPlatformToken, getSpotifyToken } from '@MusicMe/utils';
+import { Navbar } from '@MusicMe/components/navbar';
 import { useParams } from 'react-router-dom';
 import { getAccountDetailsPublicAccount } from '../../services/account';
 import { followOrUnfollowUser } from '../../services/friend';
-import { PublicProfile } from '../../types/Profile';
-import { shortenString } from '../../utils/stringShorten';
+import { Profile } from '../../types/Profile';
+import { shortenString } from '@MusicMe/utils';
 import { LikedSongsTab } from '../../components/LikedSongs/LikedSongsTab';
 import { Tablist } from '../../components/Account/Tablist';
 import { AnalyticsTile } from '../../components/Account/Analytics/AnalyticsTile';
@@ -19,7 +19,7 @@ interface Playlist {
 export const PublicAccount = () => {
     const [access_token, setAccess_token] = useState(getSpotifyToken());
     const platform_token = getPlatformToken();
-    const [profile, setProfile] = useState<PublicProfile>();
+    const [profile, setProfile] = useState<Profile.Public>();
     const [playlists, setPlaylists] = useState<any>();
     const [activeTab, setActiveTab] = useState<string>('Playlists');
     let { user_id } = useParams();
@@ -27,7 +27,7 @@ export const PublicAccount = () => {
     const [likedSongs] = useState([]);
 
     if (user_id === undefined) {
-        return window.location.href = '/account'
+        return (window.location.href = '/account');
     }
 
     const getPlaylists = async (id: string) => {

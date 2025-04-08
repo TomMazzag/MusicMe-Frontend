@@ -6,7 +6,7 @@ import { StepTwo } from '../../components/AccountCreation/SecondStep';
 import { StepThree } from '../../components/AccountCreation/ThirdStep';
 import { useNavigate } from 'react-router-dom';
 import { createAccount } from '../../services/auth';
-import { getSpotifyToken } from '../../utils/tokenGen';
+import { getSpotifyToken } from '@MusicMe/utils';
 
 export const CreateAccount = () => {
     // Get spotify details

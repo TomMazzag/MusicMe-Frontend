@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { followOrUnfollowUser } from '../../services/friend';
-import { ConnecitonProfile } from '../../types/Profile';
-import { getPlatformToken } from '../../utils/tokenGen';
+import { Profile } from '../../types/Profile';
+import { getPlatformToken } from '@MusicMe/utils';
 
 export const UserProfileTile = ({
     user_id,
@@ -10,7 +10,7 @@ export const UserProfileTile = ({
     username,
     is_following,
     currentUserId,
-}: ConnecitonProfile) => {
+}: Profile.Conneciton) => {
     const [following, setFollowing] = useState(is_following);
     const platform_token = getPlatformToken();
 

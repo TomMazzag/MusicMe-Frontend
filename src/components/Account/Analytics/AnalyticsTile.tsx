@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getPlatformToken, getSpotifyToken } from '../../../utils/tokenGen';
+import { getPlatformToken, getSpotifyToken } from '@MusicMe/utils';
 import { getAccountAnalytics } from '../../../services/account';
 import { ScaleLoader } from 'react-spinners';
 import { Chart } from './Chart';

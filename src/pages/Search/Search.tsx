@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import './Search.css';
-import { Navbar } from '../../components/Navbar';
+import { Navbar } from '@MusicMe/components/navbar';
 import { TrackSearch } from '../../components/Search/track';
-import { getNewToken, getSpotifyToken } from '../../utils/tokenGen';
+import { getNewToken, getSpotifyToken } from '@MusicMe/utils';
 import { searchUser } from '../../services/search';
 import { UserSearch } from '../../components/Search/user';
 import { ArtistSearch } from '../../components/Search/artist';
@@ -10,13 +10,13 @@ import { AlbumSearch } from '../../components/Search/album';
 import { MetaWrapper } from '../../components/Util/MetaWrapper';
 import { useSearchParams } from 'react-router-dom';
 
-type Category = 'Track' | 'Artist' | 'Album' | 'Username'
-type Params = 'query' | 'category'
+type Category = 'Track' | 'Artist' | 'Album' | 'Username';
+type Params = 'query' | 'category';
 
 const SearchPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get('query') || '';
-    const category = searchParams.get('category') as Category || 'Track';
+    const category = (searchParams.get('category') as Category) || 'Track';
     const [access_token, setAccess_token] = useState(getSpotifyToken());
     const [result, setResult] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -108,7 +108,7 @@ const SearchPage = () => {
                             </li>
                             <li
                                 onClick={() => {
-                                    updateSearchParameter('category', 'Username')
+                                    updateSearchParameter('category', 'Username');
                                 }}
                             >
                                 <a>People</a>
@@ -121,7 +121,7 @@ const SearchPage = () => {
                         placeholder={`Search by ${category}`}
                         value={query}
                         onChange={(e) => {
-                            updateSearchParameter('query', e.target.value)
+                            updateSearchParameter('query', e.target.value);
                         }}
                     />
                     <button>
@@ -150,9 +150,7 @@ const SearchPage = () => {
                                     return <UserSearch result={result} />;
                             }
                         })()}
-                    {query.length > 1 && result.length < 1 && (
-                        <p className="text text-xl mt-20">No results ...</p>
-                    )}
+                    {query.length > 1 && result.length < 1 && <p className="text text-xl mt-20">No results ...</p>}
                 </div>
             </div>
         </>

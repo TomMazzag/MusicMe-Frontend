@@ -1,4 +1,4 @@
-import { shortenString } from '../../../utils/stringShorten';
+import { shortenString } from '@MusicMe/utils';
 import { ClickableDiv } from '../../Util/ClickableDiv';
 import { SongSearchModalSmall } from './SongSearchMini';
 

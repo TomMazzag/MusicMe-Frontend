@@ -3,7 +3,7 @@ import { Review } from '../../types/Review';
 import { ReviewBoxUserOptions } from './ReviewBoxUserOptions';
 import { QueryClient } from '@tanstack/react-query';
 import { toggleLikeReview } from '../../services/rewiew';
-import { getPlatformToken } from '../../utils/tokenGen';
+import { getPlatformToken } from '@MusicMe/utils';
 
 interface ReviewProps {
     review: Review;
@@ -22,7 +22,7 @@ export const ReviewBox = ({ review, currentUserId, queryClient }: ReviewProps) =
             const newLikes = prevStatus.liked ? prevStatus.likeCount - 1 : prevStatus.likeCount + 1;
             return {
                 liked: !prevStatus.liked,
-                likeCount: newLikes
+                likeCount: newLikes,
             };
         });
 
@@ -31,7 +31,7 @@ export const ReviewBox = ({ review, currentUserId, queryClient }: ReviewProps) =
         } catch (error) {
             console.error('Error toggling like:', error);
             setLikedStatus((prevStatus) => ({
-                liked: !prevStatus.liked, 
+                liked: !prevStatus.liked,
                 likeCount: prevStatus.liked ? prevStatus.likeCount + 1 : prevStatus.likeCount - 1,
             }));
         }
@@ -58,11 +58,13 @@ export const ReviewBox = ({ review, currentUserId, queryClient }: ReviewProps) =
                 <i
                     className={likedStatus.liked ? 'fa-solid fa-heart text-[20px]' : 'fa-regular fa-heart text-[20px]'}
                 ></i>
-                <span className='ml-[4px]'>{likedStatus.likeCount}</span>
+                <span className="ml-[4px]">{likedStatus.likeCount}</span>
             </button>
-            {review.user_id === currentUserId && <>
-                <ReviewBoxUserOptions reviewId={review.id} queryClient={queryClient}/>
-            </>}
+            {review.user_id === currentUserId && (
+                <>
+                    <ReviewBoxUserOptions reviewId={review.id} queryClient={queryClient} />
+                </>
+            )}
         </div>
     );
 };

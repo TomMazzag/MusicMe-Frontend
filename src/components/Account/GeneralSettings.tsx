@@ -1,9 +1,9 @@
-import { UsersProfile } from '../../types/Profile';
+import { Profile } from '../../types/Profile';
 import { ChangePasswordModal } from './ChangePasswordModal';
 
 interface GeneralSettingsProps {
     account: {
-        userDetails: UsersProfile;
+        userDetails: Profile.User;
     };
     isError: boolean;
     isLoading: boolean;

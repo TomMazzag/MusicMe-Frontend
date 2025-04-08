@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getAccountDetailsUsersAccount } from '../services/account';
-import { getPlatformToken } from '../utils/tokenGen';
+import { getPlatformToken } from '@MusicMe/utils';
 import { Helmet } from 'react-helmet-async';
 
 export const Navbar = () => {

@@ -1,6 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
 import { deleteReview } from '../../services/rewiew';
-import { getPlatformToken } from '../../utils/tokenGen';
+import { getPlatformToken } from '@MusicMe/utils';
 
 interface OptionsProps {
     reviewId: number;
@@ -8,10 +8,10 @@ interface OptionsProps {
 }
 
 export const ReviewBoxUserOptions = ({ reviewId, queryClient }: OptionsProps) => {
-    const platform_token = getPlatformToken()
+    const platform_token = getPlatformToken();
 
     const deleteClick = async () => {
-        await deleteReview(platform_token, reviewId)
+        await deleteReview(platform_token, reviewId);
         queryClient.invalidateQueries({ queryKey: ['reviews'] });
     };
 
@@ -22,7 +22,9 @@ export const ReviewBoxUserOptions = ({ reviewId, queryClient }: OptionsProps) =>
             </div>
             <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-22 p-2 shadow">
                 <button className="btn btn-sm">Edit</button>
-                <button className="btn btn-sm" onClick={deleteClick}>Delete</button>
+                <button className="btn btn-sm" onClick={deleteClick}>
+                    Delete
+                </button>
             </ul>
         </div>
     );

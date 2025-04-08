@@ -1,13 +1,12 @@
 import { useParams } from 'react-router-dom';
-import { Navbar } from '../../components/Navbar';
+import { Navbar } from '@MusicMe/components/navbar';
 import { useEffect, useRef, useState } from 'react';
-import { getNewToken, getPlatformToken, getSpotifyToken } from '../../utils/tokenGen';
+import { getNewToken, getPlatformToken, getSpotifyToken, getCurrentUserId } from '@MusicMe/utils';
 import { getSong } from '../../services/search';
 import { toggleLikeSong } from '../../services/account';
 import { Song } from '../../types/Song';
 import { ReviewBox } from '../../components/Review/ReviewBox';
 import { Review } from '../../types/Review';
-import { getCurrentUserId } from '../../utils/user';
 import { createReview, getReviews } from '../../services/rewiew';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { addTrackView } from '../../services/song';

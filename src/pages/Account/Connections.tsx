@@ -1,11 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { UserProfileTile } from '../../components/Account/UserProfileTile';
-import { Navbar } from '../../components/Navbar';
+import { Navbar } from '@MusicMe/components/navbar';
 import { useEffect, useState } from 'react';
 import { getFollowers, getFollowing } from '../../services/friend';
-import { ConnecitonProfile } from '../../types/Profile';
-import { getCurrentUserId } from '../../utils/user';
-import { getPlatformToken } from '../../utils/tokenGen';
+import { Profile } from '../../types/Profile';
+import { getCurrentUserId, getPlatformToken } from '@MusicMe/utils';
 
 interface ConnnecitonProps {
     ConnectionType: string;
@@ -43,7 +42,7 @@ export const Connections = ({ ConnectionType }: ConnnecitonProps) => {
 
                         <div className="flex flex-col w-full gap-3 py-5 md:w-[50%]">
                             {connections.length > 0 ? (
-                                connections.map((connection: ConnecitonProfile) => (
+                                connections.map((connection: Profile.Conneciton) => (
                                     <UserProfileTile
                                         key={connection.user_id}
                                         user_id={connection.user_id}

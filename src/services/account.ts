@@ -1,4 +1,4 @@
-import { ProfileAnalytics } from '../types/Profile';
+import { Profile } from '../types/Profile';
 import { BACKEND_URL, createAuthenticatedGetRequestOptions } from './util';
 
 export const getAccountDetailsUsersAccount = async (platform_token: string) => {
@@ -49,7 +49,7 @@ export const getAccountAnalytics = async (platform_token: string, access_token: 
 
     const response = await fetch(`${BACKEND_URL}/user/analytics?access_token=${access_token}`, requestOptions);
 
-    let data: ProfileAnalytics = await response.json();
+    let data: Profile.Analytics = await response.json();
     return data;
 };
 

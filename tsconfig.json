@@ -18,7 +18,19 @@
         "strict": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true
+        "noFallthroughCasesInSwitch": true,
+        "baseUrl": ".",
+        "paths": {
+            "@MusicMe/components/discover": [
+                "src/components/Discover/index.ts"
+            ],
+            "@MusicMe/components/navbar": [
+                "src/components/Navbar.tsx"
+            ],
+            "@MusicMe/utils": [
+                "src/utils/index.ts"
+            ]
+        }
     },
     "include": ["src"],
     "references": [{ "path": "./tsconfig.node.json" }]

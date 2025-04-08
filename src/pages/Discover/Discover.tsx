@@ -1,18 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import { Navbar } from '../../components/Navbar';
+import { Navbar } from '@MusicMe/components/navbar';
 import { SongSearchTile } from '../../components/Util/SongSearchTile';
 import { getTopViewedTracks } from '../../services/song';
-import { getPlatformToken, getSpotifyToken } from '../../utils/tokenGen';
+import { getPlatformToken, getSpotifyToken, shortenString } from '@MusicMe/utils';
 import { useQuery } from '@tanstack/react-query';
 import { ScaleLoader } from 'react-spinners';
 import { getAllGenres } from '../../services/genre';
-import { GenreTile } from '../../components/Discover/GenreTiles';
-import { DiscoverSection } from '../../components/Discover/DiscoverSections';
-import { ProgressionArrowUp } from '../../components/Discover/TopStatProgressionArrows';
+import { DiscoverSection, GenreTile, ProgressionArrowUp } from '@MusicMe/components/discover';
 import { ChartNoAxesColumnIncreasing } from 'lucide-react';
 import { getTopReviews } from '../../services/rewiew';
 import { TrendingReview } from '../../types/Review';
-import { shortenString } from '../../utils/stringShorten';
 
 interface TrackWithViews extends SpotifyApi.TrackObjectFull {
     viewCount: number;
@@ -35,7 +32,7 @@ export const DiscoverPage = ({}) => {
         queryKey: ['review'],
         queryFn: async (): Promise<TrendingReview[]> =>
             getTopReviews(platform_token, spotify_token).then((data) => {
-                console.log(data)
+                console.log(data);
                 return data;
             }),
     });

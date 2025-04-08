@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import './Account.css';
-import { getNewToken, getPlatformToken, getSpotifyToken } from '../../utils/tokenGen';
-import { Navbar } from '../../components/Navbar';
+import { getNewToken, getPlatformToken, getSpotifyToken } from '@MusicMe/utils';
+import { Navbar } from '@MusicMe/components/navbar';
 import { getAccountDetailsUsersAccount, getUsersLikedSongs } from '../../services/account';
 import { LikedSongsTab } from '../../components/LikedSongs/LikedSongsTab';
-import { shortenString } from '../../utils/stringShorten';
-import { UsersProfile } from '../../types/Profile';
+import { shortenString } from '@MusicMe/utils';
+import { Profile } from '../../types/Profile';
 import { MetaWrapper } from '../../components/Util/MetaWrapper';
 import { AnalyticsTile } from '../../components/Account/Analytics/AnalyticsTile';
 import { Tablist } from '../../components/Account/Tablist';
@@ -17,7 +17,7 @@ interface Playlist {
 
 export const UsersAccount = () => {
     const [access_token, setAccess_token] = useState(getSpotifyToken());
-    const [profile, setProfile] = useState<UsersProfile>();
+    const [profile, setProfile] = useState<Profile.User>();
     const [playlists, setPlaylists] = useState<any>();
     const [activeTab, setActiveTab] = useState<string>('Playlists');
     const platform_token = getPlatformToken();

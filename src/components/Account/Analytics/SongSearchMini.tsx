@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { ScaleLoader } from 'react-spinners';
 import { SongSearchTile } from '../../Util/SongSearchTile';
-import { getPlatformToken, getSpotifyToken } from '../../../utils/tokenGen';
+import { getPlatformToken, getSpotifyToken } from '@MusicMe/utils';
 import { setHighlightedSong } from '../../../services/account';
 
 interface Props {
