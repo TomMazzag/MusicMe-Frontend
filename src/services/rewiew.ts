@@ -77,3 +77,12 @@ export const toggleLikeReview = async (token: string, reviewId: number) => {
     let data = await response.json();
     return data;
 };
+
+export const getTopReviews = async (platform_token: string, spotify_token: string) => {
+    const requestOptions = createAuthenticatedGetRequestOptions(platform_token);
+
+    const response = await fetch(`${BACKEND_URL}/rate/top?spotify_token=${spotify_token}`, requestOptions);
+
+    let data = await response.json();
+    return data;
+};

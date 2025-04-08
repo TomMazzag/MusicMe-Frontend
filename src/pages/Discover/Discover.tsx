@@ -10,6 +10,9 @@ import { GenreTile } from '../../components/Discover/GenreTiles';
 import { DiscoverSection } from '../../components/Discover/DiscoverSections';
 import { ProgressionArrowUp } from '../../components/Discover/TopStatProgressionArrows';
 import { ChartNoAxesColumnIncreasing } from 'lucide-react';
+import { getTopReviews } from '../../services/rewiew';
+import { TrendingReview } from '../../types/Review';
+import { shortenString } from '../../utils/stringShorten';
 
 interface TrackWithViews extends SpotifyApi.TrackObjectFull {
     viewCount: number;
@@ -25,6 +28,15 @@ export const DiscoverPage = ({}) => {
         queryFn: async (): Promise<TrackWithViews[]> =>
             getTopViewedTracks(platform_token, spotify_token).then((data) => {
                 return data.songsData;
+            }),
+    });
+
+    const { data: reviews, isLoading: reviewsLoading } = useQuery({
+        queryKey: ['review'],
+        queryFn: async (): Promise<TrendingReview[]> =>
+            getTopReviews(platform_token, spotify_token).then((data) => {
+                console.log(data)
+                return data;
             }),
     });
 
@@ -73,10 +85,12 @@ export const DiscoverPage = ({}) => {
                                                     }}
                                                     onClickHandler={() => goToSongPage(track.id)}
                                                 />
-                                                <span className="flex gap-1" title="Track views">
+                                                <div className="flex" title="Track views">
                                                     <ChartNoAxesColumnIncreasing />
-                                                    {track.viewCount}
-                                                </span>
+                                                    <span className="w-[3ch] text-right" title="Track views">
+                                                        {track.viewCount}
+                                                    </span>
+                                                </div>
                                             </li>
                                         ))}
                                     </ul>
@@ -91,9 +105,29 @@ export const DiscoverPage = ({}) => {
                         </div>
                         <div className="bg-base-300 p-4 rounded-lg text-center">
                             <h1 className="text text-2xl mb-6">Trending reviews</h1>
-                            <>
-                                <p>No data today, check back tomorrow for new data</p>
-                            </>
+                            {reviewsLoading ? (
+                                <>
+                                    <ScaleLoader color={'#22c55e'} />
+                                </>
+                            ) : reviews && reviews.length > 0 ? (
+                                <ul className="flex flex-col gap-4">
+                                    {reviews.map((review) => (
+                                        <li className="flex items-center gap-4 w-full" key={review.id}>
+                                            <>
+                                                <img src={review.album.images[0].url} alt="" className="h-14 rounded" />
+                                                <div className="flex flex-col text-start">
+                                                    <p>{shortenString(review.comment, 40)}</p>
+                                                    <p className="opacity-60">@{review.username}</p>
+                                                </div>
+                                            </>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <>
+                                    <p>No data today, check back tomorrow for new data</p>
+                                </>
+                            )}
                         </div>
                     </div>
                 </DiscoverSection>
