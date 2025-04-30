@@ -68,3 +68,18 @@ export const setHighlightedSong = async (platform_token: string, songId: string)
     let data = await response.json();
     return data;
 };
+
+export const uploadNewProfilePic = async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const requestOptions = {
+        method: 'POST',
+        body: formData
+    };
+
+    const response = await fetch(`${BACKEND_URL}/cloudinary/upload/profile_picture`, requestOptions);
+
+    let data = await response.json();
+    return data;
+};

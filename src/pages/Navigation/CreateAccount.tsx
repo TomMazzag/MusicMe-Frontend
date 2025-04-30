@@ -7,10 +7,9 @@ import { StepThree } from '../../components/AccountCreation/ThirdStep';
 import { useNavigate } from 'react-router-dom';
 import { createAccount } from '../../services/auth';
 import { getSpotifyToken } from '@MusicMe/utils';
+import { PlainObject } from 'src/types/Util';
 
 export const CreateAccount = () => {
-    // Get spotify details
-
     const access_token = getSpotifyToken();
     const [profile, setProfile] = useState();
     const [errorMessage, setErrorMessage] = useState<string>();
@@ -24,19 +23,15 @@ export const CreateAccount = () => {
             const data = await result.json();
             setProfile(data);
             updateAccountDetails({ access_token });
-            //console.log(data)
         };
         getProfile();
     }, []);
-
-    // Spotify details close
 
     const [activeStep, setActiveStep] = useState(0);
     const navigate = useNavigate();
     const [accountDetails, setAccountDetails] = useState();
 
-    const updateAccountDetails = (data: any) => {
-        // console.log(data)
+    const updateAccountDetails = (data: PlainObject) => {
         setAccountDetails((prevAccountDetails: any) => ({ ...prevAccountDetails, ...data }));
     };
 
