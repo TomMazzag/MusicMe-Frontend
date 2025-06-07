@@ -3,7 +3,7 @@ import { ClickableDiv } from '../../Util/ClickableDiv';
 import { SongSearchModalSmall } from './SongSearchMini';
 
 interface Props {
-    track: SpotifyApi.TrackObjectFull;
+    track: SpotifyApi.TrackObjectFull | undefined;
 }
 
 const showNewHighlightedSongModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -16,6 +16,15 @@ const showNewHighlightedSongModal = (e: React.MouseEvent<HTMLButtonElement, Mous
 };
 
 export const HighlightedSong = ({ track }: Props) => {
+    console.log(track)
+    if (!track) {
+        return (
+            <>
+                This user hasn't selected a top track yet
+            </>
+        )
+    }
+
     return (
         <div className="flex h-16">
             <ClickableDiv url={`/songs/${track.id}`}>

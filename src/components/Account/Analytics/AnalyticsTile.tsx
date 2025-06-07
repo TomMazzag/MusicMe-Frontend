@@ -1,38 +1,51 @@
 import { useQuery } from '@tanstack/react-query';
 import { getPlatformToken, getSpotifyToken } from '@MusicMe/utils';
-import { getAccountAnalytics } from '../../../services/account';
+import { getAccountAnalytics, getPublicAccountAnalytics } from '../../../services/account';
 import { ScaleLoader } from 'react-spinners';
 import { Chart } from './Chart';
 import { HighlightedSong } from './HighlightedSong';
 import { GenreSelector } from '../GenreSelector';
+import { Profile } from 'src/types/Profile';
 
 interface StatsProps {
     data: {
         playlistCount: number;
         likedSongs: number | undefined;
     };
-    profileId?: string;
+    profile?: Profile.Public;
 }
 
-export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
+export const AnalyticsTile = ({ data, profile }: StatsProps) => {
     const platform_token = getPlatformToken();
     const access_token = getSpotifyToken();
 
-    if (profileId) {
-        return (
-            <div className="grid grid-cols-2 gap-8">
-                <StatsTile heading="Total Playlists" statValue={String(data.playlistCount)} />
-                <StatsTile heading="Songs liked" statValue={String(data.likedSongs)} />
-            </div>
-        );
-    }
-
     const { data: analytics, isLoading } = useQuery({
         queryKey: ['analytics'],
-        queryFn: async () => getAccountAnalytics(platform_token, access_token),
+        queryFn: async () =>
+            profile
+                ? getPublicAccountAnalytics(platform_token, access_token, profile.user_id)
+                : getAccountAnalytics(platform_token, access_token),
         refetchOnWindowFocus: false,
         staleTime: 1000 * 60 * 5,
     });
+
+    if (profile) {
+        return (
+            <div className="flex flex-col gap-14 mb-10">
+                {isLoading && <div className="skeleton h-28 w-2/3"></div>}
+                {analytics && (
+                    <div>
+                        <p className="text-center mb-4 text-2xl">Highligted Song:</p>
+                        <HighlightedSong track={getTopTrack(analytics)} />
+                    </div>
+                )}
+                <div className="grid grid-cols-2 gap-8">
+                    <StatsTile heading="Total Playlists" statValue={String(data.playlistCount)} />
+                    <StatsTile heading="Songs liked" statValue={String(data.likedSongs)} />
+                </div>
+            </div>
+        );
+    }
 
     if (isLoading) {
         return <ScaleLoader color={'#22c55e'} />;
@@ -44,9 +57,7 @@ export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
                 <>
                     <div>
                         <p className="text-center mb-4 text-2xl">Highligted Song:</p>
-                        <HighlightedSong
-                            track={analytics.highlightedSong ? analytics.highlightedSong : analytics.topTracks.items[0]}
-                        />
+                        <HighlightedSong track={getTopTrack(analytics)} />
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-14 px-10">
@@ -64,6 +75,17 @@ export const AnalyticsTile = ({ data, profileId }: StatsProps) => {
             )}
         </div>
     );
+};
+
+const getTopTrack = (analytics: Profile.Analytics): SpotifyApi.TrackObjectFull | undefined => {
+    let returnedTrack = undefined;
+    if (analytics.highlightedSong) {
+        returnedTrack = analytics.highlightedSong;
+    }
+    if (!analytics.highlightedSong && analytics.topTracks) {
+        returnedTrack = analytics.topTracks.items[0];
+    }
+    return returnedTrack;
 };
 
 interface StatsTileProps {

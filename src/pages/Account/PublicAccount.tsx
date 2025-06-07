@@ -98,7 +98,7 @@ export const PublicAccount = () => {
                         playlistCount: playlists.length,
                         likedSongs: profile?.liked_song_count,
                     }}
-                    profileId={user_id}
+                    profile={profile}
                 />
             );
             break;

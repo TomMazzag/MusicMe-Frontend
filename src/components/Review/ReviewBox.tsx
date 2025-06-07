@@ -4,10 +4,11 @@ import { ReviewBoxUserOptions } from './ReviewBoxUserOptions';
 import { QueryClient } from '@tanstack/react-query';
 import { toggleLikeReview } from '../../services/rewiew';
 import { getPlatformToken } from '@MusicMe/utils';
+import { Profile } from 'src/types/Profile';
 
 interface ReviewProps {
     review: Review;
-    currentUserId: number;
+    currentUserId: Profile.User['user_id'];
     queryClient: QueryClient;
 }
 

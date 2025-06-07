@@ -5,7 +5,7 @@ export namespace Profile {
         followers: number;
         following: number;
         liked_song_count: number;
-        user_id: number;
+        user_id: string;
         review_count: number;
         username: string;
     }
@@ -17,12 +17,12 @@ export namespace Profile {
     export interface Public extends BaseProfile {}
 
     export interface Conneciton {
-        user_id: number;
+        user_id: string;
         full_name: string;
         profile_picture_url: string;
         username: string;
         is_following: boolean;
-        currentUserId: number;
+        currentUserId: string;
     }
 
     export interface Analytics {

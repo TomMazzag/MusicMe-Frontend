@@ -1,6 +1,7 @@
+import { Profile } from "src/types/Profile";
 import { BACKEND_URL, createAuthenticatedGetRequestOptions } from "./util";
 
-export const followOrUnfollowUser = async (platform_token: string, follow_id: number) => {
+export const followOrUnfollowUser = async (platform_token: string, follow_id: Profile.Public['user_id']) => {
     const requestOptions = {
         method: 'POST',
         headers: {

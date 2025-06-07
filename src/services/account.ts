@@ -53,6 +53,15 @@ export const getAccountAnalytics = async (platform_token: string, access_token: 
     return data;
 };
 
+export const getPublicAccountAnalytics = async (platform_token: string, access_token: string, userId: Profile.Public['user_id']) => {
+    const requestOptions = createAuthenticatedGetRequestOptions(platform_token);
+
+    const response = await fetch(`${BACKEND_URL}/user/${userId}/analytics?access_token=${access_token}`, requestOptions);
+
+    let data: Profile.Analytics = await response.json();
+    return data;
+};
+
 export const setHighlightedSong = async (platform_token: string, songId: string) => {
     const requestOptions = {
         method: 'POST',
