@@ -36,3 +36,5 @@ export namespace Profile {
         };
     }
 }
+
+export type ActiveTab = 'Playlists' | 'Liked' | 'Analytics';

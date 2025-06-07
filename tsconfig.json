@@ -29,6 +29,9 @@
             ],
             "@MusicMe/utils": [
                 "src/utils/index.ts"
+            ],
+            "@MusicMe/types": [
+                "src/types/index.ts"
             ]
         }
     },

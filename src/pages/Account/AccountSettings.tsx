@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getAccountDetailsUsersAccount } from '../../services/account';
 import { getPlatformToken } from '@MusicMe/utils';
 import { useSearchParams } from 'react-router-dom';
+import { updateSearchParams } from 'src/utils/searchParams';
 
 type Tabs = 'general' | 'spotify';
 
@@ -22,9 +23,7 @@ export const AccountSettings = () => {
     });
 
     const updateTab = (tabTitle: Tabs) => {
-        const newParams = new URLSearchParams(searchParams);
-        newParams.set('tab', tabTitle);
-        setSearchParams(newParams);
+        updateSearchParams<Tabs>('tab', tabTitle, searchParams, setSearchParams);
     };
 
     let pageContent;

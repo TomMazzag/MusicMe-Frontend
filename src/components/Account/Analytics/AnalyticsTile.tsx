@@ -5,7 +5,7 @@ import { ScaleLoader } from 'react-spinners';
 import { Chart } from './Chart';
 import { HighlightedSong } from './HighlightedSong';
 import { GenreSelector } from '../GenreSelector';
-import { Profile } from 'src/types/Profile';
+import { Profile } from '@MusicMe/types';
 
 interface StatsProps {
     data: {

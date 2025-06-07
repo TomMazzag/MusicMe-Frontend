@@ -10,6 +10,9 @@ import { MetaWrapper } from '../../components/Util/MetaWrapper';
 import { AnalyticsTile } from '../../components/Account/Analytics/AnalyticsTile';
 import { Tablist } from '../../components/Account/Tablist';
 import { ProfileImageAndNumbers } from '../../components/Account/ProfilePicAndUserStats';
+import { ActiveTab } from '@MusicMe/types';
+import { useSearchParams } from 'react-router-dom';
+import { updateSearchParams } from 'src/utils/searchParams';
 
 interface Playlist {
     public: boolean;
@@ -19,9 +22,16 @@ export const UsersAccount = () => {
     const [access_token, setAccess_token] = useState(getSpotifyToken());
     const [profile, setProfile] = useState<Profile.User>();
     const [playlists, setPlaylists] = useState<any>();
-    const [activeTab, setActiveTab] = useState<string>('Playlists');
     const platform_token = getPlatformToken();
     const [likedSongs, setLikedSongs] = useState([{}]);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const activeTab: ActiveTab | null = searchParams.get('activeTab')
+        ? (searchParams.get('activeTab') as ActiveTab)
+        : 'Playlists';
+
+    const setActiveTab = (newTab: ActiveTab) => {
+        updateSearchParams<ActiveTab>('activeTab', newTab, searchParams, setSearchParams);
+    };
 
     const getPlaylists = async (id: string) => {
         const result = await fetch(`https://api.spotify.com/v1/users/${id}/playlists?offset=0&limit=50`, {
@@ -82,7 +92,7 @@ export const UsersAccount = () => {
             tabContent = (
                 <AnalyticsTile
                     data={{
-                        playlistCount: playlists.length || 0,
+                        playlistCount: playlists?.length || 0,
                         likedSongs: profile?.liked_song_count,
                     }}
                 />

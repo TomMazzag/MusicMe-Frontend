@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './Account.css';
 import { getNewToken, getPlatformToken, getSpotifyToken } from '@MusicMe/utils';
 import { Navbar } from '@MusicMe/components/navbar';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { getAccountDetailsPublicAccount } from '../../services/account';
 import { followOrUnfollowUser } from '../../services/friend';
 import { Profile } from '../../types/Profile';
@@ -11,6 +11,8 @@ import { LikedSongsTab } from '../../components/LikedSongs/LikedSongsTab';
 import { Tablist } from '../../components/Account/Tablist';
 import { AnalyticsTile } from '../../components/Account/Analytics/AnalyticsTile';
 import { ProfileImageAndNumbers } from '../../components/Account/ProfilePicAndUserStats';
+import { ActiveTab } from '@MusicMe/types';
+import { updateSearchParams } from 'src/utils/searchParams';
 
 interface Playlist {
     public: boolean;
@@ -21,7 +23,10 @@ export const PublicAccount = () => {
     const platform_token = getPlatformToken();
     const [profile, setProfile] = useState<Profile.Public>();
     const [playlists, setPlaylists] = useState<any>();
-    const [activeTab, setActiveTab] = useState<string>('Playlists');
+    const [searchParams, setSearchParams] = useSearchParams();
+    const activeTab: ActiveTab | null = searchParams.get('activeTab')
+        ? (searchParams.get('activeTab') as ActiveTab)
+        : 'Playlists';
     let { user_id } = useParams();
     const [following, setFollowing] = useState(false);
     const [likedSongs] = useState([]);
@@ -29,6 +34,10 @@ export const PublicAccount = () => {
     if (user_id === undefined) {
         return (window.location.href = '/account');
     }
+
+    const setActiveTab = (newTab: ActiveTab) => {
+        updateSearchParams<ActiveTab>('activeTab', newTab, searchParams, setSearchParams);
+    };
 
     const getPlaylists = async (id: string) => {
         const result = await fetch(`https://api.spotify.com/v1/users/${id}/playlists?offset=0&limit=50`, {
@@ -95,7 +104,7 @@ export const PublicAccount = () => {
             tabContent = (
                 <AnalyticsTile
                     data={{
-                        playlistCount: playlists.length,
+                        playlistCount: playlists?.length,
                         likedSongs: profile?.liked_song_count,
                     }}
                     profile={profile}
