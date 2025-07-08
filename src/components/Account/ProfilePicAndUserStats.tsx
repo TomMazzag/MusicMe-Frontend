@@ -1,3 +1,4 @@
+import { pluraliseAndReturnString } from '@MusicMe/utils';
 import { Profile } from '../../types/Profile';
 
 export const ProfileImageAndNumbers = ({ profile }: { profile: Profile.User }) => {
@@ -17,7 +18,7 @@ export const ProfileImageAndNumbers = ({ profile }: { profile: Profile.User }) =
                     <div>
                         <a href={`/user/${profile.user_id}/followers`}>
                             <h2>{profile.followers}</h2>
-                            <p className="text-sm">followers</p>
+                            <p className="text-sm">{pluraliseAndReturnString(profile.followers, 'follower')}</p>
                         </a>
                     </div>
                     <div>
@@ -29,7 +30,7 @@ export const ProfileImageAndNumbers = ({ profile }: { profile: Profile.User }) =
                     <div>
                         <a href={`/user/${profile.user_id}/reviews`}>
                             <h2>{profile.review_count}</h2>
-                            <p className="text-sm">reviews</p>
+                            <p className="text-sm">{pluraliseAndReturnString(profile.review_count, 'review')}</p>
                         </a>
                     </div>
                 </div>
