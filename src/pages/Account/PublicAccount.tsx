@@ -6,13 +6,13 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { getAccountDetailsPublicAccount } from '../../services/account';
 import { followOrUnfollowUser } from '../../services/friend';
 import { Profile } from '../../types/Profile';
-import { shortenString } from '@MusicMe/utils';
 import { LikedSongsTab } from '../../components/LikedSongs/LikedSongsTab';
 import { Tablist } from '../../components/Account/Tablist';
 import { AnalyticsTile } from '../../components/Account/Analytics/AnalyticsTile';
 import { ProfileImageAndNumbers } from '../../components/Account/ProfilePicAndUserStats';
 import { ActiveTab } from '@MusicMe/types';
 import { updateSearchParams } from 'src/utils/searchParams';
+import { PlaylistsTab } from 'src/components/Account/PlaylistTab';
 
 interface Playlist {
     public: boolean;
@@ -22,7 +22,7 @@ export const PublicAccount = () => {
     const [access_token, setAccess_token] = useState(getSpotifyToken());
     const platform_token = getPlatformToken();
     const [profile, setProfile] = useState<Profile.Public>();
-    const [playlists, setPlaylists] = useState<any>();
+    const [playlists, setPlaylists] = useState<SpotifyApi.PlaylistObjectFull[] | undefined>();
     const [searchParams, setSearchParams] = useSearchParams();
     const activeTab: ActiveTab | null = searchParams.get('activeTab')
         ? (searchParams.get('activeTab') as ActiveTab)
@@ -80,22 +80,7 @@ export const PublicAccount = () => {
 
     switch (activeTab) {
         case 'Playlists':
-            tabContent = playlists && (
-                <div className="playlists mb-20 grid-cols-1 md:grid-cols-3">
-                    {playlists.map((playlist: any, index: number) => (
-                        <div key={index} className="playlist-tile text-center">
-                            <a href={playlist.external_urls.spotify} target="_blank">
-                                <img
-                                    src={playlist.images?.[0].url || undefined}
-                                    alt="Playlist artwork"
-                                    className="border-none rounded-xl"
-                                />
-                            </a>
-                            <h4 className="mt-5">{shortenString(playlist.name, 35)}</h4>
-                        </div>
-                    ))}
-                </div>
-            );
+            tabContent = <PlaylistsTab playlists={playlists} />;
             break;
         case 'Liked':
             tabContent = <LikedSongsTab likedSongs={likedSongs} />;

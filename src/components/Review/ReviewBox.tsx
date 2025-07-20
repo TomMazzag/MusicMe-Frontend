@@ -5,6 +5,7 @@ import { QueryClient } from '@tanstack/react-query';
 import { toggleLikeReview } from '../../services/rewiew';
 import { getPlatformToken } from '@MusicMe/utils';
 import { Profile } from 'src/types/Profile';
+import { ProfimeImageAndName } from 'src/components/Account/ProfileImageAndName';
 
 interface ReviewProps {
     review: Review;
@@ -40,17 +41,11 @@ export const ReviewBox = ({ review, currentUserId, queryClient }: ReviewProps) =
 
     return (
         <div className="text-left px-4 py-4 bg-base-200 rounded-[20px] relative">
-            <div className="flex items-center gap-2 mb-2 lg:mb-4">
-                <img
-                    src={review.profile_picture_url}
-                    alt="Users profile picture"
-                    className="rounded-full h-12 w-12 lg:h-16 lg:w-16"
-                />
-                <div className="flex flex-col">
-                    <h2 className="font-bold">{review.full_name}</h2>
-                    <h3 className="opacity-70 text-sm">@{review.username}</h3>
-                </div>
-            </div>
+            <ProfimeImageAndName
+                profileImageUrl={review.profile_picture_url}
+                username={review.username}
+                fullName={review.full_name}
+            ></ProfimeImageAndName>
             <div className="pl-2 mr-[10%]">
                 <p>{review.comment}</p>
                 <p>{review.rating} / 5</p>

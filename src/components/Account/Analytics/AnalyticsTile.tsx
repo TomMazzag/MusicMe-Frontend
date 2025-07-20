@@ -9,7 +9,7 @@ import { Profile } from '@MusicMe/types';
 
 interface StatsProps {
     data: {
-        playlistCount: number;
+        playlistCount: number | undefined;
         likedSongs: number | undefined;
     };
     profile?: Profile.Public;

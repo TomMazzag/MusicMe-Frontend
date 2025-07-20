@@ -2,11 +2,12 @@ import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import userProfileImage from '../../assets/exampleProfilePage.webp';
 import analyticsExample from '../../assets/profileAnalytics.webp';
+import discover from '../../assets/discover.webp'
 import { HighlightText } from '../../components/Util/TextComponents';
 
 export const AboutPage = () => {
     return (
-        <>
+        <div className="flex flex-col min-h-[100vh]">
             <Helmet>
                 <meta
                     name="description"
@@ -32,7 +33,7 @@ export const AboutPage = () => {
                 </li>
             </nav>
 
-            <div className="p-4 md:grid md:grid-cols-2">
+            <div className="p-4 md:grid md:grid-cols-2 flex-1">
                 <TextTile title="What is MusicMe?">
                     <p>
                         MusicMe is an online social media platform aimed at allow users to share their music taste with
@@ -75,6 +76,7 @@ export const AboutPage = () => {
                         <li>Song suggestions using AI/ML</li>
                     </ul>
                 </TextTile>
+                <ImageTile src={discover} />
             </div>
 
             <footer className="md:mt-10">
@@ -90,7 +92,7 @@ export const AboutPage = () => {
                     </div>
                 </div>
             </footer>
-        </>
+        </div>
     );
 };
 
@@ -114,7 +116,7 @@ interface ImageTileProps {
 
 const ImageTile = ({ src }: ImageTileProps) => {
     return (
-        <div className="md:mx-14 my-6 md:px-10  py-2 md:py-6 rounded-xl border border-accent">
+        <div className="flex items-center md:mx-14 my-6 md:px-10  py-2 md:py-6 rounded-xl border border-accent">
             <img src={src} alt="" />
         </div>
     );
